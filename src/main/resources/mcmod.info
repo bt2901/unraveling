@@ -1,0 +1,18 @@
+[
+{
+  "modid": "Unraveling",
+  "name": "Unraveling Of the Eldritch",
+  "description": "Exploration of mysterious dimension.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": [
+    me
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

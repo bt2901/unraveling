@@ -1,0 +1,67 @@
+tile.TFPortal.name=Twilight Forest Portal
+tile.TFBossSpawner.1.name=Lich Spawner
+tile.TFFireflyJar.name=Firefly Jar
+tile.TFUncraftingTable.name=Uncrafting Table
+
+
+tile.TFFireJet.0.name=Smoking block
+tile.TFFireJet.1.name=Encased Smoker
+tile.TFFireJet.2.name=Encased Smoker
+tile.TFFireJet.8.name=Fire Jet
+tile.TFFireJet.9.name=Popping Fire Jet
+tile.TFFireJet.10.name=Flaming Fire Jet
+tile.TFFireJet.11.name=Encased Fire Jet
+tile.TFFireJet.12.name=Encased Popping Fire Jet
+tile.TFFireJet.13.name=Encased Flaming Fire Jet
+
+
+item.scepterTwilight.name=Scepter of Twilight
+item.scepterLifeDrain.name=Scepter of Life Draining
+item.scepterZombie.name=Zombie Scepter
+
+item.magicMap.name=Magic Map
+item.mazeMap.name=Maze Map
+item.oreMap.name=Maze/Ore Map
+item.magicMapFocus.name=Magic Map Focus
+item.mazeMapFocus.name=Maze Map Focus
+item.emptyMagicMap.name=Blank Magic Map
+item.emptyMazeMap.name=Blank Maze Map
+item.emptyOreMap.name=Blank Maze/Ore Map
+
+    
+item.any_artifact.tooltip=Enigmatic Artifact
+
+item.tfspawnegg.name=Spawn
+
+entity.Unraveling.Twilight Lich.name=Lich
+entity.Unraveling.Lich Minion.name=Lich Minion
+entity.Unraveling.Loyal Zombie.name=Loyal Zombie
+entity.Unraveling.Death Tome.name=Death Tome
+
+
+
+achievement.twilightProgressLich=Touched by Undeath
+achievement.twilightProgressLich.desc=Use the magic of the the Lich's scepter to clear away poisonous mosquitoes in the swamp.
+
+
+
+
+item.lichPowder.name=Lich Skull Powder
+item.necroFocus.name=Wand Focus: Necromancy
+
+unraveling.research_name.VOIDORE=Void Transmutation
+unraveling.research_text.VOIDORE=Industrial applications are obvious
+unraveling.research_text.VOIDORE.1=You finally understood how do you operate this thing. Rules are:
+unraveling.research_text.VOIDORE.2=You want to try this transformation in an old-fashioned way.
+unraveling.research_text.VOIDORE.3=After trying several catalysts, you got an inkling that this system can be expanded.
+
+
+
+unraveling.research_page.VOIDGEN.1=It all became clear to you.
+
+
+
+unraveling.research_page.VOIDPURE.1=The void metal is not really metal in a strict sense. But now, having seen the void ore, you have an idea...<BR>The process of void purification is distinct yet eerily similar to the process of mundane metal purification.<BR>The result is very strange, you feel like it will prove useful in the future.
+unraveling.research_name.VOIDPURE=Void Purification
+unraveling.research_text.VOIDPURE=Witty text
+

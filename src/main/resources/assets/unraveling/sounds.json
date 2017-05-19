@@ -1,0 +1,48 @@
+{
+  "random.necromancy": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/ANIMDEAD"
+    ]
+  },
+  "mob.lich.hurt": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/screech02",
+      "mob/lich/LICHWNCE"
+    ]
+  },
+  "mob.lich.death": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/deathpuff02"
+    ]
+  },
+  "mob.lich.explode": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/MUMYKILL"
+    ]
+  },
+  "mob.lich.breathe": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/suck02",
+      "mob/lich/screech01",
+      "mob/lich/suck03_breath",
+      "mob/lich/kiss_short01",
+      "mob/lich/kiss_short02",
+      "mob/lich/kiss_short03"
+    ]
+  },
+  "mob.lich.break": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/New_spell_cast_short"
+    ]
+  },
+  "mob.lich.block": {
+    "category": "hostile",
+    "sounds": ["mob/lich/spell_hit"]
+  }
+}
