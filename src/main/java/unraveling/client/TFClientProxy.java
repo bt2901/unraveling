@@ -38,12 +38,14 @@ import unraveling.client.particle.EntityTFProtectionFX;
 import unraveling.client.renderer.entity.RenderTFTinyFirefly;
 import unraveling.client.renderer.entity.RenderTFLich;
 import unraveling.client.renderer.entity.RenderTFBiped;
+import unraveling.VoidPacketHandler;
 
 //import unraveling.tileentity.TileEntityTFFirefly;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
+import thaumcraft.common.Thaumcraft;
 
 public class TFClientProxy extends TFCommonProxy {
 
@@ -66,9 +68,9 @@ public class TFClientProxy extends TFCommonProxy {
 		//MinecraftForge.EVENT_BUS.register(clientEvents);
 		
 		// packet listener
-		//TFGenericPacketHandler genericPacketHandler = new TFGenericPacketHandler();
-		//UnravelingMod.genericChannel.register(genericPacketHandler);
-		
+		VoidPacketHandler voidPacketHandler = new VoidPacketHandler();
+		UnravelingMod.genericChannel.register(voidPacketHandler);
+        
 		//RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.passive.EntityTFTinyFirefly.class, new RenderTFTinyFirefly());
 		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLich.class, new RenderTFLich(new ModelTFLich(), 1.0F));
 		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLichMinion.class, new RenderTFBiped(new ModelTFLichMinion(), 1.0F, "textures/entity/zombie/zombie.png"));
@@ -155,5 +157,12 @@ public class TFClientProxy extends TFCommonProxy {
 			}
 		}
 	}
-	
+    @Override
+    public void doBlockTransformEffect(World worldObj, int x, int y, int z) {
+        System.out.println("doBlockTransformEffect");
+        Thaumcraft.proxy.burst(worldObj, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, 1.0F);
+        Thaumcraft.proxy.reservoirBubble(worldObj, x, y, z, 0x4D00FF);
+        worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+    };
+
 }

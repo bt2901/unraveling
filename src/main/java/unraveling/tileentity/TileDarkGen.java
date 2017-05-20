@@ -103,7 +103,6 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
                 }
                 VoidAggregationHandler.generatorUpdateCallback(my_cluster_id, this, worldObj);
             }
-
         }
 	}
     

@@ -5,6 +5,15 @@
       "mob/lich/ANIMDEAD"
     ]
   },
+  "random.blockconvert": {
+    "category": "hostile",
+    "sounds": [
+      "random/sfx/glacius_turn_short01",
+      "random/sfx/glacius_turn_short02",
+      "random/sfx/glacius_turn_short03",
+      "random/sfx/glacius_turn_short04"
+    ]
+  },
   "mob.lich.hurt": {
     "category": "hostile",
     "sounds": [

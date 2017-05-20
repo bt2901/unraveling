@@ -43,6 +43,7 @@ public class TileDarkGenMain extends TileVisNode {
     public static final String NBT_GEN_ID = "my_generators_id";
     public int ticksExisted = 0;
     public int my_generators_id;
+    public WeakReference<TileVisNode> above = null;
     // TODO:
     // send infusion data
     // last block updated
@@ -77,7 +78,7 @@ public class TileDarkGenMain extends TileVisNode {
             this.vis.reduce(aspect, drain);
         }*/
         int drain = Math.min(4, amount);
-        System.out.println("DGM: in consumeVis(). " + aspect + " amount: " + amount + " returning: " + drain);
+        //System.out.println("DGM: in consumeVis(). " + aspect + " amount: " + amount + " returning: " + drain);
         return drain;
 	}
         
@@ -144,26 +145,30 @@ public class TileDarkGenMain extends TileVisNode {
         if (isWorking()) {
             super.updateEntity();
             if (!worldObj.isRemote && (nodeCounter % 40==0 || nodeRefresh) && (getChildren().size() > 1)) {
-
-                TileEntity tileDirectlyAbove = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
-
-                System.out.println("children: " + getChildren().size());
+                if (above == null) {
+                    TileEntity tileDirectlyAbove = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+                    above = new WeakReference((TileVisNode)tileDirectlyAbove);
+                }
+                
                 for (WeakReference<TileVisNode> child : getChildren()) {
                     TileVisNode n = child.get();
-                
-                    if (n != null) {
+
+                    if (n != null && n.getParent() != null && n.getParent().get == (TileVisNode)this) {
+                    //if (n != null) {
                         boolean isDirectlyAbove = (n.xCoord == xCoord && n.yCoord == yCoord + 1 && n.zCoord == zCoord);
                         if (!isDirectlyAbove) {
                             // move the vis source
-                            System.out.println("rerouting");
-                            n.setParent(new WeakReference((TileVisNode)tileDirectlyAbove));
-                            n.nodeRefresh = true;
+                            System.out.println("rerouting from " + n.getParent() + " to " + above);
+                            n.setParent(above);
+                            //n.nodeRefresh = true;
+                            System.out.println("now parent is " + n.getParent());
+                            worldObj.markBlockForUpdate(n.xCoord, n.yCoord, n.zCoord);
+                            //n.parentChanged();
                         }
                     }
                 }
-                // nodeRefresh = true;
+                //nodeRefresh = true;
             }
-
         }
     }
         /*

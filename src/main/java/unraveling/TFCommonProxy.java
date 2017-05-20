@@ -63,5 +63,7 @@ public class TFCommonProxy implements IGuiHandler {
 		} */
         return null;
 	}
+    public void doBlockTransformEffect(World worldObj, int blockX, int blockY, int blockZ) {
+    };
 
 }

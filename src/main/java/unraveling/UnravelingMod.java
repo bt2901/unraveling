@@ -100,7 +100,7 @@ public class UnravelingMod {
 	
 	// public static final TFEventListener eventListener = new TFEventListener();
 	public static FMLEventChannel genericChannel;
-
+    //public static PacketHandler voidPacketHandler;
 	
 	@Instance(ID)
 	public static UnravelingMod instance;
@@ -137,6 +137,9 @@ public class UnravelingMod {
         
 		// GUI
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
+
+		// generic channel that handles biome change packets, but could handle some other stuff in the future
+		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
 		
 		// event listener, for those events that seem worth listening to
 		//MinecraftForge.EVENT_BUS.register(eventListener);

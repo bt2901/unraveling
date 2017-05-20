@@ -8,11 +8,16 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Iterator;
 
+
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.internal.FMLProxyPacket;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import unraveling.block.TFBlocks;
 import unraveling.tileentity.TileDarkGenMain;
 import unraveling.tileentity.TileDarkGen;
+import unraveling.VoidPacketHandler;
 import thaumcraft.common.Thaumcraft;
 
 import net.minecraft.util.MovingObjectPosition;
@@ -36,8 +41,8 @@ public class VoidAggregationHandler {
 	private static HashMap<Integer, HashSet<WorldCoordinates>> generatorsUpdated = new HashMap<Integer, HashSet<WorldCoordinates>>();
 	private static HashSet<WorldCoordinates> orphanGenerators = new HashSet<WorldCoordinates>();
 	// private static HashSet<WorldCoordinates> orphanGeneratorsMain = new HashMap<Integer, HashSet<WorldCoordinates>>();
-    private static Random myRand;
     public static int ticks = 0;
+	private static Random rand = new Random();
     
     public static void notifyOfDestruction(TileEntity tileentity) {
         System.out.println("Destruction");
@@ -95,9 +100,9 @@ public class VoidAggregationHandler {
     
     public static void generatorUpdateCallback(int group_id, TileEntity dg, World worldObj) {
         WorldCoordinates wc = new WorldCoordinates(dg);
-        System.out.println("VAH: in callback(). " + group_id + " xCoord: " + dg.xCoord + " zCoord: " + dg.zCoord);
+        //System.out.println("VAH: in callback(). " + group_id + " xCoord: " + dg.xCoord + " zCoord: " + dg.zCoord);
         HashSet<WorldCoordinates> validGens = generatorsUpdated.get(group_id);
-        System.out.println("VAH: validGens " + validGens);
+        //System.out.println("VAH: validGens " + validGens);
         if (validGens == null) {
             if (group_id == -1) {
                 group_id = assignId(dg, worldObj);
@@ -110,11 +115,11 @@ public class VoidAggregationHandler {
         }
         ShapeData shape = generatorsShape.get(group_id);
         if (shape == null) {
-            System.out.println("VAH: null shape!");
+            //System.out.println("VAH: null shape!");
             group_id = assignId(dg, worldObj);
         }
         
-        System.out.println("VAH: validGens.size() " + validGens.size() + " " + validGens);
+        //System.out.println("VAH: validGens.size() " + validGens.size() + " " + validGens);
 
         if (validGens.contains(wc)) {
             validGens.clear();
@@ -127,30 +132,51 @@ public class VoidAggregationHandler {
         validGens.add(wc);
         if (validGens.size() == GEN_NUM) {
             // generatorsUpdated.put(group_id, 0);
-            System.out.println("VAH: in processTransformation(). ");
+            //System.out.println("VAH: in processTransformation(). ");
             processTransformation(worldObj, group_id);
             validGens.clear();
         }
     }
-
+    // @SideOnly(Side.SERVER)
 	public static void processTransformation(World worldObj, int group_id) {
         if (!generatorsShape.containsKey(group_id)) {
             System.out.println("VAH: unknown shape!");
             return;
         }
         ShapeData shape = generatorsShape.get(group_id);
-        
         int squareSide = shape.maxx - shape.minx;
+        if (rand.nextInt(10) == 0) {
+            int x = shape.minx + rand.nextInt(1) * rand.nextInt(squareSide);
+            int x2 = shape.maxx - rand.nextInt(1) * rand.nextInt(squareSide);
+
+            int z = shape.minz + rand.nextInt(1) * rand.nextInt(squareSide);
+            int z2 = shape.maxz - rand.nextInt(1) * rand.nextInt(squareSide);
+
+            int y = shape.cury + rand.nextInt(squareSide);
+            int y2 = shape.cury + rand.nextInt(squareSide);
+            int col = Aspect.DARKNESS.getColor();
+
+            FMLProxyPacket message = VoidPacketHandler.makeBlockParticlePacket(x, y, z, x2, y2, z2, col);
+            NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
+            UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
+        }
         for (int x = shape.minx; x <= shape.maxx; x++) {
             for (int z = shape.minz; z <= shape.maxz; z++) {
                 for (int y = shape.cury; y <= shape.cury + squareSide; y++) {
                     Block id = worldObj.getBlock(x, y, z);
                     int meta = worldObj.getBlockMetadata(x, y, z);
                     if (id == Blocks.iron_ore && meta == 0) {
-                        worldObj.setBlock(x, y, z, TFBlocks.voidOre);
-                        worldObj.markBlockForUpdate(x, y, z);
-                        Thaumcraft.proxy.nodeBolt(worldObj, x, y, z, x+1.0F, y+1.0F, z+1.0F);
-                        return;
+                        if (rand.nextInt(20) == 0) {
+                            worldObj.setBlock(x, y, z, TFBlocks.voidOre);
+                            worldObj.markBlockForUpdate(x, y, z);
+                            
+                            FMLProxyPacket message = VoidPacketHandler.makeTransformBlockPacket(x, y, z);
+
+                            NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
+        
+                            UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
+                            return;
+                        }
                     }
                     // check all gens
                     // if they aren't valid: knows_generators = false
@@ -158,6 +184,7 @@ public class VoidAggregationHandler {
                 }
             }
         }
+    
 		return;
 	}
 
