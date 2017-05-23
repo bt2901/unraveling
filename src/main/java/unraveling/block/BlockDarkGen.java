@@ -152,10 +152,10 @@ public class BlockDarkGen extends BlockContainer {
      */
     @Override
 	@SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-    {
-        int color = (rand.nextBoolean())? Aspect.DARKNESS.getColor() : Aspect.VOID.getColor();
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+        /*
         TileDarkGen tileentity = (TileDarkGen) world.getTileEntity(x, y, z);
+        int color = (rand.nextBoolean())? Aspect.DARKNESS.getColor() : Aspect.VOID.getColor();
         if (tileentity.power > 0) {
             color = Aspect.ELDRITCH.getColor();
         }
@@ -167,8 +167,8 @@ public class BlockDarkGen extends BlockContainer {
         }
     	float dx = x + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);
     	float dy = y + 1.1F;
-    	float dz = z + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);
-        Thaumcraft.proxy.drawVentParticles(world, x + 0.5, y + 1, z + 0.5, dx, dy, dz, color, 3.0F);
+    	float dz = z + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);*/
+        // Thaumcraft.proxy.drawVentParticles(world, x + 0.5, y + 1, z + 0.5, dx, dy, dz, color, 3.0F);
         // Thaumcraft.proxy.sourceStreamFX(world, x, y, z, dx, dy, dz, Aspect.DARKNESS.getColor());
         // Thaumcraft.proxy.nodeBolt(world, x, y, z, dx, dy, dz);
         //Thaumcraft.proxy.sourceStreamFX(world, x, y, z, dx, dy, dz, Aspect.DARKNESS.getColor());

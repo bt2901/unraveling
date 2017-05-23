@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import thaumcraft.common.Thaumcraft;
 
 
+import java.util.Random;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -26,6 +27,9 @@ public class VoidPacketHandler {
 
 	public static final byte TRANSFORM_BLOCK = 1;
 	public static final byte PARTICLE_BLOCK = 2;
+	public static final byte VENT = 3;
+    
+    public static Random rand = new Random();
 
 	/**
 	 * Packet!
@@ -44,6 +48,9 @@ public class VoidPacketHandler {
 		}
 		if (discriminatorByte == PARTICLE_BLOCK) {
 			processParticleBlock(buf);
+		}
+		if (discriminatorByte == VENT) {
+			processBadVent(buf);
 		}
 	}
 
@@ -70,11 +77,21 @@ public class VoidPacketHandler {
 		int y2 = buf.readInt();
 		int z2 = buf.readInt();
         int color = buf.readInt();
-        // Item id = Items.iron_ingot;
         World worldObj = Minecraft.getMinecraft().theWorld;
-
         Thaumcraft.proxy.essentiaTrailFx(worldObj, x, y, z, x2, y2, z2, 1, color, 1);
-
+	}
+	@SideOnly(Side.CLIENT)
+	private void processBadVent(ByteBuf buf) {
+		int x = buf.readInt();
+		int y = buf.readInt();
+		int z = buf.readInt();
+        int color = buf.readInt();
+        float dx = x + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);
+    	float dy = y + 1.1F;
+    	float dz = z + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);
+        
+        World worldObj = Minecraft.getMinecraft().theWorld;
+        Thaumcraft.proxy.drawVentParticles(worldObj, x + 0.5, y + 1, z + 0.5, dx, dy, dz, color, 3.0F);
 	}
 	                    
 	
@@ -115,7 +132,20 @@ public class VoidPacketHandler {
         payload.writeInt(col);
 
 		FMLProxyPacket pkt = new FMLProxyPacket(payload, UnravelingMod.ID);
+		return pkt;
+	}
+    public static FMLProxyPacket makeVentPacket(int blockX, int blockY, int blockZ, int col) {
 
+        PacketBuffer payload = new PacketBuffer(Unpooled.buffer());
+        
+        payload.writeByte(VENT); // discriminator byte
+
+        payload.writeInt(blockX);
+        payload.writeInt(blockY);
+        payload.writeInt(blockZ);
+        payload.writeInt(col);
+
+		FMLProxyPacket pkt = new FMLProxyPacket(payload, UnravelingMod.ID);
 		return pkt;
 	}
 }

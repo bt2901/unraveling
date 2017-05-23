@@ -17,6 +17,7 @@ public class TFBlocks {
     public static Block voidOre;
     public static Block darkGen;
     public static Block darkGenMain;
+    public static Block quaesitum;
     //public static Block uncraftingTable;
     //public static Block fireJet;
 
@@ -28,6 +29,7 @@ public class TFBlocks {
         fireflyJar = (new BlockTFFireflyJar()).setBlockName("TFFireflyJar");
         voidOre = (new BlockVoidOre()).setBlockName("voidOre");
         darkGen = (new BlockDarkGen()).setBlockName("darkGen");
+        quaesitum = (new BlockQuaesitum()).setBlockName("Quaesitum");
         //uncraftingTable = (new BlockTFUncraftingTable()).setBlockName("TFUncraftingTable");
         //fireJet = (new BlockTFFireJet()).setBlockName("TFFireJet");
         
@@ -39,6 +41,7 @@ public class TFBlocks {
         registerMyBlock(voidOre, ItemBlock.class);
         registerMyBlock(darkGen, ItemBlock.class);
         registerMyBlock(darkGenMain, ItemBlock.class);
+        registerMyBlock(quaesitum, ItemBlock.class);
 
 		//registerMyBlock(uncraftingTable, ItemBlock.class);
 		//registerMyBlock(fireJet);
@@ -51,18 +54,16 @@ public class TFBlocks {
 
 	private static void registerMyBlock(Block block, Class<? extends ItemBlock> pickup, BlockSlab singleSlab, BlockSlab doubleSlab, boolean isDouble) {
 		GameRegistry.registerBlock(block, pickup, block.getUnlocalizedName(), singleSlab, doubleSlab, isDouble);
-
 	}
 
 	private static void registerMyBlock(Block block, Class<? extends ItemBlock> pickup, Block blockAgain, String[] names) {
 		GameRegistry.registerBlock(block, pickup, block.getUnlocalizedName(), blockAgain, names);
 	}
 
-	private static void registerMyBlock(Block block, Class<? extends ItemBlock> pickup) 
-	{
+	private static void registerMyBlock(Block block, Class<? extends ItemBlock> pickup) {
 		GameRegistry.registerBlock(block, pickup, block.getUnlocalizedName());
 	}
-	
+
 	private static void registerMyBlock(Block block) 
 	{
 		GameRegistry.registerBlock(block, ItemBlockTFMeta.class, block.getUnlocalizedName());

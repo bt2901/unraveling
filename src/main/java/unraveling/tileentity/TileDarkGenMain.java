@@ -153,7 +153,7 @@ public class TileDarkGenMain extends TileVisNode {
                 for (WeakReference<TileVisNode> child : getChildren()) {
                     TileVisNode n = child.get();
 
-                    if (n != null && n.getParent() != null && n.getParent().get == (TileVisNode)this) {
+                    if (n != null && n.getParent() != null && n.getParent().get() == (TileVisNode)this) {
                     //if (n != null) {
                         boolean isDirectlyAbove = (n.xCoord == xCoord && n.yCoord == yCoord + 1 && n.zCoord == zCoord);
                         if (!isDirectlyAbove) {

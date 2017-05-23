@@ -124,6 +124,8 @@ public class VoidAggregationHandler {
         if (validGens.contains(wc)) {
             validGens.clear();
             System.out.println("VAH: bad things incoming");
+            FMLProxyPacket m = VoidPacketHandler.makeVentPacket(dg.xCoord, dg.yCoord, dg.zCoord, Aspect.ELDRITCH.getColor());
+            sendMessage(m, dg.xCoord, dg.yCoord, dg.zCoord, worldObj);
             // we already checked this group on previous tick 
             // break
             return;
@@ -145,7 +147,7 @@ public class VoidAggregationHandler {
         }
         ShapeData shape = generatorsShape.get(group_id);
         int squareSide = shape.maxx - shape.minx;
-        if (rand.nextInt(10) == 0) {
+        if (rand.nextInt(5) == 0) {
             int x = shape.minx + rand.nextInt(1) * rand.nextInt(squareSide);
             int x2 = shape.maxx - rand.nextInt(1) * rand.nextInt(squareSide);
 
@@ -154,11 +156,12 @@ public class VoidAggregationHandler {
 
             int y = shape.cury + rand.nextInt(squareSide);
             int y2 = shape.cury + rand.nextInt(squareSide);
-            int col = Aspect.DARKNESS.getColor();
-
+            int col = (rand.nextBoolean())? Aspect.DARKNESS.getColor() : Aspect.VOID.getColor();
+            if (rand.nextInt(5) == 0) {
+                col = Aspect.ELDRITCH.getColor();
+            }
             FMLProxyPacket message = VoidPacketHandler.makeBlockParticlePacket(x, y, z, x2, y2, z2, col);
-            NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
-            UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
+            sendMessage(message, x, y, z, worldObj);
         }
         for (int x = shape.minx; x <= shape.maxx; x++) {
             for (int z = shape.minz; z <= shape.maxz; z++) {
@@ -166,21 +169,17 @@ public class VoidAggregationHandler {
                     Block id = worldObj.getBlock(x, y, z);
                     int meta = worldObj.getBlockMetadata(x, y, z);
                     if (id == Blocks.iron_ore && meta == 0) {
-                        if (rand.nextInt(20) == 0) {
+                        if (rand.nextInt(40) == 0) {
                             worldObj.setBlock(x, y, z, TFBlocks.voidOre);
                             worldObj.markBlockForUpdate(x, y, z);
                             
                             FMLProxyPacket message = VoidPacketHandler.makeTransformBlockPacket(x, y, z);
+                            worldObj.playSoundEffect((double)x, (double)y, (double)z, UnravelingMod.ID + ":random.blockconvert", 1.0F, 1.0F);
 
-                            NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
-        
-                            UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
-                            return;
+                            sendMessage(message, x, y, z, worldObj);
+                            // return;
                         }
                     }
-                    // check all gens
-                    // if they aren't valid: knows_generators = false
-                    // if they has no power
                 }
             }
         }
@@ -254,6 +253,11 @@ public class VoidAggregationHandler {
         // TODO: check if this is ore
 
         return 1;
+    }
+    
+    public static void sendMessage(FMLProxyPacket message, int x, int y, int z, World worldObj) {
+        NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
+        UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
     }
 }
 

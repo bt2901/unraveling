@@ -30,6 +30,9 @@ public class TFCommonProxy implements IGuiHandler {
 	public int getDarkGenRenderID() {
 		return 0;
 	}
+	public int getQRenderID() {
+		return 0;
+	}
 	//public int getCastleMagicBlockRenderID() {
 	//	return 0;
 	//}

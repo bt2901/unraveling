@@ -8,6 +8,14 @@
   "random.blockconvert": {
     "category": "hostile",
     "sounds": [
+      "mob/lich/ANIMDEAD",
+      "mob/lich/LANDKILL"
+    ]
+  },
+  "random.blockconvert2": {
+    "category": "hostile",
+    "sounds": [
+      "mob/lich/ANIMDEAD",
       "random/sfx/glacius_turn_short01",
       "random/sfx/glacius_turn_short02",
       "random/sfx/glacius_turn_short03",

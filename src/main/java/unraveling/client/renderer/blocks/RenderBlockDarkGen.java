@@ -19,6 +19,44 @@ public class RenderBlockDarkGen implements ISimpleBlockRenderingHandler {
 	}
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+        Tessellator tessellator =  Tessellator.instance;
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);        
+        renderer.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, (7.0F/16.0F), 1.0F);
+
+        // render slab: top and bottom
+        double empty_width = (7.0F/16.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, -1.0F, 0.0F);
+        renderer.renderFaceYNeg(block, 0.0F, 0.0F, 0.0F, BlockDarkGen.slabBottom);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 1.0F, 0.0F);
+        renderer.renderFaceYPos(block, 0.0F, (double)(0.0F - 0), 0.0F, BlockDarkGen.slabTop);
+        tessellator.draw();
+
+        // render slab: sides
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, -1.0F);
+        renderer.renderFaceXPos(block, 0.0F, 0.0F, 0.0F, BlockDarkGen.slabSide);
+        tessellator.draw();
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, 1.0F);
+        renderer.renderFaceXNeg(block, 0.0F, 0.0F, 0.0F, BlockDarkGen.slabSide);
+        tessellator.draw();
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+        renderer.renderFaceZNeg(block, 0.0F, 0.0F, 0.0F, BlockDarkGen.slabSide);
+        tessellator.draw();
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(1.0F, 0.0F, 0.0F);
+        renderer.renderFaceZPos(block, 0.0F, 0.0F, 0.0F, BlockDarkGen.slabSide);
+        tessellator.draw();
+
+        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
+        block.setBlockBoundsForItemRender();
         // TODO
 	}
 
@@ -108,7 +146,7 @@ public class RenderBlockDarkGen implements ISimpleBlockRenderingHandler {
 	@Override
 	public boolean shouldRender3DInInventory(int modelId) {
         // TODO
-		return false;
+		return true;
 	}
 
 	@Override

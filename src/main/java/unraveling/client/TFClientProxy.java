@@ -27,6 +27,7 @@ import unraveling.client.renderer.entity.RenderTFGenericLiving;
 import unraveling.client.renderer.entity.RenderTFProtectionBox;
 import unraveling.client.renderer.blocks.RenderBlockTFFireflyJar;
 import unraveling.client.renderer.blocks.RenderBlockDarkGen;
+import unraveling.client.renderer.blocks.RenderBlockQ;
 //import unraveling.client.renderer.entity.TileDarkRelayRenderer;
 //import unraveling.tileentity.TileDarkRelay;
 import unraveling.client.particle.EntityTFProtectionFX;
@@ -51,7 +52,7 @@ public class TFClientProxy extends TFCommonProxy {
 
 	int blockComplexRenderID;
 	int blockDarkGenRenderID;
-	
+	int blockQRenderID;
 	/**
 	 * Called during mod loading.  Registers renderers and stuff
 	 */
@@ -103,6 +104,8 @@ public class TFClientProxy extends TFCommonProxy {
 		RenderingRegistry.registerBlockHandler(new RenderBlockTFFireflyJar(blockComplexRenderID));
 		blockDarkGenRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(new RenderBlockDarkGen(blockDarkGenRenderID));
+		blockQRenderID = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(new RenderBlockQ(blockQRenderID));
 		
 	}
 
@@ -111,6 +114,9 @@ public class TFClientProxy extends TFCommonProxy {
 	}
 	public int getDarkGenRenderID() {
 		return blockDarkGenRenderID;
+	}
+	public int getQRenderID() {
+		return blockQRenderID;
 	}
 	
 	@Override
@@ -162,7 +168,6 @@ public class TFClientProxy extends TFCommonProxy {
         System.out.println("doBlockTransformEffect");
         Thaumcraft.proxy.burst(worldObj, (double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, 1.0F);
         Thaumcraft.proxy.reservoirBubble(worldObj, x, y, z, 0x4D00FF);
-        worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+        //worldObj.playSoundEffect((double)x, (double)y, (double)z, UnravelingMod.ID + ":random.necromancy", 1.0F, 1.0F);
     };
-
 }
