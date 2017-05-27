@@ -28,6 +28,10 @@ import thaumcraft.api.research.ResearchItem;
 import thaumcraft.common.config.ConfigResearch;
 import thaumcraft.common.config.ConfigBlocks;
 
+import thaumcraft.common.config.ConfigItems;
+import net.minecraft.init.Items;
+
+
 public class EldritchLore {
     public static HashMap recipes = new HashMap();
 
@@ -94,6 +98,27 @@ public class EldritchLore {
         ).setPages(new ResearchPage[] { 
             new ResearchPage("unraveling.research_text.INTRO.1"), 
             new ResearchPage("unraveling.research_text.INTRO.2") 
+        }).setStub().setRound().setAutoUnlock().registerResearchItem();
+        
+        recipes.put(
+            "QBlock", 
+            ThaumcraftApi.addArcaneCraftingRecipe(
+                "QBLOCK", new ItemStack(TFBlocks.quaesitum), 
+                new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), 
+                new Object[]{"   ", "GSG", "RRR", 
+                    Character.valueOf('G'), Items.gold_ingot, 
+                    Character.valueOf('S'), new ItemStack(ConfigItems.itemThaumometer), 
+                    Character.valueOf('R'), Blocks.stone}));
+                    
+        (new ResearchItem("Q", "UNRAVELING", 
+            new AspectList(), 
+            -4, -8, 0, 
+            new ItemStack(TFBlocks.quaesitum))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("tc.research_page.unraveling.Q.1"), 
+            new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
+            new ResearchPage("tc.research_page.unraveling.Q.3"), 
+            new ResearchPage("tc.research_page.unraveling.Q.4") 
         }).setStub().setRound().setAutoUnlock().registerResearchItem();
     }
 }

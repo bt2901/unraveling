@@ -22,6 +22,12 @@ import net.minecraftforge.oredict.OreDictionary;
 import unraveling.block.TFBlocks;
 import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
+import unraveling.PacketQResearch;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+
+
+
+import cpw.mods.fml.relauncher.Side;
 //import unraveling.item.BehaviorTFMobEggDispense;
 //import unraveling.item.ItemTFMagicMap;
 //import unraveling.item.ItemTFMazeMap;
@@ -33,6 +39,7 @@ import unraveling.item.TFRecipes;
 import unraveling.tileentity.TileEntityTFLichSpawner;
 import unraveling.tileentity.TileDarkGenMain;
 import unraveling.tileentity.TileDarkGen;
+import unraveling.tileentity.TileQuaesitum;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -100,6 +107,7 @@ public class UnravelingMod {
 	
 	// public static final TFEventListener eventListener = new TFEventListener();
 	public static FMLEventChannel genericChannel;
+	public static SimpleNetworkWrapper netHandler;
     //public static PacketHandler voidPacketHandler;
 	
 	@Instance(ID)
@@ -138,8 +146,6 @@ public class UnravelingMod {
 		// GUI
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
-		// generic channel that handles biome change packets, but could handle some other stuff in the future
-		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
 		
 		// event listener, for those events that seem worth listening to
 		//MinecraftForge.EVENT_BUS.register(eventListener);
@@ -158,7 +164,8 @@ public class UnravelingMod {
 
 		// generic channel that handles biome change packets, but could handle some other stuff in the future
 		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
-		
+		UnravelingMod.netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(UnravelingMod.ID + "2");
+		UnravelingMod.netHandler.registerMessage(PacketQResearch.class, PacketQResearch.class, 2901, Side.SERVER);
 		// render and other client stuff
 		proxy.doOnLoadRegistration();
 		
@@ -226,6 +233,7 @@ public class UnravelingMod {
 		GameRegistry.registerTileEntity(TileEntityTFLichSpawner.class, "Lich Spawner");
 		GameRegistry.registerTileEntity(TileDarkGenMain.class, "Void Aggregator");
 		GameRegistry.registerTileEntity(TileDarkGen.class, "Darkness Generator");
+        GameRegistry.registerTileEntity(TileQuaesitum.class, "Quaesitum");
 		//GameRegistry.registerTileEntity(TileEntityTFSmoker.class, "Swamp Smoker");
 		//GameRegistry.registerTileEntity(TileEntityTFPoppingJet.class, "Popping Flame Jet");
 		//GameRegistry.registerTileEntity(TileEntityTFFlameJet.class, "Lit Flame Jet");

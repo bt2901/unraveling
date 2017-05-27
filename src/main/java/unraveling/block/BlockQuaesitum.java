@@ -40,6 +40,26 @@ import thaumcraft.api.aspects.AspectList;
 
 import unraveling.tileentity.TileQuaesitum;
 
+import cpw.mods.fml.common.Loader;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.research.ResearchPage;
+import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.config.ConfigItems;
+
+import unraveling.item.ItemAspectNote;
+
 public class BlockQuaesitum extends BlockContainer {
 	
 	public static IIcon foundationSide;
@@ -49,9 +69,10 @@ public class BlockQuaesitum extends BlockContainer {
 	public static IIcon slabTop;
 	public static IIcon slabBottom;
 	
+    public Random random = new Random();
 	protected BlockQuaesitum() {
 		super(Material.rock);
-		//this.setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, (10.0F/16.0F), 1.0F);
 		this.setHardness(1.0F);
 		this.setStepSound(Block.soundTypeStone);
     }
@@ -107,7 +128,7 @@ public class BlockQuaesitum extends BlockContainer {
     @Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) 
     {
-    	return 3;
+    	return 2;
     }
     
     /**
@@ -141,9 +162,93 @@ public class BlockQuaesitum extends BlockContainer {
         BlockQuaesitum.slabBottom = par1IconRegister.registerIcon(UnravelingMod.ID + ":quaesitum_bottom");
     }
 
+    @Override
+    public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
+        TileQuaesitum analyzer = (TileQuaesitum) par1World.getTileEntity(par2, par3, par4);
+
+        if (analyzer != null) {
+            for (int j1 = 0; j1 < analyzer.getSizeInventory(); ++j1) {
+                ItemStack itemstack = analyzer.getStackInSlot(j1);
+
+                if (itemstack != null) {
+                    float f = random.nextFloat() * 0.8F + 0.1F;
+                    float f1 = random.nextFloat() * 0.8F + 0.1F;
+                    EntityItem entityitem;
+
+                    for (float f2 = random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem)) {
+                        int k1 = random.nextInt(21) + 10;
+
+                        if (k1 > itemstack.stackSize)
+                            k1 = itemstack.stackSize;
+
+                        itemstack.stackSize -= k1;
+                        entityitem = new EntityItem(par1World, par2 + f, par3 + f1, par4 + f2, new ItemStack(itemstack.getItem(), k1, itemstack.getItemDamage()));
+                        float f3 = 0.05F;
+                        entityitem.motionX = (float) random.nextGaussian() * f3;
+                        entityitem.motionY = (float) random.nextGaussian() * f3 + 0.2F;
+                        entityitem.motionZ = (float) random.nextGaussian() * f3;
+
+                        if (itemstack.hasTagCompound())
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                    }
+                }
+            }
+
+            par1World.func_147453_f(par2, par3, par4, par5);
+        }
+
+        super.breakBlock(par1World, par2, par3, par4, par5, par6);
+    }
+
+
+
+    @Override
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        if (!par1World.isRemote) {
+            TileQuaesitum tile = (TileQuaesitum) par1World.getTileEntity(par2, par3, par4);
+
+            if (tile != null) {
+                par5EntityPlayer.openGui(UnravelingMod.instance, UnravelingMod.proxy.GUI_ID_Q, par1World, par2, par3, par4);
+                
+                
+            }
+        }
+
+        return true;
+    }
 
 
 }
 
 
 
+
+    /*
+import thaumic.tinkerer.client.core.helper.IconHelper;
+import thaumic.tinkerer.common.ThaumicTinkerer;
+import thaumic.tinkerer.common.block.tile.TileAspectAnalyzer;
+import thaumic.tinkerer.common.lib.LibBlockNames;
+import thaumic.tinkerer.common.lib.LibGuiIDs;
+import thaumic.tinkerer.common.lib.LibResearch;
+import thaumic.tinkerer.common.registry.ThaumicTinkererArcaneRecipe;
+import thaumic.tinkerer.common.registry.ThaumicTinkererRecipe;
+import thaumic.tinkerer.common.research.IRegisterableResearch;
+import thaumic.tinkerer.common.research.ResearchHelper;
+import thaumic.tinkerer.common.research.TTResearchItem;
+
+import java.util.ArrayList;
+import java.util.Random;
+    @Override
+    public IRegisterableResearch getResearchItem() {
+        return (IRegisterableResearch) new TTResearchItem(LibResearch.KEY_ASPECT_ANALYZER, new AspectList().add(Aspect.MECHANISM, 2).add(Aspect.SENSES, 1).add(Aspect.MIND, 1), 0, 1, 2, new ItemStack(this)).setParents(LibResearch.KEY_PERIPHERALS).setParentsHidden("GOGGLES", "THAUMIUM").setConcealed().setRound()
+                .setPages(new ResearchPage("0"), ResearchHelper.arcaneRecipePage(LibResearch.KEY_ASPECT_ANALYZER));
+    }
+
+    @Override
+    public ThaumicTinkererRecipe getRecipeItem() {
+        return new ThaumicTinkererArcaneRecipe(LibResearch.KEY_ASPECT_ANALYZER, LibResearch.KEY_ASPECT_ANALYZER, new ItemStack(this), new AspectList().add(Aspect.ORDER, 1).add(Aspect.ENTROPY, 1),
+                "TWT", "WMW", "TWT",
+                'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
+                'M', new ItemStack(ConfigItems.itemThaumometer),
+                'T', new ItemStack(ConfigItems.itemResource, 1, 2));
+    }*/

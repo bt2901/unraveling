@@ -3,6 +3,12 @@ package unraveling;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+
+
+import unraveling.tileentity.TileQuaesitum;
+import unraveling.ContainerQ;
+import unraveling.GuiQTileEntity;
+
 //import unraveling.inventory.ContainerTFUncrafting;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -49,23 +55,24 @@ public class TFCommonProxy implements IGuiHandler {
 		;
 	}
 
-	@Override
-	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		/*
-        if (id == UnravelingMod.GUI_ID_UNCRAFTING) {
-			return new ContainerTFUncrafting(player.inventory, world, x, y, z);
-		} */
-        return null;
-	}
+    public static final int GUI_ID_Q = 0;
 
-	@Override
-	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		/*
-		if (id == unravelingMod.GUI_ID_UNCRAFTING) {
-			return new unraveling.client.GuiTFGoblinCrafting(player.inventory, world, x, y, z);
-		} */
+    @Override
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        if (ID == GUI_ID_Q)
+            return new ContainerQ((TileQuaesitum) world.getTileEntity(x, y, z), player.inventory);
+
         return null;
-	}
+    }
+
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        if (ID == GUI_ID_Q)
+            return new GuiQTileEntity((TileQuaesitum) world.getTileEntity(x, y, z), player.inventory);
+
+        return null;
+    }
+
     public void doBlockTransformEffect(World worldObj, int blockX, int blockY, int blockZ) {
     };
 

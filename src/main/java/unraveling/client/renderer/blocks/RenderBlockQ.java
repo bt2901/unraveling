@@ -17,10 +17,11 @@ import net.minecraft.client.renderer.ItemRenderer;
 
 import unraveling.block.BlockQuaesitum;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 
 import thaumcraft.common.blocks.BlockTable;
 import thaumcraft.common.config.ConfigBlocks;
-
+// public class RenderBlockQ extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler, IItemRenderer  {
 public class RenderBlockQ implements ISimpleBlockRenderingHandler {
 	
 	final int renderID;

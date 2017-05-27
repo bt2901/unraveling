@@ -8,6 +8,8 @@ import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraft.client.model.ModelBiped;
 
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.EntitySmokeFX;
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -123,7 +125,9 @@ public class TFClientProxy extends TFCommonProxy {
 	public World getClientWorld() {
 		return FMLClientHandler.instance().getClient().theWorld;
 	}
-	
+    public static EntityPlayer getPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
+    }	
 
 	/**
 	 * Spawns a particle.  This is my copy of RenderGlobal.spawnParticle where I implement custom particles.

@@ -18,6 +18,9 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.common.config.ConfigItems;
 
 
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.api.aspects.Aspect;
+
 public class TFRecipes {
 
 	public static void registerRecipes() {
@@ -43,6 +46,7 @@ public class TFRecipes {
         
 		GameRegistry.addShapelessRecipe(new ItemStack(TFItems.scepterZombie), new Object[] {new ItemStack(TFItems.scepterZombie, 1, TFItems.scepterZombie.getMaxDamage()), Items.bone, Items.bone});
         
+
         /*
 		GameRegistry.addShapelessRecipe(new ItemStack(TFItems.magicMapFocus), new Object[] {TFItems.feather, TFItems.torchberries, Items.glowstone_dust});
 		GameRegistry.addRecipe(new ItemStack(TFItems.emptyMagicMap), new Object[] {"###", "#X#", "###", '#', Items.paper, 'X', TFItems.magicMapFocus});
