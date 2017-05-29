@@ -1,0 +1,213 @@
+Lich Dimension:
+астероид 
+в центре пирамида
+и портал 
+
+иногда там может быть:
+руины деревни
+http://imgur.com/a/jKFyK#0
+http://imgur.com/a/sS96W#0
+
+странная пирамида https://www.reddit.com/r/Minecraft/comments/1f426w/a_funky_pyramid_i_made/
+площадка с обелисками https://www.reddit.com/r/Minecraft/comments/ulvad/i_like_the_addition_of_pyramids_but_i_thought/?ref=search_posts
+
+
+pyramid layout:
+в центре лестница (а-ля Twilight)
+вокруг лабиринт
+входы на лестницу закрыты ключом 
+ 
+ 
+ Ancient Stone
+ не работает с Portable Hole
+ 
+верхний этаж - башня из Ancient Stone 
+похожая на Twilight. Там будет сражение.
+наружный слой пирамиды - возможно тоже Ancient Stone  
+может быть нет, там есть дырки и Portable Hole работает 
+
+
+== Room List ==
+
+=== Special ===
+
+Warded Stone at entrance
+
+Entrance like in The Guide
+
+Eldritch Portal near entrance
+
+Central hallway with ladders
+Windows out of Warded Glass
+(?) Some of doors/walls are broken; crumbled. You can use Portable Hole on them
+^^^ top two floors
+
+Tower Room
+
+=== Coridors ===
+
+Mundane coridor
+
+Trap corridors:
+* Poison and liquid death traps!
+* Golems in walls
+* runic coridor
+
+
+
+=== Rooms ===
+Dye Room:
+* Squids in aquarium 
+* umbral rose 
+* coal room: trees, some of them are withered. Leaves drop Coal Dust
+
+Farms:
+* Instead of spawners - wrath cages with essentia gather mechanism, as trap
+  Everything through essentia mirror, but it's source is nowhere to be found
+* Nether Wart / Wither Wart farm
+  Strange plants (Ender Lily grower? Gold Ender Core? )
+* Bees?
+* Warded room for arena. Or farming? You will fight farmed mobs and golems
+  Farm where hellhounds are like cows!
+  
+Research:
+* Tables, bookshelfs, enchanting table, crystal clusters (sometimes balanced cluster)
+* Brain in jar (think tank?), randomly placed alchemical construct
+* obelisks, research table
+* chest: books, knowledge fragments, lore fragments, Observations of immortal (?), crimson rites (?)
+
+Potions and jars:
+* Potions! Fumes!
+* Brewing, unfinished
+* Node in jar
+* Empty jars, some of them are with fireflies or glowstone
+
+Treasure
+* like Twilight
+* Thaumium and amber blocks storage
+* Void metal cluster
+* Trophy room
+* Vis relays room (see Api.TileVisNode )
+
+Utility:
+* Room with giant bones growing
+* Room with jars. Some with fireflies
+* Room qith crystal clusters. And shards
+* Void Metal Ore Transformation Room
+There is room when you can convert iron ore to thaum ore
+Or maybe into void ore if you supply it with something. It a bit more efficient than making void seeds
+
+* The Darkness Generator uses regular wheat seeds to create Seeds of Darkness, which you need to create other Eldritch items.
+
+In order to be able to work, the darkness generator needs to be placed close to an Eldritch Monolith, and it also needs to be sheltered from light - any light (even moonlight) hinders its operation. The secret treasure chambers below an Eldritch Monolith which you can unlock using the Eldritch Keystone: Tlhutlh each contain one monolith and are thus ideally suited for the placement of darkness generators. 
+
+
+
+== Lab Block List ==
+
+Deconstructor - Q thing
+When you break lich devices, artifacts pour out. Or gears, or...
+You can research them
+
+Devices look like infuser from tc 2 (or tc 3?)
+But have different runes on them
+
+connected by random pipes
+random magic mirrors
+
+bone meal like redstone
+
+Maybe something like horadric cube
+
+Or antibuilder which can be turned off
+
+Ender lily grower?
+
+Each block has cradfting recipe but it's unavailable
+Materials:
+* Eldritch Gears 
+* Useless staff scepters
+* Nitor / Alumentum / Enchanted Fabric / amber / quicksilver
+* block of thaumium / block of void (?)
+* Focus
+* soul sand
+* machine frame?
+
+
+Wand parts? ? Bingo with uncrafting - —- doesn't really work
+
+Focus eraser?
+Lich tries to craft some machine
+Like a thermal expansion one
+With staff scepter instead of reception coil
+
+Unknown
+block of thaumium
+Staff, 2 thaumium gears?
+
+Half crafted focus
+
+
+
+
+
+
+
+
+Reverse engineering the scepters into foci
+
+
+
+Some sort of reception coil
+Like Redstone? You can place it
+
+Render tricks: death animation, different models for different phases
+
+Lich battle: there are several bone barrels
+Or bone tree. It heals lich
+
+Appearance
+Some bone trees have no outward appearance betraying their status (the bones are around the roots, having sunk deep within the trunk). This is most often the case when a bone tree takes root in or near a populated or well-travelled area. Most however, have obvious bits of bone dangling from their boughs, or tangled in their roots. The most aged and profane bone trees seem to be sheathed in a bony coating, complete with many terrible skull-faces and bony hands and ribs. Bone trees that grow from the seed of a greater bone tree resemble the original tree but with a malignant, evil twist to the orignal form.
+
+https://dodermandefense.wordpress.com/2015/02/17/extreme-environments-1/
+https://dodermandefense.wordpress.com/2015/02/24/extreme-environments-2/
+
+
+Well, you've got the right mindset for a lich to-be. Trying to compromise with that kind of ludicrous evil will help set you down the path of darkness.
+
+
+
+
+
+    
+Iron golems
+
+
+
+
+
+Warded doors. Maybe in separate buildings? Lich drops key
+
+Maze: could be a lair? Of lich?
+
+
+        
+// --- Small Bone Segment
+mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones>, "corpus 1, exanimis 3, mortuus 2");
+
+// --- Medium Bone Segment
+mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones:1>, "corpus 2, exanimis 6, mortuus 4");
+
+// --- Large Bone Segment
+mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones:2>, "corpus 3, exanimis 9, mortuus 6");
+
+
+// --- Small Bone Segment
+Macerator.addRecipe(<minecraft:dye:15> * 5, <BiomesOPlenty:bones>);
+
+// --- Medium Bone Segment
+Macerator.addRecipe(<minecraft:dye:15> * 10, <BiomesOPlenty:bones:1>);
+
+// --- Large Bone Segment
+Macerator.addRecipe(<minecraft:dye:15> * 15, <BiomesOPlenty:bones:2>);
+

@@ -15,14 +15,12 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
-//import unraveling.biomes.TFBiomeBase;
 
-//import unraveling.block.BlockTFForceField;
 
 import unraveling.block.TFBlocks;
 import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
-import unraveling.PacketQResearch;
+import unraveling.mechanics.PacketQResearch;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 

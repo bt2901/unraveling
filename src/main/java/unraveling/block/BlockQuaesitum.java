@@ -1,6 +1,5 @@
 package unraveling.block;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -19,26 +18,13 @@ import net.minecraft.world.World;
 
 import unraveling.UnravelingMod;
 import unraveling.item.TFItems;
+import unraveling.tileentity.TileQuaesitum;
+import unraveling.item.ItemAspectNote;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import thaumcraft.client.fx.particles.FXEssentiaTrail;
-import thaumcraft.client.fx.particles.FXSmokeSpiral;
-import thaumcraft.client.fx.particles.FXSmokeTrail;
-import thaumcraft.client.fx.particles.FXSpark;
-import thaumcraft.client.fx.particles.FXSparkle;
-import thaumcraft.client.fx.particles.FXSparkleTrail;
-import thaumcraft.client.fx.particles.FXSwarm;
-import thaumcraft.client.fx.particles.FXVent;
-import thaumcraft.client.fx.particles.FXWisp;
-import thaumcraft.client.fx.particles.FXWispArcing;
-import thaumcraft.common.Thaumcraft;
 
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-
-import unraveling.tileentity.TileQuaesitum;
 
 import cpw.mods.fml.common.Loader;
 import net.minecraft.block.Block;
@@ -52,13 +38,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.research.ResearchPage;
-import thaumcraft.common.config.ConfigBlocks;
-import thaumcraft.common.config.ConfigItems;
 
-import unraveling.item.ItemAspectNote;
+import thaumcraft.api.research.ResearchPage;
+
 
 public class BlockQuaesitum extends BlockContainer {
 	
@@ -206,49 +188,10 @@ public class BlockQuaesitum extends BlockContainer {
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
         if (!par1World.isRemote) {
             TileQuaesitum tile = (TileQuaesitum) par1World.getTileEntity(par2, par3, par4);
-
             if (tile != null) {
                 par5EntityPlayer.openGui(UnravelingMod.instance, UnravelingMod.proxy.GUI_ID_Q, par1World, par2, par3, par4);
-                
-                
             }
         }
-
         return true;
     }
-
-
 }
-
-
-
-
-    /*
-import thaumic.tinkerer.client.core.helper.IconHelper;
-import thaumic.tinkerer.common.ThaumicTinkerer;
-import thaumic.tinkerer.common.block.tile.TileAspectAnalyzer;
-import thaumic.tinkerer.common.lib.LibBlockNames;
-import thaumic.tinkerer.common.lib.LibGuiIDs;
-import thaumic.tinkerer.common.lib.LibResearch;
-import thaumic.tinkerer.common.registry.ThaumicTinkererArcaneRecipe;
-import thaumic.tinkerer.common.registry.ThaumicTinkererRecipe;
-import thaumic.tinkerer.common.research.IRegisterableResearch;
-import thaumic.tinkerer.common.research.ResearchHelper;
-import thaumic.tinkerer.common.research.TTResearchItem;
-
-import java.util.ArrayList;
-import java.util.Random;
-    @Override
-    public IRegisterableResearch getResearchItem() {
-        return (IRegisterableResearch) new TTResearchItem(LibResearch.KEY_ASPECT_ANALYZER, new AspectList().add(Aspect.MECHANISM, 2).add(Aspect.SENSES, 1).add(Aspect.MIND, 1), 0, 1, 2, new ItemStack(this)).setParents(LibResearch.KEY_PERIPHERALS).setParentsHidden("GOGGLES", "THAUMIUM").setConcealed().setRound()
-                .setPages(new ResearchPage("0"), ResearchHelper.arcaneRecipePage(LibResearch.KEY_ASPECT_ANALYZER));
-    }
-
-    @Override
-    public ThaumicTinkererRecipe getRecipeItem() {
-        return new ThaumicTinkererArcaneRecipe(LibResearch.KEY_ASPECT_ANALYZER, LibResearch.KEY_ASPECT_ANALYZER, new ItemStack(this), new AspectList().add(Aspect.ORDER, 1).add(Aspect.ENTROPY, 1),
-                "TWT", "WMW", "TWT",
-                'W', new ItemStack(ConfigBlocks.blockWoodenDevice, 1, 6),
-                'M', new ItemStack(ConfigItems.itemThaumometer),
-                'T', new ItemStack(ConfigItems.itemResource, 1, 2));
-    }*/

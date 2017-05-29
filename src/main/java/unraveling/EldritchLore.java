@@ -25,18 +25,27 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.research.ResearchItem;
 
+import unraveling.mechanics.UResearchItem;
+
 import thaumcraft.common.config.ConfigResearch;
 import thaumcraft.common.config.ConfigBlocks;
 
 import thaumcraft.common.config.ConfigItems;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 
 
 public class EldritchLore {
     public static HashMap recipes = new HashMap();
 
     public static void addResearch() {
-        ResearchCategories.registerCategory("UNRAVELING", new ResourceLocation("unraveling", "textures/tab_unraveling.png"), new ResourceLocation("unraveling", "textures/tab_unraveling.png"));
+        ResourceLocation background = new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png");
+        // ResourceLocation background = new ResourceLocation("unraveling", "textures/tab_unraveling.png");
+        //ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconFromDamage(0));
+        // ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconString());
+        ResourceLocation icon = new ResourceLocation("unraveling", "textures/items/scroll_fancy.png");
+        ResearchCategories.registerCategory("UNRAVELING", icon, background);
+        
 
         explore();
         studyUndead();
@@ -56,7 +65,7 @@ public class EldritchLore {
     public static void studyVoid() {
 
             //).setParents("BRAINCURE","RESEARCHER2").setParentsHidden("INFUSION").setConcealed().registerResearchItem();
-            ResearchItem research = new ResearchItem("VOIDORE", "UNRAVELING", 
+            ResearchItem research = new UResearchItem("VOIDORE", "UNRAVELING", 
                 new AspectList(), 
                 -8, -5, 1, 
                 new ItemStack(TFBlocks.voidOre)
@@ -83,7 +92,7 @@ public class EldritchLore {
                 }));
             
             research.setPages(
-                new ResearchPage("unraveling.research_text.VOIDORE.1"), 
+                new ResearchPage("VOIDORE.1"), 
                 //infusionPage(""), 
                 //new ResearchPage("2"), 
                 constructPage("CREATEVOIDORE")
@@ -91,13 +100,13 @@ public class EldritchLore {
     }
 
     public static void explore() {
-        (new ResearchItem("INTRO", "UNRAVELING", 
+        (new UResearchItem("INTRO", "UNRAVELING", 
             new AspectList(), 
             -8, -8, 0, 
             new ItemStack(TFItems.necroFocus, 1, 0))
         ).setPages(new ResearchPage[] { 
-            new ResearchPage("unraveling.research_text.INTRO.1"), 
-            new ResearchPage("unraveling.research_text.INTRO.2") 
+            new ResearchPage("INTRO.1"), 
+            new ResearchPage("INTRO.2") 
         }).setStub().setRound().setAutoUnlock().registerResearchItem();
         
         recipes.put(
@@ -110,15 +119,15 @@ public class EldritchLore {
                     Character.valueOf('S'), new ItemStack(ConfigItems.itemThaumometer), 
                     Character.valueOf('R'), Blocks.stone}));
                     
-        (new ResearchItem("Q", "UNRAVELING", 
+        (new UResearchItem("Q", "UNRAVELING", 
             new AspectList(), 
             -4, -8, 0, 
             new ItemStack(TFBlocks.quaesitum))
         ).setPages(new ResearchPage[] { 
-            new ResearchPage("tc.research_page.unraveling.Q.1"), 
+            new ResearchPage("1"), 
             new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
-            new ResearchPage("tc.research_page.unraveling.Q.3"), 
-            new ResearchPage("tc.research_page.unraveling.Q.4") 
+            new ResearchPage("3"), 
+            new ResearchPage("4") 
         }).setStub().setRound().setAutoUnlock().registerResearchItem();
     }
 }

@@ -74,7 +74,7 @@ public class TFItems {
         necroFocus = new necroFocus().setUnlocalizedName("necroFocus");
         GameRegistry.registerItem(necroFocus, "Necromancy Focus");
         
-    	aspectNote = new ItemAspectNote();
+    	aspectNote = new ItemAspectNote().setUnlocalizedName("aspectNote");
         GameRegistry.registerItem(aspectNote, "Research Aspect Note");
 
         registerTFItem(scepterTwilight, "Scepter of Twilight");

@@ -32,10 +32,10 @@ item.any_artifact.tooltip=Enigmatic Artifact
 
 item.tfspawnegg.name=Spawn
 
-entity.Unraveling.Twilight Lich.name=Lich
-entity.Unraveling.Lich Minion.name=Lich Minion
-entity.Unraveling.Loyal Zombie.name=Loyal Zombie
-entity.Unraveling.Death Tome.name=Death Tome
+entity.unraveling.Twilight Lich.name=Lich
+entity.unraveling.Lich Minion.name=Lich Minion
+entity.unraveling.Loyal Zombie.name=Loyal Zombie
+entity.unraveling.Death Tome.name=Death Tome
 
 
 
@@ -49,57 +49,98 @@ item.lichPowder.name=Lich Skull Powder
 item.necroFocus.name=Wand Focus: Necromancy
 
 
+tile.Quaesitum.name=Quaesitum
+tile.darkGen.name=Void Aggregator
+tile.darkGenMain.name=Void Condenser
+
+tile.voidOre.name=Void Metal Ore
+
+item.aspectNote.name=Research Note: Aspect
 
 #===============
 # Research 
 #===============
 
+# Formatting:
+# §l 	Bold
+# §m 	Strikethrough
+# §n 	Underline
+# §o 	Italic
+# §r 	Reset
+# <BR>  LineBreak
+# <LINE>Fancy LineBreak
+#
+#
+# Template:
+#  u.name.KEY=Research name
+#  u.text.KEY=Research subtext
+#  u.page.KEY.NUMBER=Research text on page of number NUMBER
+#
+tc.research_category.UNRAVELING=Unraveling the Eldritch Realm
+u.researchPrefix=[UER]
+
+u.name.Q=Quaesitum
+u.text.Q=When scanning doesn't work
+u.page.Q.1=While Thaumometer is a great part of thaumaturge's arsenal, you may encounter items which will resist your attempts to study them with such a simple tool.<BR>There is a certain method suitable both for ancient relics of purpose unknown and mundane items asociated with aspects you yet have to discover. Some may find the process tedious, but nobody doubts its power.<BR>The thaumaturges of old were studying the true nature of items using the device named Quaesitium. You can apply this time-proved method to expand your knowledge of aspects or to investigate interesting artifacts.
+
+u.page.Q.3=The Quaesitium and the normal research table share a number of similarities. They both require scribing tools and paper.  You can boost their efficiency by surrounding them by bookcases or similar objects. <BR>Since intervention is a necessary precondition for knowledge, there is a chance of losing the item you are studying. There are probably some ways to make your actions less destructive, you hope to discover them someday.
+u.page.Q.4=Quaesitum can be used to examine any item; however studying powerful artifacts will prove most fruitful. Their design may nudge you towards novel arcane theories, point at the lost places of great import, offer clues to new intriguing questions or even be useful on their own. 
 
 
 
-tc.research_name.unraveling.Q=Quaesitum
-tc.research_text.unraveling.Q=When scanning doesn't work
-tc.research_page.unraveling.Q.1=While Thaumometer is a great tool in thaumaturge's arsenal, you may encounter items which will resist your attempts to study them with such a simple tool.<BR>There is a certain method suitable both for ancient relics of purpose unknown and mundane items asociated with aspects you yet have to discover. Some may find the process tedious, but nobody doubts its power.<BR>The thaumaturges of old were studying the true nature of items using the device named Quaesitium. You can apply this time-proved method to expand your knowledge of aspects or to investigate interesting artifacts.
+u.name.QAUTOLOOK=Unseen Scribe
+u.text.QAUTOLOOK=Quaesitum upgrade
+u.page.QAUTOLOOK.1=Drains Cognitio essentia. 
 
-tc.research_page.unraveling.Q.3=The Quaesitium and the normal research table share a number of similarities. They both require scribing tools and paper.  You can boost their efficiency by surrounding them by bookcases or similar objects. <BR>Since intervention is a necessary precondition for knowledge, there is a chance of losing the item you are studying. There are probably some ways to make your actions less destructive, you hope to discover them someday.
-tc.research_page.unraveling.Q.4=Quaesitum can be used to examine any item; however studying powerful artifacts will prove most fruitful. Their design may nudge you towards novel arcane theories, point at the lost places of great import, offer clues to new intriguing questions or even be useful on their own. 
+u.name.QAUTOTOUCH=Spectrometry
+u.text.QAUTOTOUCH=Quaesitum upgrade
+u.page.QAUTOTOUCH.1=This is powerful but the chance of losing item is great.
 
+u.name.VOIDBOOKS=Void Aspected Book Covers
+u.text.VOIDBOOKS=Exactly what it whispers on the tin
+u.page.VOIDBOOKS.1=You can channel darkness now. Non enchantable. Try not to stare into it too long.
 
-
-tc.research_name.unraveling.QAUTOLOOK=Unseen Scribe
-tc.research_text.unraveling.QAUTOLOOK=Quaesitum upgrade
-tc.research_page.unraveling.QAUTOLOOK.1=Drains Cognitio essentia. 
-
-tc.research_name.unraveling.QAUTOTOUCH=Spectrometry
-tc.research_text.unraveling.QAUTOTOUCH=Quaesitum upgrade
-tc.research_page.unraveling.QAUTOTOUCH.1=This is powerful but the chance of losing item is great.
-
-tc.research_name.unraveling.VOIDBOOKS=Void Aspected Book Covers
-tc.research_text.unraveling.VOIDBOOKS=Exactly what it whispers on the tin
-tc.research_page.unraveling.VOIDBOOKS.1=You can channel darkness now. Non enchantable. Try not to stare into it too long.
-
-tc.research_name.unraveling.MAGICBOOKS=Thaumium Book Covers
-tc.research_text.unraveling.MAGICBOOKS=Why nobody had thought about this?
-tc.research_page.unraveling.MAGICBOOKS.1=They also hold mystical enchantments very well and can hold powerful magic much better than even expensive armor.  
+u.name.MAGICBOOKS=Thaumium Book Covers
+u.text.MAGICBOOKS=Why nobody had thought about this?
+u.page.MAGICBOOKS.1=They also hold mystical enchantments very well and can hold powerful magic much better than even expensive armor.  
 
 
+u.name.DIM=Pocket Dimensions
+u.text.DIM=Tear a hole in the universe!
+# if TT then ender rift is prereq
+u.page.DIM.1=You can create a your own pocket dimension using either RF power or books with mystical knowledge. 
+u.page.DIM.2=Planes: warp, vis, matter: mind, soul, body. Magic creates ripples of warp.
+
+u.name.WARPDETECTOR=Warp Detector Discovery
+u.text.WARPDETECTOR=Find a man with things man didn't mean to know!
+# if TT then ender rift is prereq
+u.page.WARPDETECTOR.1=Magic creates ripples of warp.
 
 
 
-tc.research_name.unraveling.VOIDGEN=Void Aggregator
-tc.research_text.unraveling.VOIDGEN=How do you operate this thing?
-tc.research_page.unraveling.VOIDGEN.1=You've discovered a strange contraption. The design principles and the purpose remain a mystery to you, but you was able to decipher some of the strange symbols enscribed on it. <BR>You think it uses Vacuous and Tenebrae essentia to infuse iron ore with the primal energy. 
-tc.research_page.unraveling.VOIDGEN.2=Moonlight. 
+u.name.VOIDGEN=Void Aggregator
+u.text.VOIDGEN=How do you operate this thing?
+u.page.VOIDGEN.1=You've discovered a strange contraption. The design principles and the purpose remain a mystery to you, but you was able to decipher some of the strange symbols enscribed on it. <BR>You think it uses Vacuous and Tenebrae essentia to infuse iron ore with the primal energy. 
+u.page.VOIDGEN.2=Moonlight. 
 
 
-tc.research_name.unraveling.VOIDAGG=Advanced Void Aggregator
-tc.research_text.unraveling.VOIDAGG=First steps towards understanding
-tc.research_page.unraveling.VOIDAGG.1=This idea is obvious now, actually.<BR>The process of creating the strange metal made out of darkness involves imbuing the seed with the energy of void and then shaping it into metal using Metallum essentia. These steps are required because the power of void is far too delicate to handle in isolation.<BR>But recently you have discovered another way. To the eyes of sophisticated mage, the mundane iron ore is no more than drops of metal inside the minerals, shielded by stone. It is possible to inject the essence of void directly into these drops, producing the Void Metal Ore.
-tc.research_page.unraveling.VOIDAGG.2=The process is very inefficient. You want to try this transformation in an old-fashioned way.
-tc.research_page.unraveling.VOIDAGG.3=After trying several catalysts, you got an inkling that this system can be expanded.
+u.name.VOIDAGG=Advanced Void Aggregator
+u.text.VOIDAGG=First steps towards understanding
+u.page.VOIDAGG.1=This idea is obvious now, actually.<BR>The process of creating the strange metal made out of darkness involves imbuing the seed with the energy of void and then shaping it into metal using Metallum essentia. These steps are required because the power of void is far too delicate to handle in isolation.<BR>But recently you have discovered another way. To the eyes of sophisticated mage, the mundane iron ore is no more than drops of metal inside the minerals, shielded by stone. It is possible to inject the essence of void directly into these drops, producing the Void Metal Ore.
+u.page.unraveling.VOIDAGG.2=The process is very inefficient. You want to try this transformation in an old-fashioned way.
+u.page.VOIDAGG.3=After trying several catalysts, you got an inkling that this system can be expanded.
 
 
-unraveling.research_page.VOIDPURE.1=The void metal is not really metal in a strict sense. But now, having seen the void ore, you sense a certain connection...<BR>The process of void purification is distinct yet eerily similar to the process of mundane metal purification.<BR>The result is much easier to process; smelting it will produce twice the normal amount of void metal ingots. You feel like this material will prove useful in the future.
+u.page.VOIDPURE.1=The void metal is not really metal in a strict sense. But now, having seen the void ore, you sense a certain connection...<BR>The process of void purification is distinct yet eerily similar to the process of mundane metal purification.<BR>The result is much easier to process; smelting it will produce twice the normal amount of void metal ingots. You feel like this material will prove useful in the future.
 unraveling.research_name.VOIDPURE=Void Purification
 unraveling.research_text.VOIDPURE=Witty text
 
+# 
+# 
+# 
+# 
+# 
+#  
+# 
+# 
+# 

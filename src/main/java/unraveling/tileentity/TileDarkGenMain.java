@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import unraveling.block.TFBlocks;
-import unraveling.VoidAggregationHandler;
+import unraveling.mechanics.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
 
@@ -171,104 +171,6 @@ public class TileDarkGenMain extends TileVisNode {
             }
         }
     }
-        /*
-        if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-            // System.out.println("update . . ." + myGenerators.size() + " " + ticksExisted);
-            if (myGenerators.isEmpty()) {
-                if (!worldObj.isRemote) {
-                    if (++ticksExisted % 40 == 0) {
-                        if (searchForGenerators()) {
-                            getDescriptionPacket();
-                        };
-                    }
-                }
-            } else {
-                int genStatus = checkGeneratorsAlive();
-                boolean ok = describeSquareOrDie();
-                if (genStatus == -2 || !ok) {
-                    myGenerators.clear();
-                } else {
-                    processInfusion();
-                }
-            }
-        }*/
 
 
-
-    public void makeLinkageFX(){
-    }
-    public void makeInfusionFX(){
-    }
-    /*
-    public void processInfusion(){
-        int squareSide = maxx-minx;
-        for (int x = minx; x <= maxx; x++) {
-            for (int z = minz; z <= maxz; z++) {
-                for (int y = cury; y <= cury + squareSide; y++) {
-                    Block id = worldObj.getBlock(x, y, z);
-                    int meta = worldObj.getBlockMetadata(x, y, z);
-                    if (id == Blocks.iron_ore && meta == 0) {
-                        worldObj.setBlock(x, y, z, TFBlocks.voidOre);
-                        worldObj.markBlockForUpdate(x, y, z);
-                        Thaumcraft.proxy.nodeBolt(worldObj, x, y, z, x+1.0F, y+1.0F, z+1.0F);
-                        return;
-                    }
-                    // check all gens
-                    // if they aren't valid: knows_generators = false
-                    // if they has no power
-                }
-            }
-        }
-    }*/
-    
 }
-/*
-    public void readCustomNBT(NBTTagCompound par1NBTTagCompound) {
-        working = par1NBTTagCompound.getBoolean(TAG_WORKING);
-        currentAspects.readFromNBT(par1NBTTagCompound.getCompoundTag(TAG_CURRENT_ASPECTS));
-        totalAspects.readFromNBT(par1NBTTagCompound.getCompoundTag(TAG_TOTAL_ASPECTS));
-
-        enchantments.clear();
-        for (int i : par1NBTTagCompound.getIntArray(TAG_ENCHANTS))
-            enchantments.add(i);
-        levels.clear();
-        for (int i : par1NBTTagCompound.getIntArray(TAG_LEVELS))
-            levels.add(i);
-
-        NBTTagList var2 = par1NBTTagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-        inventorySlots = new ItemStack[getSizeInventory()];
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-            byte var5 = var4.getByte("Slot");
-            if (var5 >= 0 && var5 < inventorySlots.length)
-                inventorySlots[var5] = ItemStack.loadItemStackFromNBT(var4);
-        }
-    }
-
-    public void writeCustomNBT(NBTTagCompound par1NBTTagCompound) {
-        par1NBTTagCompound.setIntArray(TAG_LEVELS, ArrayUtils.toPrimitive(levels.toArray(new Integer[levels.size()])));
-
-        par1NBTTagCompound.setIntArray(TAG_ENCHANTS, ArrayUtils.toPrimitive(enchantments.toArray(new Integer[enchantments.size()])));
-
-        NBTTagCompound totalAspectsCmp = new NBTTagCompound();
-        totalAspects.writeToNBT(totalAspectsCmp);
-
-        NBTTagCompound currentAspectsCmp = new NBTTagCompound();
-        currentAspects.writeToNBT(currentAspectsCmp);
-
-        par1NBTTagCompound.setBoolean(TAG_WORKING, working);
-        par1NBTTagCompound.setTag(TAG_TOTAL_ASPECTS, totalAspectsCmp);
-        par1NBTTagCompound.setTag(TAG_CURRENT_ASPECTS, currentAspectsCmp);
-        NBTTagList var2 = new NBTTagList();
-        for (int var3 = 0; var3 < inventorySlots.length; ++var3) {
-            if (inventorySlots[var3] != null) {
-                NBTTagCompound var4 = new NBTTagCompound();
-                var4.setByte("Slot", (byte) var3);
-                inventorySlots[var3].writeToNBT(var4);
-                var2.appendTag(var4);
-            }
-        }
-        par1NBTTagCompound.setTag("Items", var2);
-    }
-
-*/

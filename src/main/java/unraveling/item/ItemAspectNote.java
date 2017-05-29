@@ -66,7 +66,8 @@ public class ItemAspectNote extends Item {
 	protected ItemAspectNote() {
 		super();
         this.maxStackSize = 16;
-        setHasSubtypes(true);
+        setHasSubtypes(false);
+        
 	}
     
     @SideOnly(Side.CLIENT)

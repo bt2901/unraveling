@@ -19,6 +19,7 @@ import unraveling.item.TFItems;
 import net.minecraft.entity.item.EntityItem;
 import java.util.Random;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
+import thaumcraft.common.lib.research.ResearchManager;
 
 
 public class TileQuaesitum extends TileEntity implements IInventory  {
@@ -172,6 +173,9 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         researchtime = 0;
         if (thingResearched != null) {
             int meta = 0;
+            --this.inventorySlots[2].stackSize;
+            ResearchManager.consumeInkFromTable(this.inventorySlots[2], true);
+            
             ItemAspectNote note = (ItemAspectNote)TFItems.aspectNote;
             ItemStack finishedResearch = new ItemStack(note, 1, meta);
 
@@ -180,7 +184,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             note.setAspects(finishedResearch, new AspectList().add(al[randomIndex], 1));
             
             ItemStack stack = getStackInSlot(3);
-            if (stack == null || stack.isItemEqual(finishedResearch)) {
+            if (stack==null || (stack.isItemEqual(finishedResearch) && stack.areItemStackTagsEqual(finishedResearch, stack))) {
                 finishedResearch.stackSize += (stack == null) ? 0 : stack.stackSize;
                 setInventorySlotContents(3, finishedResearch);
                 return;
@@ -197,7 +201,10 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         return par1 * progress / researchtime;
     }
     private boolean canResearch() {
-        if (getStackInSlot(0) == null) {
+        if (getStackInSlot(0) == null || getStackInSlot(1) == null) {
+            return false;
+        }
+        if (!ResearchManager.consumeInkFromTable(this.inventorySlots[2], false)) {
             return false;
         }
         AspectList al = ThaumcraftCraftingManager.getObjectTags(getStackInSlot(0));

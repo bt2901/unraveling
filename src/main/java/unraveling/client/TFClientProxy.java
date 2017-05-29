@@ -2,12 +2,6 @@ package unraveling.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.model.ModelPig;
-import net.minecraft.client.model.ModelSilverfish;
-import net.minecraft.client.model.ModelSlime;
-import net.minecraft.client.model.ModelWolf;
-import net.minecraft.client.model.ModelBiped;
-
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.client.particle.EntityFX;
@@ -30,20 +24,15 @@ import unraveling.client.renderer.entity.RenderTFProtectionBox;
 import unraveling.client.renderer.blocks.RenderBlockTFFireflyJar;
 import unraveling.client.renderer.blocks.RenderBlockDarkGen;
 import unraveling.client.renderer.blocks.RenderBlockQ;
-//import unraveling.client.renderer.entity.TileDarkRelayRenderer;
-//import unraveling.tileentity.TileDarkRelay;
 import unraveling.client.particle.EntityTFProtectionFX;
 
 //import unraveling.client.renderer.TFMagicMapRenderer;
 //import unraveling.client.renderer.TFMazeMapRenderer;
-//import unraveling.client.renderer.TileEntityTFFireflyRenderer;
-//import unraveling.client.renderer.blocks.RenderBlockTFCastleMagic;
 import unraveling.client.renderer.entity.RenderTFTinyFirefly;
 import unraveling.client.renderer.entity.RenderTFLich;
 import unraveling.client.renderer.entity.RenderTFBiped;
-import unraveling.VoidPacketHandler;
+import unraveling.mechanics.VoidPacketHandler;
 
-//import unraveling.tileentity.TileEntityTFFirefly;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;

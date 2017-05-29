@@ -21,10 +21,6 @@ import unraveling.tileentity.TileDarkGenMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-//import thaumcraft.client.fx.particles.FXEssentiaTrail;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-
 public class BlockDarkGenMain extends BlockContainer {
 	
 	public static IIcon fullSide;
@@ -123,21 +119,6 @@ public class BlockDarkGenMain extends BlockContainer {
         }
     }
 
-    /**
-     * A randomly called display update to be able to add particles or other items for display
-    @Override
-	@SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-    {
-
-    	double dx = x + ((rand.nextFloat() - rand.nextFloat()) * 0.3F + 0.5F);
-    	double dy = y + 1.1F;
-    	double dz = z + ((rand.nextFloat() - rand.nextFloat()) * 0.3F + 0.5F);
-
-    	FXEssentiaTrail steam = new FXEssentiaTrail(world, x, y, z, dx, dy, dz, 1, Aspect.DARKNESS.getColor(), 0.5F);
-    	world.addWeatherEffect(steam);
-    }
-    */
 
 
 }

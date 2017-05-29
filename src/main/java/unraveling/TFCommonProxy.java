@@ -4,12 +4,10 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-
 import unraveling.tileentity.TileQuaesitum;
-import unraveling.ContainerQ;
-import unraveling.GuiQTileEntity;
+import unraveling.mechanics.ContainerQ;
+import unraveling.mechanics.GuiQTileEntity;
 
-//import unraveling.inventory.ContainerTFUncrafting;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class TFCommonProxy implements IGuiHandler {

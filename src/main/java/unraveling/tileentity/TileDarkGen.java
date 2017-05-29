@@ -1,7 +1,7 @@
 package unraveling.tileentity;
 
 import unraveling.UnravelingMod;
-import unraveling.VoidAggregationHandler;
+import unraveling.mechanics.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
@@ -213,52 +213,3 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
 	public void triggerConsumeEffect(Aspect aspect) {	}
 
 }
-
-
-
-
-
-
-
-/*
-public class TileArcaneLampGrowth
-extends TileThaumcraft
-implements IEssentiaTransport {
-    public ForgeDirection facing = ForgeDirection.getOrientation((int)0);
-    private boolean reserve = false;
-    public int charges = -1;
-    int lx = 0;
-    int ly = 0;
-    int lz = 0;
-    Block lid = Blocks.field_150350_a;
-    int lmd = 0;
-    ArrayList<BlockCoordinates> checklist = new ArrayList();
-    int drawDelay = 0;
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        super.onDataPacket(net, pkt);
-        if (this.worldObj != null && this.worldObj.isRemote) {
-            this.worldObj.func_147463_c(EnumSkyBlock.Block, this.field_145851_c, this.field_145848_d, this.field_145849_e);
-        }
-    }
-
-
-    @Override
-    public void readCustomNBT(NBTTagCompound nbttagcompound) {
-        this.facing = ForgeDirection.getOrientation((int)nbttagcompound.func_74762_e("orientation"));
-        this.reserve = nbttagcompound.func_74767_n("reserve");
-        this.charges = nbttagcompound.func_74762_e("charges");
-    }
-
-    @Override
-    public void writeCustomNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.func_74768_a("orientation", this.facing.ordinal());
-        nbttagcompound.func_74757_a("reserve", this.reserve);
-        nbttagcompound.func_74768_a("charges", this.charges);
-    }
-
-
-
-}
-*/

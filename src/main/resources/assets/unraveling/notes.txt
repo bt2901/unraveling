@@ -1,0 +1,16 @@
+
+
+
+Not all assets are created by me. 
+
+Sounds:
+* Harry Potter: Prisoner of Azkaban
+* Heroes of Might and Magic 3
+
+
+Textures:
+* Void Metal Ore and Cluster are based on TC textures, remixed by me.
+* devicetop.png, scroll_fancy and some of artifacts: lost vikings 2
+* GUI of Quaesitum is based on TC, for now is an ugly placeholder
+* lich powder: pokemon game, I think?
+* twilightlich64: Twillight Forest and some skins I found online

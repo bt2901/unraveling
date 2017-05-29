@@ -21,22 +21,7 @@ import unraveling.tileentity.TileDarkGen;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import thaumcraft.client.fx.particles.FXEssentiaTrail;
-import thaumcraft.client.fx.particles.FXSmokeSpiral;
-import thaumcraft.client.fx.particles.FXSmokeTrail;
-import thaumcraft.client.fx.particles.FXSpark;
-import thaumcraft.client.fx.particles.FXSparkle;
-import thaumcraft.client.fx.particles.FXSparkleTrail;
-import thaumcraft.client.fx.particles.FXSwarm;
-import thaumcraft.client.fx.particles.FXVent;
-import thaumcraft.client.fx.particles.FXWisp;
-import thaumcraft.client.fx.particles.FXWispArcing;
-import thaumcraft.common.Thaumcraft;
-
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-
-import unraveling.VoidAggregationHandler;
+import unraveling.mechanics.VoidAggregationHandler;
 
 public class BlockDarkGen extends BlockContainer {
 	
@@ -125,14 +110,6 @@ public class BlockDarkGen extends BlockContainer {
     	return false;
     }
     
-    /**
-     * Updates the blocks bounds based on its current state. Args: world, x, y, z
-    @Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
-        // TODO: ignore darkness gem sometimes?
-    	this.setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
-    }
-     */
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileDarkGen();
@@ -153,34 +130,8 @@ public class BlockDarkGen extends BlockContainer {
     @Override
 	@SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        /*
-        TileDarkGen tileentity = (TileDarkGen) world.getTileEntity(x, y, z);
-        int color = (rand.nextBoolean())? Aspect.DARKNESS.getColor() : Aspect.VOID.getColor();
-        if (tileentity.power > 0) {
-            color = Aspect.ELDRITCH.getColor();
-        }
-        if (tileentity.reserve || tileentity.charges > 0) {
-            color = Aspect.AIR.getColor();
-            if (tileentity.power > 0) {
-                color = Aspect.MAGIC.getColor();
-            }
-        }
-    	float dx = x + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);
-    	float dy = y + 1.1F;
-    	float dz = z + ((rand.nextFloat() - rand.nextFloat()) + 0.5F);*/
-        // Thaumcraft.proxy.drawVentParticles(world, x + 0.5, y + 1, z + 0.5, dx, dy, dz, color, 3.0F);
-        // Thaumcraft.proxy.sourceStreamFX(world, x, y, z, dx, dy, dz, Aspect.DARKNESS.getColor());
-        // Thaumcraft.proxy.nodeBolt(world, x, y, z, dx, dy, dz);
-        //Thaumcraft.proxy.sourceStreamFX(world, x, y, z, dx, dy, dz, Aspect.DARKNESS.getColor());
-        //Thaumcraft.proxy.drawInfusionParticles3(world, x, y, z, x + 1, y + 5, z + 3);
-    }/*
-    public void sourceStreamFX(World worldObj, double sx, double sy, double sz, float tx, float ty, float tz, int tagColor) {
-        Color c = new Color(tagColor);
-        FXWispArcing ef = new FXWispArcing(worldObj, tx, ty, tz, sx, sy, sz, 0.1f, (float)c.getRed() / 255.0f, (float)c.getGreen() / 255.0f, (float)c.getBlue() / 255.0f);
-        ef.setGravity(0.0f);
-        ParticleEngine.instance.addEffect(worldObj, ef);
-    }*/
-        
+    }
+    
     public void breakBlock(World world, int par2, int par3, int par4, int par5, int par6) {
         TileDarkGen tileentity = (TileDarkGen) world.getTileEntity(par2, par3, par4);
         
