@@ -22,13 +22,15 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
 import unraveling.entity.TFCreatures;
-import unraveling.entity.TFEntityEggInfo;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.EntityList.EntityEggInfo;
 
-public class ItemTFSpawnEgg extends ItemMonsterPlacer {
 
-	protected ItemTFSpawnEgg() {
+
+public class ItemSpawnEgg extends ItemMonsterPlacer {
+
+	protected ItemSpawnEgg() {
 		super();
         this.setHasSubtypes(true);
 	}
@@ -37,7 +39,7 @@ public class ItemTFSpawnEgg extends ItemMonsterPlacer {
     @Override
     public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
     {
-    	TFEntityEggInfo info = (TFEntityEggInfo)TFCreatures.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
+    	EntityEggInfo info = (EntityEggInfo)TFCreatures.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
         return info != null ? (par2 == 0 ? info.primaryColor : info.secondaryColor) : 16777215;
     }
     
@@ -136,11 +138,11 @@ public class ItemTFSpawnEgg extends ItemMonsterPlacer {
     @Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        Iterator<TFEntityEggInfo> var4 = TFCreatures.entityEggs.values().iterator();
+        Iterator<EntityEggInfo> var4 = TFCreatures.entityEggs.values().iterator();
 
         while (var4.hasNext())
         {
-        	TFEntityEggInfo var5 = (TFEntityEggInfo)var4.next();
+        	EntityEggInfo var5 = (EntityEggInfo)var4.next();
             par3List.add(new ItemStack(par1, 1, var5.spawnedID));
         }
     }

@@ -21,7 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import unraveling.client.TFClientProxy;
+import unraveling.client.UClientProxy;
 
 
 public abstract class PacketTile<T extends TileEntity> implements IMessage {
@@ -64,7 +64,7 @@ public abstract class PacketTile<T extends TileEntity> implements IMessage {
     public IMessage onMessage(PacketTile message, MessageContext ctx) {
         MinecraftServer server = MinecraftServer.getServer();
         if (ctx.side.isClient())
-            message.player = TFClientProxy.getPlayer();
+            message.player = UClientProxy.getPlayer();
         else {
             message.player = ctx.getServerHandler().playerEntity;
         }

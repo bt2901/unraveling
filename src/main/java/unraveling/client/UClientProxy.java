@@ -12,7 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import unraveling.TFCommonProxy;
+import unraveling.UCommonProxy;
 import unraveling.UnravelingMod;
 import unraveling.block.TFBlocks;
 import unraveling.client.model.ModelTFDeathTome;
@@ -39,7 +39,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import thaumcraft.common.Thaumcraft;
 
-public class TFClientProxy extends TFCommonProxy {
+public class UClientProxy extends UCommonProxy {
 
 	int blockComplexRenderID;
 	int blockDarkGenRenderID;

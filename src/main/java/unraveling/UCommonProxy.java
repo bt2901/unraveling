@@ -10,7 +10,7 @@ import unraveling.mechanics.GuiQTileEntity;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 
-public class TFCommonProxy implements IGuiHandler {
+public class UCommonProxy implements IGuiHandler {
 	
 	/**
 	 * Called during the pre-load step.  Register stuff here.  
@@ -37,9 +37,6 @@ public class TFCommonProxy implements IGuiHandler {
 	public int getQRenderID() {
 		return 0;
 	}
-	//public int getCastleMagicBlockRenderID() {
-	//	return 0;
-	//}
 
 	public World getClientWorld() {
 		return null;

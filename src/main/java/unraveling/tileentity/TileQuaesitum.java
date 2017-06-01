@@ -16,6 +16,10 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import unraveling.UnravelingMod;
 import unraveling.item.TFItems;
+import unraveling.item.ItemScrutinyNote;
+import unraveling.item.ItemArtifact;
+import unraveling.mechanics.ExaminationData;
+
 import net.minecraft.entity.item.EntityItem;
 import java.util.Random;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
@@ -172,26 +176,29 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         progress = 0;
         researchtime = 0;
         if (thingResearched != null) {
-            int meta = 0;
-            --this.inventorySlots[2].stackSize;
+            //--this.inventorySlots[2].stackSize;
             ResearchManager.consumeInkFromTable(this.inventorySlots[2], true);
+            this.inventorySlots[1].stackSize--;
             
-            ItemAspectNote note = (ItemAspectNote)TFItems.aspectNote;
-            ItemStack finishedResearch = new ItemStack(note, 1, meta);
+            ItemStack finishedResearch;
 
-            Aspect[] al = new AspectList(thingResearched).getAspects();
-            int randomIndex = rand.nextInt(al.length);
-            note.setAspects(finishedResearch, new AspectList().add(al[randomIndex], 1));
-            
+            if (thingResearched.getItem() instanceof ItemArtifact) {
+                finishedResearch = ItemScrutinyNote.createNoteOnResearch("ALUMENTUM", rand.nextInt(5));
+            } else {
+                Aspect[] al = new AspectList(thingResearched).getAspects();
+                int randomIndex = rand.nextInt(al.length);
+                finishedResearch = ItemScrutinyNote.createNoteOnAspect(al[randomIndex]);
+            }
+
             ItemStack stack = getStackInSlot(3);
-            if (stack==null || (stack.isItemEqual(finishedResearch) && stack.areItemStackTagsEqual(finishedResearch, stack))) {
-                finishedResearch.stackSize += (stack == null) ? 0 : stack.stackSize;
+            // if (stack==null || (stack.isItemEqual(finishedResearch) && stack.areItemStackTagsEqual(finishedResearch, stack))) {
+            // finishedResearch.stackSize += (stack == null) ? 0 : stack.stackSize;
+            if (stack==null) {
                 setInventorySlotContents(3, finishedResearch);
                 return;
             }
             
-            EntityItem entityitem = new EntityItem(worldObj, xCoord, yCoord + 1, zCoord, new ItemStack(note, 1, meta));                
-            entityitem.getEntityItem().setTagCompound((NBTTagCompound) finishedResearch.getTagCompound().copy());
+            EntityItem entityitem = new EntityItem(worldObj, xCoord, yCoord + 1, zCoord, finishedResearch);                
             worldObj.spawnEntityInWorld(entityitem);
         }
     }

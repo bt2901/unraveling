@@ -32,7 +32,6 @@ import cpw.mods.fml.relauncher.Side;
 import unraveling.item.TFItems;
 import unraveling.item.TFRecipes;
 //import unraveling.structures.StructureTFMajorFeatureStart;
-//import unraveling.tileentity.TileEntityTFFirefly;
 //import unraveling.tileentity.TileEntityTFFlameJet;
 import unraveling.tileentity.TileEntityTFLichSpawner;
 import unraveling.tileentity.TileDarkGenMain;
@@ -111,8 +110,8 @@ public class UnravelingMod {
 	@Instance(ID)
 	public static UnravelingMod instance;
 
-	@SidedProxy(clientSide = "unraveling.client.TFClientProxy", serverSide = "unraveling.TFCommonProxy")
-	public static TFCommonProxy proxy;
+	@SidedProxy(clientSide = "unraveling.client.UClientProxy", serverSide = "unraveling.UCommonProxy")
+	public static UCommonProxy proxy;
 
 	public UnravelingMod() {
 		UnravelingMod.instance = this;
@@ -290,14 +289,6 @@ public class UnravelingMod {
 		ThaumcraftApi.registerObjectTag(new ItemStack(item, 1, meta), list);
 	}
 
-
-	/**
-	 * Register all dispenser behaviors.
-	private void registerDispenseBehaviors(MinecraftServer minecraftServer)
-	{
-		BlockDispenser.dispenseBehaviorRegistry.putObject(TFItems.spawnEgg, new BehaviorTFMobEggDispense(minecraftServer));
-	}
-	 */
 	
 	/**
 	 * Load our config file and set default values

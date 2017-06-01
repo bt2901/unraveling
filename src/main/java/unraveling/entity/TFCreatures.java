@@ -10,11 +10,12 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
+import net.minecraft.entity.EntityList.EntityEggInfo;
 
 public class TFCreatures {
 
 	/** This is a HashMap of the Creative Entity Eggs/Spawners. */
-	public static HashMap<Integer, TFEntityEggInfo> entityEggs = new LinkedHashMap<Integer, TFEntityEggInfo>();
+	public static HashMap<Integer, EntityEggInfo> entityEggs = new LinkedHashMap<Integer, EntityEggInfo>();
 
 
 	public static void registerTFCreature(Class <? extends Entity > entityClass, String entityName, int id, int backgroundEggColour, int foregroundEggColour) {
@@ -22,21 +23,11 @@ public class TFCreatures {
 	}	
 	
 	public static void registerTFCreature(Class <? extends Entity > entityClass, String entityName, int id, int backgroundEggColour, int foregroundEggColour, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
-		if (UnravelingMod.creatureCompatibility)
-		{
-			// only register global id if flag is set
-			EntityRegistry.registerGlobalEntityID(entityClass, entityName, id);
-		}
 		EntityRegistry.registerModEntity(entityClass, entityName, id, UnravelingMod.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-		entityEggs.put(Integer.valueOf(id), new TFEntityEggInfo(id, backgroundEggColour, foregroundEggColour));
+		entityEggs.put(Integer.valueOf(id), new EntityEggInfo(id, backgroundEggColour, foregroundEggColour));
 	}
 
 	public static void registerTFCreature(Class <? extends Entity > entityClass, String entityName, int id) {
-		if (UnravelingMod.creatureCompatibility)
-		{
-			// only register global id if flag is set
-			EntityRegistry.registerGlobalEntityID(entityClass, entityName, id);
-		}
 		EntityRegistry.registerModEntity(entityClass, entityName, id, UnravelingMod.instance, 80, 3, true);
 	}
 
@@ -89,18 +80,10 @@ public class TFCreatures {
 	}
 
 	/**
-	 * Return a string suitable for setting as the mobID in spawners.  If the compatibility flag is set, then use the base monster name
-	 * If the flag is false, return TwilightForest.mobName
+	 * Return a string suitable for setting as the mobID in spawners.
 	 */
 	public static String getSpawnerNameFor(String baseName) {
-		if (UnravelingMod.creatureCompatibility)
-		{
-			return baseName;
-		}
-		else
-		{
-			return "TwilightForest." + baseName;
-		}
+        return UnravelingMod.ID + baseName;
 	}
 	
 	

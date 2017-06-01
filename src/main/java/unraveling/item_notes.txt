@@ -1,0 +1,121 @@
+Ruined Villages:
+"ancient_pottery.png"
+"tarnished_chalice.png"
+"worn_statuette.png"
+"ancient_stone_tablet.png"
+
+Ritual:
+"ancient_weapon.png"
+"distorted_skull.png"
+"ritual_skull.png"
+"inhuman_skull.png"
+"tusk.png"
+
+Machine Parts:
+"ancient_seal.png"
+"singularity.png"
+"shard_of_strange_metal.png"
+"circuit.png"
+"disturbing_mirror.png"
+"eldritch_mechanism.png"
+"eldritch_repository.png"
+"engine.png"
+"gear1.png"
+"gear2.png"
+"glowing_eldritch_device.png"
+
+
+???
+"opalescent_eye.png"
+"wand.png"
+"darkened_crystal_eye.png"
+"knotted_spite.png"
+
+
+
+
+
+
+absolutely bare bones:
+
+new dim
+empty pyramid
+>1 rooms with devices
+research
+
+
+
+
+
+
+    
+        for (ArrayList<Item> itemArrayList : itemRegistry.values()) {
+            for (Item item : itemArrayList) {
+                registerRecipe((ITTinkererRegisterable) item);
+            }
+        }
+
+
+        
+if player discovered every aspect
+then 
+there is a chance to learn advanced stuff
+
+need to refactor
+class ResearchNoteData
+
+get description(player)
+get value
+get type
+get prerequisites
+boolean can use(player)
+perform_use
+read from nbt
+
+and so on
+
+class ItemResearchNote
+
+ getIconIndex for switching icons based on stack data.
+ or maybe just metadata
+ 
+
+{800}{}{You read the book.}
+{801}{}{You learn nothing new.}
+{802}{}{You learn new science information.}
+{803}{}{You learn a lot about repairing broken electronics.}
+{804}{}{You learn new ways to heal injury.}
+{805}{}{You learn how to handle your guns better.}
+{806}{}{You learn a lot about wilderness survival.}
+#
+# Use on messages (and some extra stuff that Jesse needed)
+#
+{900}{}{The supplies in the Doctor's Bag run out.}
+{901}{}{The supplies in the First Aid Kit run out.}
+{902}{}{You cannot do that in combat.}
+{903}{}{This person will not barter with you.}
+{904}{}{This person has nothing to tell you about.}
+{905}{}{You cannot pick up that item. You are at your maximum weight capacity.}
+{910}{}{The supplies in the Paramedic's Bag run out.}
+{911}{}{The supplies in the Field Medic First Aid Kit run out.}
+{913}{}{This critter can't carry anything.}
+
+
+{580}{}{You use the %s.}
+{581}{}{You use the %s on %s.}
+{582}{}{That does nothing.}
+{583}{}{To your dismay, you realize that it is already dead.}
+{584}{}{As you reach down, you realize that it is already dead.}
+{585}{}{Alas, you are too late.} # This is relating to a critter being dead.
+{586}{}{That won't work on the dead.}
+http://heroescommunity.com/viewthread.php3?TID=39870&pagenumber=2
+
+You come upon an obelisk made from a type of stone you have never seen before.  Staring at it intently, the smooth surface suddenly changes to an inscription.  The inscription is a piece of a lost ancient map.  Quickly, you copy down the piece, and the inscription vanishes as abruptly as it had appeared."
+ 
+ 
+A smooth stone on the face of this pillar begins to swirl as you approach. Looking into it, you are amazed to see answers to questions you have pondered for years.  The stone suddenly goes still, but you realize you have learned much."
+"{Learning Stone}
+
+You approach the pillar, hoping to gain more insight, but the stone now does nothing more than reflect the sunlight." 
+ 
+ 

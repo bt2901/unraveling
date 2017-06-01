@@ -13,9 +13,11 @@ public class TFItems {
 	
     public static Item lichPowder;
     public static Item necroFocus;
-    public static Item spawnEgg;
+    public static Item artifact;
 
+    public static Item scrutinyNote;
     public static Item aspectNote;
+    public static Item spawnEgg;
     
     public static Item scepterTwilight;
     public static Item scepterLifeDrain;
@@ -36,7 +38,7 @@ public class TFItems {
     public static void registerItems()
     {
     
-        spawnEgg = new ItemTFSpawnEgg().setUnlocalizedName("tfspawnegg");
+        spawnEgg = new ItemSpawnEgg().setUnlocalizedName("tfspawnegg");
 
         scepterTwilight = new ItemTFTwilightWand().setUnlocalizedName("scepterTwilight").setMaxStackSize(1).setFull3D();
     	scepterLifeDrain = new ItemTFScepterLifeDrain().setUnlocalizedName("scepterLifeDrain").setMaxStackSize(1).setFull3D();
@@ -77,6 +79,12 @@ public class TFItems {
     	aspectNote = new ItemAspectNote().setUnlocalizedName("aspectNote");
         GameRegistry.registerItem(aspectNote, "Research Aspect Note");
 
+    	artifact = new ItemArtifact().setUnlocalizedName("artifact");
+        GameRegistry.registerItem(artifact, "Artifact");
+        
+    	scrutinyNote = new ItemScrutinyNote().setUnlocalizedName("scrutinyNote");
+        GameRegistry.registerItem(scrutinyNote, "scrutinyNote");
+        
         registerTFItem(scepterTwilight, "Scepter of Twilight");
         registerTFItem(scepterLifeDrain, "Scepter of Life Draining");
         registerTFItem(scepterZombie, "Zombie Scepter");

@@ -43,7 +43,8 @@ public class EldritchLore {
         // ResourceLocation background = new ResourceLocation("unraveling", "textures/tab_unraveling.png");
         //ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconFromDamage(0));
         // ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconString());
-        ResourceLocation icon = new ResourceLocation("unraveling", "textures/items/scroll_fancy.png");
+        // ResourceLocation icon = new ResourceLocation("unraveling", "textures/items/scroll_fancy.png");
+        ResourceLocation icon = new ResourceLocation("unraveling", "textures/tab.png");
         ResearchCategories.registerCategory("UNRAVELING", icon, background);
         
 

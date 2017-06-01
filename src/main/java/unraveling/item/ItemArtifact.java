@@ -13,6 +13,7 @@ import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.creativetab.CreativeTabs;
 
 import java.util.List;
 /*
@@ -32,7 +33,7 @@ import unraveling.UnravelingMod;
 public class ItemArtifact extends Item {
 
     final int subtypes = 10;
-    IIcon[] icon;
+    IIcon[] icon = new IIcon[subtypes];
     public ItemArtifact() {
         this.setMaxStackSize(1);
         this.setHasSubtypes(true);
@@ -62,6 +63,12 @@ public class ItemArtifact extends Item {
         return this.icon[0];
     }
 
+    @Override
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+        for (int i = 0; i < subtypes; ++i) {
+            list.add(new ItemStack(item, 1, i));
+        }
+    }
     public String getUnlocalizedName(ItemStack par1ItemStack) {
         return super.getUnlocalizedName() + "." + par1ItemStack.getItemDamage();
     }
