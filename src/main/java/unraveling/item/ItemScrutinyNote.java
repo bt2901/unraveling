@@ -105,7 +105,6 @@ public class ItemScrutinyNote extends Item {
         int meta = 0;
         ItemScrutinyNote note = (ItemScrutinyNote)TFItems.scrutinyNote;
         ExaminationData ed = ExaminationData.onAspect(aspect);
-        System.out.println("ed asp: " + ed.aspectTag + " " + ed.noteType);
         ItemStack finishedResearch = new ItemStack(note, 1, meta);
         setData(finishedResearch, ed);
         return finishedResearch;
@@ -114,7 +113,6 @@ public class ItemScrutinyNote extends Item {
         int meta = 1;
         ItemScrutinyNote note = (ItemScrutinyNote)TFItems.scrutinyNote;
         ExaminationData ed = ExaminationData.forResearch(which, value);
-        System.out.println("ed item: " + ed.ResearchData + " " + ed.noteType);
         ItemStack finishedResearch = new ItemStack(note, 1, meta);
         setData(finishedResearch, ed);
         return finishedResearch;
@@ -122,17 +120,9 @@ public class ItemScrutinyNote extends Item {
     
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        ItemStack finishedResearch = new ItemStack(item, 1, 1);
-        setData(finishedResearch, ExaminationData.forResearch("NITOR", 3));
-        list.add(finishedResearch);
-        
-        ItemStack finishedResearch2 = new ItemStack(item, 1, 1);
-        setData(finishedResearch2, ExaminationData.forResearch("SINSTONE", 5));
-        list.add(finishedResearch2);
-        
-        ItemStack finishedResearch3 = new ItemStack(item, 1, 0);
-        setData(finishedResearch3, ExaminationData.onAspect(Aspect.MAGIC));
-        list.add(finishedResearch3);
+        list.add(createNoteOnResearch("NITOR", 3));
+        list.add(createNoteOnResearch("SINSTONE", 5));
+        list.add(createNoteOnAspect(Aspect.MAGIC));
     }
 
     @Override
@@ -163,7 +153,6 @@ public class ItemScrutinyNote extends Item {
             if (ed.canSeeAdvancedDescription(par2EntityPlayer)) {
                 par3List.add(ed.getAdvancedDescription());
             }
-            
         }
 	}
 
@@ -172,6 +161,5 @@ public class ItemScrutinyNote extends Item {
             itemstack.setTagCompound(new NBTTagCompound());
         }
 		ed.writeToNBT(itemstack.getTagCompound());
-        System.out.println("SetData " + ed + " at " + itemstack);
 	}    
 }

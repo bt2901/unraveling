@@ -9,6 +9,8 @@ import java.util.Arrays;
 import unraveling.item.TFItems;
 import unraveling.block.TFBlocks;
 import unraveling.UnravelingMod;
+import unraveling.item.ItemArtifact;
+
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -33,6 +35,7 @@ import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 
 public class EldritchLore {
@@ -41,13 +44,9 @@ public class EldritchLore {
     public static void addResearch() {
         ResourceLocation background = new ResourceLocation("thaumcraft", "textures/gui/gui_researchback.png");
         // ResourceLocation background = new ResourceLocation("unraveling", "textures/tab_unraveling.png");
-        //ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconFromDamage(0));
-        // ResourceLocation icon = new ResourceLocation(Item.getItemFromBlock(TFBlocks.quaesitum).getIconString());
-        // ResourceLocation icon = new ResourceLocation("unraveling", "textures/items/scroll_fancy.png");
         ResourceLocation icon = new ResourceLocation("unraveling", "textures/tab.png");
         ResearchCategories.registerCategory("UNRAVELING", icon, background);
         
-
         explore();
         studyUndead();
         studyVoid();
@@ -99,19 +98,19 @@ public class EldritchLore {
                 constructPage("CREATEVOIDORE")
                 ).setStub().setRound().setAutoUnlock();
     }
-
+    
     public static void explore() {
         (new UResearchItem("INTRO", "UNRAVELING", 
             new AspectList(), 
-            -8, -8, 0, 
+            -4, -8, 0, 
             new ItemStack(TFItems.necroFocus, 1, 0))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("INTRO.1"), 
             new ResearchPage("INTRO.2") 
         }).setStub().setRound().setAutoUnlock().registerResearchItem();
         
-        recipes.put(
-            "QBlock", 
+        // --------- Quaesitum ------------
+        recipes.put("QBlock", 
             ThaumcraftApi.addArcaneCraftingRecipe(
                 "QBLOCK", new ItemStack(TFBlocks.quaesitum), 
                 new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), 
@@ -119,10 +118,9 @@ public class EldritchLore {
                     Character.valueOf('G'), Items.gold_ingot, 
                     Character.valueOf('S'), new ItemStack(ConfigItems.itemThaumometer), 
                     Character.valueOf('R'), Blocks.stone}));
-                    
         (new UResearchItem("Q", "UNRAVELING", 
             new AspectList(), 
-            -4, -8, 0, 
+            -8, -8, 0, 
             new ItemStack(TFBlocks.quaesitum))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
@@ -130,6 +128,78 @@ public class EldritchLore {
             new ResearchPage("3"), 
             new ResearchPage("4") 
         }).setStub().setRound().setAutoUnlock().registerResearchItem();
+        // ---------- SAN -------------
+        (new UResearchItem("ENDERCOMPASS", "UNRAVELING", 
+            new AspectList(), 
+            -8, -2, 0, 
+            new ResourceLocation("unraveling", "textures/items/compass.png"))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("1") 
+            //new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
+            }).setStub().setRound().registerResearchItem();
+        
+        (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
+            new AspectList(), 
+            -8, 2, 0, 
+            new ItemStack(TFBlocks.quaesitum))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("1"), 
+            new ResearchPage("2") 
+        }).setStub().setRound().registerResearchItem();
+        
+        (new UResearchItem("DEMIPLANEDISCOVERY", "UNRAVELING", 
+            new AspectList(), 
+            -5, 0, 0, 
+            new ResourceLocation("unraveling", "textures/items/compass.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+            new ResearchPage("2") 
+        }).setStub().setRound().setConcealed().registerResearchItem();
+        
+        (new UResearchItem("lost", "UNRAVELING", 
+            new AspectList(), 
+            -5, 3, 0, 
+            new ResourceLocation("unraveling", "textures/lostIcon.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setStub().setRound().registerResearchItem();
+    }
+    
+    
+    public static String RelatedResearch(ItemStack is) {
+        // TODO: config
+        boolean alternate = false;
+        Item item = is.getItem();
+        if (alternate) {
+            // if (item == )
+        }
+        if (item == Items.ender_eye) {
+            return "ENDERCOMPASS";
+        }
+        if (item == ConfigItems.itemSanityChecker) {
+            return "ASTRALSNARE";
+        }
+        if (item instanceof ItemArtifact) {
+            return "lost";
+        }
+        // http://takahikokawasaki.github.io/minecraft-resources/javadoc/forge/1.7.10-10.13.2.1291/net/minecraft/init/Items.html
+        
+        return null;
     }
 }
 
+/*
+new ResearchItem("COREFISHING", "GOLEMANCY", 
+    new AspectList().add(Aspect.WATER, 3).add(Aspect.HARVEST, 3).add(Aspect.BEAST, 3).add(Aspect.HUNGER, 3), 
+    -2, 7, 2, 
+    new ItemStack(ConfigItems.itemGolemCore, 1, 11)
+    ).setPages(
+        new ResearchPage("tc.research_page.COREFISHING.1"), 
+        new ResearchPage((InfusionRecipe)recipes.get("CoreFishing")), 
+        new ResearchPage("UPGRADEAIR", "tc.research_page.COREFISHING.2"), 
+        new ResearchPage("UPGRADEFIRE", "tc.research_page.COREFISHING.3"), 
+        new ResearchPage("UPGRADEORDER", "tc.research_page.COREFISHING.4"), 
+        new ResearchPage("UPGRADEENTROPY", "tc.research_page.COREFISHING.5")
+    ).setConcealed().setSecondary().setParents("COREHARVEST", "INFUSION").registerResearchItem();
+
+*/

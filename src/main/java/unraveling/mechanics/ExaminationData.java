@@ -30,7 +30,7 @@ import thaumcraft.common.lib.research.ScanManager;
 import thaumcraft.client.lib.PlayerNotifications;
 import thaumcraft.common.lib.research.PlayerKnowledge;
 import net.minecraft.nbt.NBTTagCompound;
-
+import thaumcraft.api.research.ResearchCategories;
 
 
 public class ExaminationData {
@@ -87,6 +87,11 @@ public class ExaminationData {
             return null;
         }
         if (noteType == 1) {
+            //System.out.println("doesPlayerHaveRequisites: " + ResearchData);
+            //System.out.println("Research: " + );
+            if (ResearchCategories.getResearch(ResearchData) == null) {
+                return StatCollector.translateToLocal("tc.unknownobject");
+            }
             if (!ResearchManager.doesPlayerHaveRequisites(playerName, ResearchData)) {
                 return StatCollector.translateToLocal("u.note.notready");
             }

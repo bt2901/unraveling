@@ -18,6 +18,7 @@ public class TFBlocks {
     public static Block darkGen;
     public static Block darkGenMain;
     public static Block quaesitum;
+    public static Block portal;
     //public static Block uncraftingTable;
     //public static Block fireJet;
 
@@ -30,6 +31,7 @@ public class TFBlocks {
         voidOre = (new BlockVoidOre()).setBlockName("voidOre");
         darkGen = (new BlockDarkGen()).setBlockName("darkGen");
         quaesitum = (new BlockQuaesitum()).setBlockName("Quaesitum");
+        portal = (new BlockVoidPortal()).setBlockName("Portal");
         //uncraftingTable = (new BlockTFUncraftingTable()).setBlockName("TFUncraftingTable");
         //fireJet = (new BlockTFFireJet()).setBlockName("TFFireJet");
         
@@ -42,6 +44,7 @@ public class TFBlocks {
         registerMyBlock(darkGen, ItemBlock.class);
         registerMyBlock(darkGenMain, ItemBlock.class);
         registerMyBlock(quaesitum, ItemBlock.class);
+        registerMyBlock(portal, ItemBlock.class);
 
 		//registerMyBlock(uncraftingTable, ItemBlock.class);
 		//registerMyBlock(fireJet);

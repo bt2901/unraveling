@@ -13,6 +13,7 @@ public class TFItems {
 	
     public static Item lichPowder;
     public static Item necroFocus;
+    public static Item ender_compass;
     public static Item artifact;
 
     public static Item scrutinyNote;
@@ -39,7 +40,10 @@ public class TFItems {
     {
     
         spawnEgg = new ItemSpawnEgg().setUnlocalizedName("tfspawnegg");
-
+        ender_compass = new ItemCompassStone().setUnlocalizedName("enderCompass");
+        GameRegistry.registerItem(ender_compass, "ender_compass");
+        
+        
         scepterTwilight = new ItemTFTwilightWand().setUnlocalizedName("scepterTwilight").setMaxStackSize(1).setFull3D();
     	scepterLifeDrain = new ItemTFScepterLifeDrain().setUnlocalizedName("scepterLifeDrain").setMaxStackSize(1).setFull3D();
     	scepterZombie = new ItemTFZombieWand().setUnlocalizedName("scepterZombie").setMaxStackSize(1).setFull3D();

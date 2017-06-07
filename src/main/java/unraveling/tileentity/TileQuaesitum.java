@@ -17,7 +17,7 @@ import thaumcraft.api.aspects.AspectList;
 import unraveling.UnravelingMod;
 import unraveling.item.TFItems;
 import unraveling.item.ItemScrutinyNote;
-import unraveling.item.ItemArtifact;
+import unraveling.EldritchLore;
 import unraveling.mechanics.ExaminationData;
 
 import net.minecraft.entity.item.EntityItem;
@@ -181,9 +181,9 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             this.inventorySlots[1].stackSize--;
             
             ItemStack finishedResearch;
-
-            if (thingResearched.getItem() instanceof ItemArtifact) {
-                finishedResearch = ItemScrutinyNote.createNoteOnResearch("ALUMENTUM", rand.nextInt(5));
+            String r = EldritchLore.RelatedResearch(thingResearched);
+            if (r != null) {
+                finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, rand.nextInt(5));
             } else {
                 Aspect[] al = new AspectList(thingResearched).getAspects();
                 int randomIndex = rand.nextInt(al.length);

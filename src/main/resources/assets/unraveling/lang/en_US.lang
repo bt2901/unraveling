@@ -111,11 +111,11 @@ u.page.MAGICBOOKS.1=After carefully studying books, you realised something. They
 
 
 
-u.name.ASTRALSNARE=Astral Snares
+u.name.ASTRALSNARE=Astral Snare
 u.text.ASTRALSNARE=Witty text
 # prereq:  if TT then ender rift
-u.page.ASTRALSNARE.1=After carefully studying sanity checker, you realised something. Magic creates ripples of warp.
-u.page.ASTRALSNARE.2=Those ripples are very noticeable when changing dimensions. You conjecture it's having to do something with the ultimate structure of reality.
+u.page.ASTRALSNARE.1=After carefully studying sanity checker, you realised something. Magic creates ripples of warp. These ripples are very noticeable when changing dimensions. You conjecture it's having to do something with the ultimate structure of reality.
+u.page.ASTRALSNARE.2=You created a block which can detect such disturbations. 
 # http://takahikokawasaki.github.io/minecraft-resources/javadoc/forge/1.7.10-10.13.2.1291/cpw/mods/fml/common/gameevent/PlayerEvent.PlayerChangedDimensionEvent.html
 
 u.name.ENDERCOMPASS=Ender Compass
@@ -140,6 +140,11 @@ u.page.DIM.2=Planes: warp, vis, matter: mind, soul, body. Magic creates ripples 
 u.name.WARPDETECTOR=Warp Detector Discovery
 u.text.WARPDETECTOR=Find a man with things man didn't mean to know!
 # if TT then ender rift is prereq
+# dim change: -> send packet with warp (no decay yet)
+# on right click: send packet with stronghold positions
+# show one icon when portal
+# show another when stronghold or nether fortress
+# sprite: lodestone but with radar dish / antennaes
 u.page.WARPDETECTOR.1=Magic creates ripples of warp.
 
 
@@ -165,6 +170,7 @@ u.name.ANTIBUILDER=Anti Builder
 u.name.MAGICMAP=Magic Map
 u.name.RESEARCHMASTERY=Research Mastery
 u.name.WITHERCOAL=Petrified Wood
+u.name.UNCRAFTING=Arcane Uncrafting
 
 u.name.NECROFOCUS=Focus: Necromancy
 u.name.NECROFOCUS.1=Archer Upgrade
@@ -178,9 +184,9 @@ tc.research_name.eldritch=Eldritch Knowledge
 tc.research_lore.eldritch=[TH] A strange culture...
 tc.research_page.eldritch.0= The lost culture of the Eldritch<BR>Mystical dungeons and strange artefacts. They managed to create some extremely powerful objects of wonder. You're sure you can try to recreate these things after some further research... <BR><IMG>th:textures/misc/eldritchPicture.png:256:256:256:160:0.5</IMG>
 
-tc.research_name.lost=Lost Knowledge
-tc.research_lore.lost=[TH] Now it isn't lost any more!
-tc.research_page.lost.0=With the help of these long lost and broken artifacts, you think you can can finally begin to understand how they may have once worked... And possibly recreate them... <BR><IMG>th:textures/misc/lostPicture.png:256:256:256:160:0.5</IMG>
+u.name.lost=Lost Knowledge
+u.text.lost=Now it isn't lost any more!
+u.page.lost.1=With the help of these long lost and broken artifacts, you think you can can finally begin to understand how they may have once worked... And possibly recreate them... <BR><IMG>unraveling:textures/lostPicture.png:256:256:256:160:0.5</IMG>
 
 
 # 

@@ -211,3 +211,93 @@ Macerator.addRecipe(<minecraft:dye:15> * 10, <BiomesOPlenty:bones:1>);
 // --- Large Bone Segment
 Macerator.addRecipe(<minecraft:dye:15> * 15, <BiomesOPlenty:bones:2>);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * Returns a list of creatures of the specified type that can spawn at the
+	 * given location.
+	 * 
+	 * Twilight Forest varient! First check features, then only if we're not in
+	 * a feature, check the biome.
+	 */
+     /*
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int mapX, int mapY, int mapZ) {
+		// are the specified coordinates precicely in a feature?
+		TFFeature nearestFeature = TFFeature.getFeatureForRegion(mapX >> 4, mapZ >> 4, worldObj);
+
+		if (nearestFeature != TFFeature.nothing) {
+			// if the feature is already conquered, no spawns
+			if (this.isStructureConquered(mapX, mapY, mapZ)) {
+				return null;
+			}
+
+			// check the precise coords.
+			int spawnListIndex = this.majorFeatureGenerator.getSpawnListIndexAt(mapX, mapY, mapZ);
+			if (spawnListIndex >= 0) {
+				return nearestFeature.getSpawnableList(creatureType, spawnListIndex);
+			}
+		}
+
+		BiomeGenBase biome = worldObj.getBiomeGenForCoords(mapX, mapZ);
+
+		if (biome == null) {
+			return null;
+		} else if (mapY < TFWorld.SEALEVEL && creatureType == EnumCreatureType.monster && biome instanceof TFBiomeBase) {
+			// cave monsters!
+			return ((TFBiomeBase)biome).getUndergroundSpawnableList();
+		} else {
+			return biome.getSpawnableList(creatureType);
+		}
+	}*/
+
+    
+    
+    Liquid Death in walls?
+    
+
+################
+#              |
+#              |
+#  ######      |
+#  #           |
+#  #           |
+#  #           |
+#  #           |
+#              |
+#              |
+#              |
+#          #####
+#          #   |
+#          #   |
+#          #   |
+#----------#----
+
+
+hadesX32.png.mcmeta
+
+{
+	"animation": {
+        "interpolate": true,
+		"frametime": 5
+	}
+}

@@ -22,6 +22,7 @@ import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
 import unraveling.mechanics.PacketQResearch;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import unraveling.dim.WorldProviderDemiplane;
 
 
 
@@ -37,6 +38,7 @@ import unraveling.tileentity.TileEntityTFLichSpawner;
 import unraveling.tileentity.TileDarkGenMain;
 import unraveling.tileentity.TileDarkGen;
 import unraveling.tileentity.TileQuaesitum;
+import unraveling.dim.TileVoidPortal;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -150,10 +152,6 @@ public class UnravelingMod {
 		// tick listener
 		// FMLCommonHandler.instance().bus().register(tickHandler);
 		
-		// set up portal item
-		Item portalItem = Items.diamond;
-		// tickHandler.portalItem = portalItem;
-		
 		// make some channels for our maps
 		// TFMapPacketHandler mapPacketHandler = new TFMapPacketHandler();
 		// NetworkRegistry.INSTANCE.newEventDrivenChannel(ItemTFMagicMap.STR_ID).register(mapPacketHandler);
@@ -170,7 +168,9 @@ public class UnravelingMod {
 		// DimensionManager.registerProviderType(UnravelingMod.dimensionProviderID, WorldProviderTwilightForest.class, false);
 		// enter biomes into dictionary
 		// TFBiomeBase.registerWithBiomeDictionary();
-
+        DimensionManager.registerProviderType(2901, WorldProviderDemiplane.class, false);
+        DimensionManager.registerDimension(2901, 2901);
+        
         FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "Unraveling.Twilight Lich:95");
         EldritchLore.addResearch();
 	}
@@ -231,6 +231,7 @@ public class UnravelingMod {
 		GameRegistry.registerTileEntity(TileDarkGenMain.class, "Void Aggregator");
 		GameRegistry.registerTileEntity(TileDarkGen.class, "Darkness Generator");
         GameRegistry.registerTileEntity(TileQuaesitum.class, "Quaesitum");
+        GameRegistry.registerTileEntity(TileVoidPortal.class, "Void Portal");
 		//GameRegistry.registerTileEntity(TileEntityTFSmoker.class, "Swamp Smoker");
 		//GameRegistry.registerTileEntity(TileEntityTFPoppingJet.class, "Popping Flame Jet");
 		//GameRegistry.registerTileEntity(TileEntityTFFlameJet.class, "Lit Flame Jet");

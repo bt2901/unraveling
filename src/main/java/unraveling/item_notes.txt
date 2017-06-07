@@ -61,24 +61,6 @@ if player discovered every aspect
 then 
 there is a chance to learn advanced stuff
 
-need to refactor
-class ResearchNoteData
-
-get description(player)
-get value
-get type
-get prerequisites
-boolean can use(player)
-perform_use
-read from nbt
-
-and so on
-
-class ItemResearchNote
-
- getIconIndex for switching icons based on stack data.
- or maybe just metadata
- 
 
 {800}{}{You read the book.}
 {801}{}{You learn nothing new.}
@@ -87,18 +69,6 @@ class ItemResearchNote
 {804}{}{You learn new ways to heal injury.}
 {805}{}{You learn how to handle your guns better.}
 {806}{}{You learn a lot about wilderness survival.}
-#
-# Use on messages (and some extra stuff that Jesse needed)
-#
-{900}{}{The supplies in the Doctor's Bag run out.}
-{901}{}{The supplies in the First Aid Kit run out.}
-{902}{}{You cannot do that in combat.}
-{903}{}{This person will not barter with you.}
-{904}{}{This person has nothing to tell you about.}
-{905}{}{You cannot pick up that item. You are at your maximum weight capacity.}
-{910}{}{The supplies in the Paramedic's Bag run out.}
-{911}{}{The supplies in the Field Medic First Aid Kit run out.}
-{913}{}{This critter can't carry anything.}
 
 
 {580}{}{You use the %s.}
