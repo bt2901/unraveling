@@ -19,8 +19,9 @@ public class PyramidFeature extends MapGenStructure {
 	@Override
 	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
         //return false;
+        // return true;
 		// return !(chunkZ < 5 && chunkX < 5);
-		return (chunkZ + chunkX) % 4 == 0;
+		return (chunkZ % 32 == 0 && chunkX % 32 == 0);
 	}
 
 	@Override
@@ -84,87 +85,4 @@ public class PyramidFeature extends MapGenStructure {
         return highestFoundIndex;
     }
 
-    /**
-     * Get the structure bounding box, if any, at the specified position
-     */
-	@SuppressWarnings("unchecked")
-	public StructureBoundingBox getSBBAt(int mapX, int mapY, int mapZ) {
-		StructureBoundingBox boxFound = null;
-
-        Iterator<StructureStart> startIterator = this.structureMap.values().iterator();
-
-        while (startIterator.hasNext())
-        {
-            StructureStart start = (StructureStart)startIterator.next();
-
-            if (start.isSizeableStructure() && start.getBoundingBox().intersectsWith(mapX, mapZ, mapX, mapZ))
-            {
-                Iterator<StructureComponent> componentIterator = start.getComponents().iterator();
-
-                while (componentIterator.hasNext())
-                {
-                    StructureComponent component = (StructureComponent)componentIterator.next();
-
-                    if (component.getBoundingBox().isVecInside(mapX, mapY, mapZ))
-                    {
-                    	boxFound = component.getBoundingBox();
-                    }
-                }
-            }
-        }
-
-        return boxFound;
-	}
-	
-	/**
-	 * Do the specified x & z coordinates intersect the full structure?
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean isBlockInFullStructure(int mapX, int mapZ) {
-		for (StructureStart start : (Collection<StructureStart>)this.structureMap.values()) {
-            if (start.isSizeableStructure() && start.getBoundingBox().intersectsWith(mapX, mapZ, mapX, mapZ)) {
-            	return true;
-            }
-		}
-		return false;
-	}
-	
-	/**
-	 * Are the specified x & z coordinates close to a full structure?
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean isBlockNearFullStructure(int mapX, int mapZ, int range) {
-        StructureBoundingBox rangeBB = new StructureBoundingBox(mapX - range, mapZ - range, mapX + range, mapZ + range);
-		for (StructureStart start : (Collection<StructureStart>)this.structureMap.values()) {
-			if (start.isSizeableStructure() && start.getBoundingBox().intersectsWith(rangeBB)) {
-            	return true;
-            }
-		}
-		return false;
-	}
-	
-	/**
-	 * Get full structure bounding box at the specified x, z coordinates.
-	 */
-	@SuppressWarnings("unchecked")
-	public StructureBoundingBox getFullSBBAt(int mapX, int mapZ) {
-		for (StructureStart start : (Collection<StructureStart>)this.structureMap.values()) {
-            if (start.isSizeableStructure() && start.getBoundingBox().intersectsWith(mapX, mapZ, mapX, mapZ)) {
-            	return start.getBoundingBox();
-            }
-		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public StructureBoundingBox getFullSBBNear(int mapX, int mapZ, int range) {
-        StructureBoundingBox rangeBB = new StructureBoundingBox(mapX - range, mapZ - range, mapX + range, mapZ + range);
-		for (StructureStart start : (Collection<StructureStart>)this.structureMap.values()) {
-			if (start.isSizeableStructure() && start.getBoundingBox().intersectsWith(rangeBB)) {
-            	return start.getBoundingBox();
-            }
-		}
-		return null;
-
-	}
 }

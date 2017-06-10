@@ -68,8 +68,9 @@ public class ChunkProviderDemiplane implements IChunkProvider {
 		Block blockStorage[] = new Block[16 * 16 * 256];
 		byte metaStorage[] = new byte[16 * 16 * 256];
 		generateTerrain3(cx, cz, blockStorage, metaStorage);
-        ravineGenerator.func_151539_a(this, this.worldObj, cx, cz, blockStorage);
-        ravineGenerator.func_151539_a(this, this.worldObj, cx + 1, cz + 1, blockStorage);
+        for (int i = 0; i < 5; ++i) {
+            ravineGenerator.func_151539_a(this, this.worldObj, cx + i*100, cz + i*100, blockStorage);
+        }
 				
 		// fake byte array
 		Block[] fake = new Block[0];
@@ -205,6 +206,7 @@ public class ChunkProviderDemiplane implements IChunkProvider {
         long i1 = this.random.nextLong() / 2L * 2L + 1L;
         long j1 = this.random.nextLong() / 2L * 2L + 1L;
         this.random.setSeed((long) par2 * i1 + (long) par3 * j1 ^ this.worldObj.getSeed());
+        pyramidGenerator.generateStructuresInChunk(worldObj, random, par2, par3);
 
         int k1;
         int l1;

@@ -390,21 +390,22 @@ public class PyramidTranslator extends StructureComponent {
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
 		super.buildComponent(structurecomponent, list, random);
+        System.out.println("BC");
 		
 		// add a second story
 		if (this.level == 1)
 		{
-            /*
+            
 			int centerX = boundingBox.minX + ((boundingBox.maxX - boundingBox.minX) / 2);
 			int centerZ = boundingBox.minZ + ((boundingBox.maxZ - boundingBox.minZ) / 2);
 			
 			// PyramidTranslator maze = new PyramidTranslator(1, centerX, boundingBox.minY - 10, centerZ, rcoords[2], rcoords[3], 2);
             
-			PyramidTranslator maze = new PyramidTranslator(world, random, 2, centerX, boundingBox.minY - 10, centerZ);
+			// PyramidTranslator maze = new PyramidTranslator(world, random, 2, centerX, boundingBox.minY - 10, centerZ);
             // (1, , rcoords[2], rcoords[3], 2);
-			list.add(maze);
-			maze.buildComponent(this, list, random);
-            */
+			// list.add(maze);
+			// maze.buildComponent(this, list, random);
+            
 		}
 	
 		
@@ -426,6 +427,8 @@ public class PyramidTranslator extends StructureComponent {
 
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
+        System.out.println("ACP");
+        //super.addComponentParts(world, rand, sbb);
 		// level 2 maze surrounded by bedrock
 		if (level == 2)
 		{

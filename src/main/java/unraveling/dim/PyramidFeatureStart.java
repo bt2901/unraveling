@@ -36,18 +36,18 @@ public class PyramidFeatureStart extends StructureStart {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public PyramidFeatureStart(World world, Random rand, int chunkX, int chunkZ)  {
-
-		int x = (chunkX << 4) + 8;
-		int z = (chunkZ << 4) + 8;
+		int x = (chunkX * 16) + 8;
+		int z = (chunkZ * 16) + 8;
 		int y = 50; //TODO: maybe a biome-specific altitude for some of them?
-        
+
+		//int x = 100;
+		//int z = 100;
 		
 		StructureComponent firstComponent = new PyramidTranslator(world, rand, 0, x, y, z);
         components.add(firstComponent);
         firstComponent.buildComponent(firstComponent, components, rand);
 
 		updateBoundingBox();
-        
         //moveToAvgGroundLevel(world, x, z);
 	}
 	    

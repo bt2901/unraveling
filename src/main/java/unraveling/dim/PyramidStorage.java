@@ -305,9 +305,9 @@ public class PyramidStorage {
 		
 		// call function recursively at the destination
 		rbGen(dx, dz);
-		
+		return;
 		// the destination has run out of free spaces, let's try this square again, up to 2 more times
-		rbGen(sx, sz);
-		rbGen(sx, sz);
+		// rbGen(sx, sz);
+		// rbGen(sx, sz);
 	}    
 }
