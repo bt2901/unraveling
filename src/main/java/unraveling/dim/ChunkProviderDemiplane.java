@@ -63,8 +63,7 @@ public class ChunkProviderDemiplane implements IChunkProvider {
      
     @Override
 	public Chunk provideChunk(int cx, int cz) {
-        System.out.println("provideChunk " + cx + " " + cz);
-		// rand.setSeed(cx * 0x4f9939f508L + cz * 0x1ef1565bd5L);
+        // rand.setSeed(cx * 0x4f9939f508L + cz * 0x1ef1565bd5L);
 		Block blockStorage[] = new Block[16 * 16 * 256];
 		byte metaStorage[] = new byte[16 * 16 * 256];
 		generateTerrain3(cx, cz, blockStorage, metaStorage);

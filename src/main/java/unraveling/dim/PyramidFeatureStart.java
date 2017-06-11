@@ -14,22 +14,13 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 import net.minecraft.world.gen.structure.StructureStrongholdPieces;
 
-//import twilightforest.structures.lichtower.TFLichTowerPieces;
-//import twilightforest.structures.minotaurmaze.ComponentTFMazeRuins;
-//import twilightforest.structures.minotaurmaze.TFMinotaurMazePieces;
-import unraveling.dim.PyramidTranslator;
-//import unraveling.dim.TFMinotaurMazePieces;
-
-//import twilightforest.world.TFWorldChunkManager;
-
-
 public class PyramidFeatureStart extends StructureStart {
 			
     static
     {
     	MapGenStructureIO.registerStructure(PyramidFeatureStart.class, "Ziggurath");
-        MapGenStructureIO.func_143031_a(PyramidTranslator.class, "ZMain");
-    	//TFLichTowerPieces.registerPieces();
+        MapGenStructureIO.func_143031_a(PyramidMain.class, "ZMain");
+        MapGenStructureIO.func_143031_a(PyramidLevel.class, "ZLevel");
     }
     
     public PyramidFeatureStart() {}
@@ -43,7 +34,7 @@ public class PyramidFeatureStart extends StructureStart {
 		//int x = 100;
 		//int z = 100;
 		
-		StructureComponent firstComponent = new PyramidTranslator(world, rand, 0, x, y, z);
+		StructureComponent firstComponent = new PyramidMain(world, rand, x, y, z);
         components.add(firstComponent);
         firstComponent.buildComponent(firstComponent, components, rand);
 

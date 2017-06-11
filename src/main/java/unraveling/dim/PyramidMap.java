@@ -7,6 +7,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 
 
 /**
@@ -17,10 +19,10 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
  * @author Ben
  *
  */
-public class PyramidStorage {
+public class PyramidMap {
 	
-	public int width; // cells wide (x)
-	public int depth; // cells deep (z)
+	public int cellsWidth; // cells wide (x)
+	public int cellsDepth; // cells deep (z)
 		
 	public int worldX; // set when we first copy the maze into the world
 	public int worldY;
@@ -29,22 +31,25 @@ public class PyramidStorage {
 	protected int rawWidth;
 	protected int rawDepth;
 	protected int[] storage;
+    private long mySeed;
 	
 	public static final int OUT_OF_BOUNDS = Integer.MIN_VALUE;
 	public static final int OOB = OUT_OF_BOUNDS;
 	public static final int ROOM = 5;
-	public static final int DOOR = 6;
+	public static final int ROOMCENTRAL = 6;
+	public static final int ROOM2LOW = 7;
+	public static final int ROOM2HIGH = 8;
 	
 	public Random rand;
+    public int[] rcoords;
 	
-	public PyramidStorage(int cellsWidth, int cellsDepth)
-	{
+	public PyramidMap(int cellsWidth, int cellsDepth) {
 		
-		this.width = cellsWidth;
-		this.depth = cellsDepth;
+		this.cellsWidth = cellsWidth;
+		this.cellsDepth = cellsDepth;
 		
-		this.rawWidth = width * 2 + 1;
-		this.rawDepth = depth * 2 + 1;
+		this.rawWidth = cellsWidth * 2 + 1;
+		this.rawDepth = cellsDepth * 2 + 1;
 		storage = new int [rawWidth * rawDepth];
 		
 		rand = new Random();
@@ -154,6 +159,7 @@ public class PyramidStorage {
 	 * Sets the random seed to a specific value
 	 */
 	public void setSeed(long newSeed) {
+        mySeed = newSeed;
 		rand.setSeed(newSeed);
 	}
 	/**
@@ -177,7 +183,7 @@ public class PyramidStorage {
 	/**
 	 * This room is a 3x3 cell room with exits in every direction.
 	 */
-	public void carveRoom1(int cx, int cz)
+	public void carveCustomRoom(int cx, int cz, int type)
 	{
 		int rx = cx * 2  + 1;
 		int rz = cz * 2  + 1;
@@ -187,7 +193,7 @@ public class PyramidStorage {
 		{
 			for(int j = -2; j <= 2; j++)
 			{
-				putRaw(rx + i, rz + j, ROOM);
+				putRaw(rx + i, rz + j, type);
 			}
 		}
 		
@@ -199,16 +205,16 @@ public class PyramidStorage {
 		
 		// make 4 exits (if not at the edge of the maze)
 		if (getRaw(rx, rz + 4) != OUT_OF_BOUNDS) {
-			putRaw(rx, rz + 3, ROOM);
+			putRaw(rx, rz + 3, type);
 		}
 		if (getRaw(rx, rz - 4) != OUT_OF_BOUNDS) {
-			putRaw(rx, rz - 3, ROOM);
+			putRaw(rx, rz - 3, type);
 		}
 		if (getRaw(rx + 4, rz) != OUT_OF_BOUNDS) {
-			putRaw(rx + 3, rz, ROOM);
+			putRaw(rx + 3, rz, type);
 		}
 		if (getRaw(rx- 4, rz) != OUT_OF_BOUNDS) {
-			putRaw(rx - 3, rz, ROOM);
+			putRaw(rx - 3, rz, type);
 		}
 	}	
 	
@@ -305,9 +311,91 @@ public class PyramidStorage {
 		
 		// call function recursively at the destination
 		rbGen(dx, dz);
-		return;
 		// the destination has run out of free spaces, let's try this square again, up to 2 more times
-		// rbGen(sx, sz);
-		// rbGen(sx, sz);
+		rbGen(sx, sz);
+		rbGen(sx, sz);
+		return;
 	}    
+    	/**
+	 * @return true if the specified dx and dz are within 3 of a room specified in rcoords
+	 */
+
+    protected boolean isNearRoom(int dx, int dz, int[] rcoords, int range) {
+		// if proposed coordinates are covering the origin, return true to stop the room from causing the maze to fail
+		if (dx == 1 && dz == 1) {
+			return true;
+		}
+		
+		for (int i = 0; i < rcoords.length / 3; i++)
+		{
+			int rx = rcoords[i * 3];
+			int rz = rcoords[i * 3 + 1];
+			int rtype = rcoords[i * 3 + 2];
+			
+			if (rx == 0 && rz == 0) {
+				continue;
+			}
+			
+			if (Math.abs(dx - rx) < range && Math.abs(dz - rz) < range) {
+				return true;
+			}
+		}
+		return false;
+	}
+    
+	public void addRoomsToMaze(int nrooms) {
+        rcoords = new int[nrooms * 3];
+
+		// add room coordinates, trying to keep them separate from existing rooms
+		for (int i = 0; i < nrooms; i++)
+		{
+			int rx, rz;
+			do {
+				rx = rand.nextInt(cellsWidth - 2) + 1;
+				rz = rand.nextInt(cellsDepth - 2) + 1;
+			} while(isNearRoom(rx, rz, rcoords, i == 1 ? 7 : 4));
+
+			carveCustomRoom(rx, rz, ROOM);
+			
+			//System.out.println("Initially carving room " + rx + ", " + rz);
+
+			rcoords[i * 3] = rx;
+			rcoords[i * 3 + 1] = rz;
+			rcoords[i * 3 + 2] = ROOM;
+		}
+	}
+
+	public void addBonusRoom(int entranceX, int entranceZ, int type) {
+        int l = rcoords.length;
+        int[] rcoords2 = new int[l + 3];
+        System.arraycopy(rcoords, 0, rcoords2, 0, l);
+
+		rcoords2[l] = entranceX;
+		rcoords2[l + 1] = entranceZ;
+		rcoords2[l + 2] = type;
+		carveCustomRoom(entranceX, entranceZ, type);
+        rcoords = rcoords2;
+	}
+    
+    
+	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
+        par1NBTTagCompound.setInteger("cellsWidth", this.cellsWidth);
+        par1NBTTagCompound.setInteger("cellsDepth", this.cellsDepth);
+        par1NBTTagCompound.setLong("mySeed", this.mySeed);
+        par1NBTTagCompound.setIntArray("roomCoords", this.rcoords);
+    }
+
+	public static PyramidMap readFromNBT(NBTTagCompound nbttagcompound) {
+        int cellsWidth = nbttagcompound.getInteger("cellsWidth");
+        int cellsDepth = nbttagcompound.getInteger("cellsDepth");
+        
+        PyramidMap pstorage = new PyramidMap(cellsWidth, cellsDepth);
+        pstorage.rcoords = nbttagcompound.getIntArray("roomCoords");
+        pstorage.setSeed(nbttagcompound.getInteger("mySeed"));
+		pstorage.generateRecursiveBacktracker(0, 0);
+        
+        return pstorage;
+    }
+    
+
 }
