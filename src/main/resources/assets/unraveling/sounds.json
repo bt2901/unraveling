@@ -1,12 +1,12 @@
 {
   "random.necromancy": {
-    "category": "hostile",
+    "category": "master",
     "sounds": [
       "mob/lich/ANIMDEAD"
     ]
   },
   "random.blockconvert": {
-    "category": "hostile",
+    "category": "master",
     "sounds": [
       "random/sfx/glacius_turn_short01",
       "random/sfx/glacius_turn_short02",
@@ -53,5 +53,16 @@
   "mob.lich.block": {
     "category": "hostile",
     "sounds": ["mob/lich/spell_hit"]
+  },
+  "research.clue": {
+    "category": "master",
+    "sounds": [
+        "research/pop_temple_3",
+        "research/pop_temple_4",
+        "research/pop_temple_5",
+        "research/pop_temple_7",
+        "research/pop_temple_8",
+        "research/pop_temple_10"
+    ]
   }
 }

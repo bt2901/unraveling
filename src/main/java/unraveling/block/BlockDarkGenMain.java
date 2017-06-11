@@ -16,7 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
+import unraveling.item.UItems;
 import unraveling.tileentity.TileDarkGenMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,17 +29,15 @@ public class BlockDarkGenMain extends BlockContainer {
     
 	protected BlockDarkGenMain() {
 		super(Material.rock);
-		//this.setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
 		this.setHardness(1.0F);
 		this.setStepSound(Block.soundTypeStone);
-        }
+    }
 
     /**
      * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
      */
     @Override
-	public boolean renderAsNormalBlock()
-    {
+	public boolean renderAsNormalBlock() {
         return true;
     }
 
@@ -48,8 +46,7 @@ public class BlockDarkGenMain extends BlockContainer {
      * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
      */
     @Override
-	public boolean isOpaqueCube()
-    {
+	public boolean isOpaqueCube() {
         return true;
     }
     
@@ -57,8 +54,7 @@ public class BlockDarkGenMain extends BlockContainer {
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
     @Override
-	public IIcon getIcon(int side, int meta)
-    {
+	public IIcon getIcon(int side, int meta) {
         if (side == 0)
             return slabBottom;
         if (side == 1)
@@ -76,8 +72,7 @@ public class BlockDarkGenMain extends BlockContainer {
      * @return The light value
      */
     @Override
-	public int getLightValue(IBlockAccess world, int x, int y, int z) 
-    {
+	public int getLightValue(IBlockAccess world, int x, int y, int z) {
     	return 0;
     }
     
@@ -92,8 +87,7 @@ public class BlockDarkGenMain extends BlockContainer {
      * @param z Z position
      * @return True if the block is a full cube
      */
-    public boolean isBlockNormalCube(World world, int x, int y, int z) 
-    {
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
     	return false;
     }
     
@@ -104,8 +98,7 @@ public class BlockDarkGenMain extends BlockContainer {
   
     @Override
 	@SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         BlockDarkGenMain.fullSide = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_fullside");
         BlockDarkGenMain.slabTop = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_top");
         BlockDarkGenMain.slabBottom = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_bottom");
@@ -113,7 +106,6 @@ public class BlockDarkGenMain extends BlockContainer {
     @Override
     public void onNeighborBlockChange(World worldObj, int x, int y, int z, Block p_149695_5_) {
         TileDarkGenMain tileentity = (TileDarkGenMain) worldObj.getTileEntity(x, y, z);
-        
         if(tileentity != null) {
             tileentity.onNeighborBlockChange();
         }

@@ -66,8 +66,8 @@ public class VoidPacketHandler {
         System.out.println("processTransformBlock");
 
 		UnravelingMod.proxy.doBlockTransformEffect(worldObj, blockX, blockY, blockZ);
-
 	}
+    
 	@SideOnly(Side.CLIENT)
 	private void processParticleBlock(ByteBuf buf) {
 		int x = buf.readInt();

@@ -43,12 +43,8 @@ public class UResearchItem extends ResearchItem {
         public ResearchItem setPages(ResearchPage... par) {
                 for (ResearchPage page : par) {
 	                	if (page.type == PageType.TEXT) {
-	                    	//System.out.println("TEXT IS: " + (page.text.split("#")[0].equals("NE")) + "'" + page.text.split("#")[0] + "'");
 	                        page.text = "u.page." + key + "." + page.text;
 	                	}
-
-                        		
-                        
                         if (page.type == PageType.INFUSION_CRAFTING) {
                                 if (parentsHidden == null || parentsHidden.length == 0)
                                         parentsHidden = new String[] { "INFUSION" };
@@ -61,7 +57,6 @@ public class UResearchItem extends ResearchItem {
                                 }
                         }
                 }
-
                 return super.setPages(par);
         }
 }

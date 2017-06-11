@@ -29,7 +29,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
+import unraveling.item.UItems;
 
 
 
@@ -45,8 +45,8 @@ public class EntityTFLich extends EntityMob implements IBossDisplayData {
 
 	EntityTFLich masterLich;
 
-	private static final ItemStack masterHeldItems[] = {new ItemStack(TFItems.scepterZombie, 1), new ItemStack(TFItems.scepterTwilight, 1), new ItemStack(TFItems.scepterTwilight, 1)};
-	private static final ItemStack cloneHeldItems[] = {new ItemStack(Items.bone, 1), new ItemStack(TFItems.scepterTwilight, 1), new ItemStack(Items.golden_sword, 1)};
+	private static final ItemStack masterHeldItems[] = {new ItemStack(UItems.scepterZombie, 1), new ItemStack(UItems.scepterTwilight, 1), new ItemStack(UItems.scepterTwilight, 1)};
+	private static final ItemStack cloneHeldItems[] = {new ItemStack(Items.bone, 1), new ItemStack(UItems.scepterTwilight, 1), new ItemStack(Items.golden_sword, 1)};
 	public static final int MAX_SHADOW_CLONES = 2;
 	public static final int INITIAL_SHIELD_STRENGTH = 5;
 	public static final int MAX_ACTIVE_MINIONS = 5;
@@ -139,7 +139,7 @@ public class EntityTFLich extends EntityMob implements IBossDisplayData {
         for (int i = 0; i < totalDrops; ++i)
         {
             //this.dropItem(Items.ender_pearl, 1);
-            this.dropItem(TFItems.lichPowder, 1);
+            this.dropItem(UItems.lichPowder, 1);
         }
 
         // bones
@@ -152,16 +152,16 @@ public class EntityTFLich extends EntityMob implements IBossDisplayData {
  	}
 
 	private void dropScepter() {
-        // this.entityDropItem(new ItemStack(TFItems.necroFocus), 0);
+        // this.entityDropItem(new ItemStack(UItems.necroFocus), 0);
 		int scepterType = rand.nextInt(3);
 		if (scepterType == 0) {
-			this.entityDropItem(new ItemStack(TFItems.scepterZombie), 0);
+			this.entityDropItem(new ItemStack(UItems.scepterZombie), 0);
 		}
 		else if (scepterType == 1) {
-			this.entityDropItem(new ItemStack(TFItems.scepterLifeDrain), 0);
+			this.entityDropItem(new ItemStack(UItems.scepterLifeDrain), 0);
 		}
 		else {
-			this.entityDropItem(new ItemStack(TFItems.scepterTwilight), 0);
+			this.entityDropItem(new ItemStack(UItems.scepterTwilight), 0);
 		}
 	}
 

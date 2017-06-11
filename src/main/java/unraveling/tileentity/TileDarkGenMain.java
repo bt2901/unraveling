@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import unraveling.block.TFBlocks;
+import unraveling.block.UBlocks;
 import unraveling.mechanics.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;

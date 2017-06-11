@@ -17,9 +17,8 @@ import net.minecraft.world.World;
 
 
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
+import unraveling.item.UItems;
 import unraveling.tileentity.TileQuaesitum;
-import unraveling.item.ItemAspectNote;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -72,8 +71,7 @@ public class BlockQuaesitum extends BlockContainer {
      * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
      */
     @Override
-	public boolean isOpaqueCube()
-    {
+	public boolean isOpaqueCube() {
         return false;
     }
     
@@ -81,8 +79,7 @@ public class BlockQuaesitum extends BlockContainer {
      * The type of render function that is called for this block
      */
     @Override
-	public int getRenderType()
-    {
+	public int getRenderType() {
     	return UnravelingMod.proxy.getQRenderID();
     }
     

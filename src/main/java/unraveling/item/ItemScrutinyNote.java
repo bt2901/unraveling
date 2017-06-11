@@ -7,8 +7,6 @@ import net.minecraft.item.Item;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -16,7 +14,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
-import unraveling.entity.EntityTFLoyalZombie;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -103,7 +100,7 @@ public class ItemScrutinyNote extends Item {
     }
     public static ItemStack createNoteOnAspect(Aspect aspect) {
         int meta = 0;
-        ItemScrutinyNote note = (ItemScrutinyNote)TFItems.scrutinyNote;
+        ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.onAspect(aspect);
         ItemStack finishedResearch = new ItemStack(note, 1, meta);
         setData(finishedResearch, ed);
@@ -111,7 +108,7 @@ public class ItemScrutinyNote extends Item {
     }
     public static ItemStack createNoteOnResearch(String which, int value) {
         int meta = 1;
-        ItemScrutinyNote note = (ItemScrutinyNote)TFItems.scrutinyNote;
+        ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.forResearch(which, value);
         ItemStack finishedResearch = new ItemStack(note, 1, meta);
         setData(finishedResearch, ed);

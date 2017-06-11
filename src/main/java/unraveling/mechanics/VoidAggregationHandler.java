@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Iterator;
 
+import net.minecraftforge.oredict.OreDictionary;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -15,7 +16,7 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import unraveling.UnravelingMod;
-import unraveling.block.TFBlocks;
+import unraveling.block.UBlocks;
 import unraveling.tileentity.TileDarkGenMain;
 import unraveling.tileentity.TileDarkGen;
 import unraveling.mechanics.VoidPacketHandler;
@@ -31,17 +32,32 @@ import thaumcraft.api.WorldCoordinates;
 import thaumcraft.api.aspects.Aspect;
 import net.minecraft.tileentity.TileEntity;
 
-public class VoidAggregationHandler {
+/*
+How it works?
 
-	//private static HashMap<Integer, ArrayList<WorldCoordinates>> generatorsGroup = new HashMap<Integer, ArrayList<WorldCoordinates>>();
+if all void aggregators are working (consuming vis):
+they try to consume essentia (T & V) in some balanced way
+if they cannot: 
+    so bad.
+    something bad (but occasionaly useful) happens
+if they can:
+    convert one block
+
+if there's nothing to convert:
+all is OK
+if there's things to convert but unablle to:
+    something bad
+    
+*/
+
+public class VoidAggregationHandler {
+    
     public static final int GEN_NUM = 4;
 
-	//private static HashMap<Integer, WorldCoordinates> generatorsMain = new HashMap<Integer, WorldCoordinates>();
 	private static HashMap<WorldCoordinates, Integer> generatorsGroupId = new HashMap<WorldCoordinates, Integer>();
 	private static HashMap<Integer, ShapeData> generatorsShape = new HashMap<Integer, ShapeData>();
 	private static HashMap<Integer, HashSet<WorldCoordinates>> generatorsUpdated = new HashMap<Integer, HashSet<WorldCoordinates>>();
 	private static HashSet<WorldCoordinates> orphanGenerators = new HashSet<WorldCoordinates>();
-	// private static HashSet<WorldCoordinates> orphanGeneratorsMain = new HashMap<Integer, HashSet<WorldCoordinates>>();
     public static int ticks = 0;
 	private static Random rand = new Random();
     
@@ -101,9 +117,7 @@ public class VoidAggregationHandler {
     
     public static void generatorUpdateCallback(int group_id, TileEntity dg, World worldObj) {
         WorldCoordinates wc = new WorldCoordinates(dg);
-        //System.out.println("VAH: in callback(). " + group_id + " xCoord: " + dg.xCoord + " zCoord: " + dg.zCoord);
         HashSet<WorldCoordinates> validGens = generatorsUpdated.get(group_id);
-        //System.out.println("VAH: validGens " + validGens);
         if (validGens == null) {
             if (group_id == -1) {
                 group_id = assignId(dg, worldObj);
@@ -116,12 +130,9 @@ public class VoidAggregationHandler {
         }
         ShapeData shape = generatorsShape.get(group_id);
         if (shape == null) {
-            //System.out.println("VAH: null shape!");
             group_id = assignId(dg, worldObj);
         }
         
-        //System.out.println("VAH: validGens.size() " + validGens.size() + " " + validGens);
-
         if (validGens.contains(wc)) {
             validGens.clear();
             System.out.println("VAH: bad things incoming");
@@ -131,10 +142,8 @@ public class VoidAggregationHandler {
             // break
             return;
         }
-        //int old_size = validGens.size();
         validGens.add(wc);
         if (validGens.size() == GEN_NUM) {
-            // generatorsUpdated.put(group_id, 0);
             //System.out.println("VAH: in processTransformation(). ");
             processTransformation(worldObj, group_id);
             validGens.clear();
@@ -171,7 +180,7 @@ public class VoidAggregationHandler {
                     int meta = worldObj.getBlockMetadata(x, y, z);
                     if (id == Blocks.iron_ore && meta == 0) {
                         if (rand.nextInt(40) == 0) {
-                            worldObj.setBlock(x, y, z, TFBlocks.voidOre);
+                            worldObj.setBlock(x, y, z, UBlocks.voidOre);
                             worldObj.markBlockForUpdate(x, y, z);
                             
                             FMLProxyPacket message = VoidPacketHandler.makeTransformBlockPacket(x, y, z);
@@ -200,7 +209,7 @@ public class VoidAggregationHandler {
         for (int x = dgm.xCoord - 8; x <= dgm.xCoord + 8; x++) {
             for (int z = dgm.zCoord - 8; z <= dgm.zCoord + 8; z++) {
                 Block id = worldObj.getBlock(x, y, z);
-                if (id == TFBlocks.darkGen) {
+                if (id == UBlocks.darkGen) {
                     System.out.println("found gens at " + x + " " + y + " " + z);
                     // TODO: 
                     myGenerators.add(new WorldCoordinates(x, y, z, worldObj.provider.dimensionId));
@@ -219,24 +228,63 @@ public class VoidAggregationHandler {
         return true;
     }
     public int calcPotency(int group_id, World worldObj) {
-        ArrayList<Vec3> myGenerators = generatorsShape.get(group_id).cornersList();
+        ShapeData shape = generatorsShape.get(group_id);
+        int squareSide = shape.maxx - shape.minx;
+        int result = 0;
+        
+        ArrayList<Vec3> myGenerators = shape.cornersList();
 		for(int i = 0; i < GEN_NUM; i++) {
             Vec3 genPos = myGenerators.get(i);
             int x = (int)genPos.xCoord;
             int y = (int)genPos.yCoord;
             int z = (int)genPos.zCoord;
-            //TileEntity gen = worldObj.getTileEntity(x, y, z);
-            // TODO: check Tile Entity: light, catalyst
-            // check void ore and void blocks in area
+            TileEntity gen = worldObj.getTileEntity(x, y, z);
+            // result += catalyst
+            // result += consumed vis
+
         }
         
-        // Block id = worldObj.getBlock(x, y, z);
-        // int meta = worldObj.getBlockMetadata(x, y, z);
-        // TODO: check if this is ore
-
-        return 1;
+        for (int x = shape.minx; x <= shape.maxx; x++) {
+            for (int z = shape.minz; z <= shape.maxz; z++) {
+                for (int y = shape.cury; y <= shape.cury + squareSide; y++) {
+                    Block id = worldObj.getBlock(x, y, z);
+                    if (id == UBlocks.voidOre) {
+                        result += 1;
+                    }
+                    if (id.getUnlocalizedName().equals("voidmetalBlock") || id.getUnlocalizedName().equals("voidblock")) {
+                        result += 4;
+                    }
+                }
+            }
+        }
+        return result;
     }
-    
+    public int calcCostCap(int group_id, World worldObj) {
+        int base = 5;
+        int weakestCatalyst = 5;
+        int brightestPlace = 0;
+
+        ShapeData shape = generatorsShape.get(group_id);
+        
+        ArrayList<Vec3> myGenerators = shape.cornersList();
+		for(int i = 0; i < GEN_NUM; i++) {
+            Vec3 genPos = myGenerators.get(i);
+            int x = (int)genPos.xCoord;
+            int y = (int)genPos.yCoord;
+            int z = (int)genPos.zCoord;
+            TileEntity gen = worldObj.getTileEntity(x, y, z);
+            Block id = worldObj.getBlock(x, y, z);
+            int meta = worldObj.getBlockMetadata(x, y, z);
+            if (id != UBlocks.darkGen || meta != 0) {
+                return -1; // EVERYBODY PANIC
+            }
+            // TODO: check Tile Entity: light, catalyst
+            // if gen is not valid: retutn -1
+        }
+        return base - weakestCatalyst + brightestPlace / 2;
+    }
+
+
     public int calcFragility(int group_id, World worldObj) {
         ArrayList<Vec3> myGenerators = generatorsShape.get(group_id).cornersList();
 		for(int i = 0; i < GEN_NUM; i++) {
@@ -244,9 +292,13 @@ public class VoidAggregationHandler {
             int x = (int)genPos.xCoord;
             int y = (int)genPos.yCoord;
             int z = (int)genPos.zCoord;
+            
             //TileEntity gen = worldObj.getTileEntity(x, y, z);
             // TODO: check Tile Entity: light, catalyst
-            // check void ore and void blocks in area
+            
+            // TODO: check Tile Entity: essentia
+            // result += consumed essentia
+            
         }
         
         // Block id = worldObj.getBlock(x, y, z);
@@ -260,127 +312,26 @@ public class VoidAggregationHandler {
         NetworkRegistry.TargetPoint targetPoint = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, x, y, z, 64);
         UnravelingMod.genericChannel.sendToAllAround(message, targetPoint);
     }
-}
-
     
-    // -2: EVERYTHING IS BROKEN. cannot find GEN_NUM generators; We need to assign generators again
-    // -1: some of gens aren't valid but some of them are. Very unstable configuration. 
-    // 0: no essentia, no vis or something
-    // 1: OK
-    // TODO: I need just override ON BLOCK DROP in dark gen slaves
-    /*
-    public int checkGeneratorsAlive(TileDarkGenMain dgm) {
-        if (myGenerators.size() != GEN_NUM) {
-            return -2;
+    public void maybeSpawnBadThing(int fragility, int potency) {
+        /*
+        if (potency >= 500) {
+            maybe spawn Hungry Node
         }
-        int numHavingVis = 0;
-		for(int i = 0; i < GEN_NUM; i++) {
-            Vec3 genPos = myGenerators.get(i);
-            int x = (int)genPos.xCoord;
-            int y = (int)genPos.yCoord;
-            int z = (int)genPos.zCoord;
-            Block id = worldObj.getBlock(x, y, z);
-            int meta = worldObj.getBlockMetadata(x, y, z);
-            if (id != TFBlocks.darkGen || meta != 0) {
-                System.out.println("bad gen at " + genPos);
-                return -2;
-            } else {
-                // TODO: check Tile Entity: essentia, catalyst
-                // TODO: check Tile Entity: vis
-                ++numHavingVis;
-            }
+        if (potency >= 300) {
+            import thaumcraft.common.lib.utils.EntityUtils
+            maybe spawn wisp (tenebrae, vacuous, alienis)
+            if (potency >= 400)
+                EntityUtils.makeChampion(EntityMob entity, boolean persist)
         }
-        if (numHavingVis > 0 && numHavingVis < GEN_NUM) {
-            return -1;
+        if (potency >= 100) {
+            spawn shadow gas from TT
+            consume catalyst
+            flux 
+            blindness
+            attack player
         }
-        return 1;
-    }*/
 
-	
-
-/*
-	static ArrayList<WorldCoordinates> cache = new ArrayList<WorldCoordinates>();
-	public static ArrayList<Object[]> findClosestNodes(TileAbstractVisNode target,
-			TileAbstractVisNode parent, ArrayList<Object[]> in) {
-		
-		if (cache.size() > 512 || cache.contains(new WorldCoordinates(parent))) return in;
-		cache.add(new WorldCoordinates(parent));
-		
-		for (WeakReference<TileAbstractVisNode> childWR : parent.getChildren()) {
-			TileAbstractVisNode child = childWR.get();
-
-			if (child != null && !child.equals(target) && !child.equals(parent)) {
-				float r2 = inRange(child.getWorldObj(), child.getLocation(),
-						target.getLocation(), target.getRange());
-				if (r2 > 0) {
-					in.add(new Object[] { child, r2 });
-				}
-				
-				in = findClosestNodes(target, child, in);
-			}
-		}
-		return in;
-	}
-*/
-
-    
-
-
-	// public static HashMap<WorldCoordinates,WeakReference<TileAbstractVisNode>>
-	// noderef = new HashMap<WorldCoordinates,WeakReference<TileAbstractVisNode>>();
-	//
-	// public static TileAbstractVisNode getClosestNodeWithinRadius(World world, int x,
-	// int y, int z, int radius) {
-	// TileAbstractVisNode out = null;
-	// WorldCoordinates wc = null;
-	// float cd = Float.MAX_VALUE;
-	// for (int sx = x - radius; sx <= x + radius; sx++) {
-	// for (int sy = y - radius; sy <= y + radius; sy++) {
-	// for (int sz = z - radius; sz <= z + radius; sz++) {
-	// wc = new WorldCoordinates(sx,sy,sz,world.provider.dimensionId);
-	// if (noderef.containsKey(wc)) {
-	// float d = wc.getDistanceSquared(x, y, z);
-	// if (d<radius*radius && noderef.get(wc).get()!=null &&
-	// !noderef.get(wc).get().isReceiver() &&
-	// isNodeValid(noderef.get(wc).get().getParent())
-	// ) {
-	// out = noderef.get(wc).get();
-	// cd = d;
-	// }
-	// }
-	// }
-	// }
-	// }
-	// return out;
-	// }
-
-
-
-    /*
-    @Override
-    public void updateEntity() {
-        if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
-            // System.out.println("update . . ." + myGenerators.size() + " " + ticksExisted);
-            if (myGenerators.isEmpty()) {
-                if (!worldObj.isRemote) {
-                    if (++ticksExisted % 40 == 0) {
-                        if (searchForGenerators()) {
-                            getDescriptionPacket();
-                        };
-                    }
-                }
-            } else {
-                int genStatus = checkGeneratorsAlive();
-                boolean ok = describeSquareOrDie();
-                if (genStatus == -2 || !ok) {
-                    myGenerators.clear();
-                } else {
-                    processInfusion();
-                }
-            }
-        }
+        */
     }
-*/
-
-    
-    
+}

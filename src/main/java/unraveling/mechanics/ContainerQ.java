@@ -38,8 +38,7 @@ public class ContainerQ extends Container {
 
         //addSlotToContainer(slotInput = new SlotLimitedHasAspects(analyzer, 0, 22, 30));
         addSlotToContainer(slotInput = new Slot(analyzer, 0, 22, 30));
-        //addSlotToContainer(slotPaper = new SlotLimitedByClass(Items.paper.class, analyzer, 1, 124, 21));
-        //addSlotToContainer(slotPaper = new Slot(analyzer, 1, 124, 21));
+
         addSlotToContainer(slotPaper = new SlotLimitedByItemstack(new ItemStack(Items.paper), analyzer, 1, 124, 21));
         addSlotToContainer(slotScribe = new SlotLimitedByClass(IScribeTools.class, analyzer, 2, 91, 21));
         addSlotToContainer(slotNote = new SlotOutput(analyzer, 3, 156, 31));

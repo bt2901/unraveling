@@ -1,17 +1,11 @@
 package unraveling.dim;
 
-// save to nbt: move to storage
-// nbt: size, room coords
-// storage now is "level storage"
-// move to storage: addRoomsToMaze
-
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import unraveling.block.TFBlocks;
 
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -24,12 +18,7 @@ import thaumcraft.common.config.ConfigBlocks;
 
 
 /**
- * This is a maze of cells and walls.
- * 
- * The cells are at odd numbered x and y values, and the walls are at even numbered ones.  This does make the storage slightly inefficient, but oh wells.
- * 
- * @author Ben
- *
+ * Based on a Twilight Forest maze by Benimatic.
  */
 public class PyramidMain extends StructureComponent {
     
@@ -107,9 +96,6 @@ public class PyramidMain extends StructureComponent {
             newMaze.addBonusRoom(entranceX-i, entranceZ-i, PyramidMap.ROOMCENTRAL);
             if (i > 0) {
                 newMaze.addBonusRoom(mazes.get(i-1).rcoords[0] - 1, mazes.get(i-1).rcoords[1] - 1, PyramidMap.ROOM2HIGH);
-            }
-            if (i > 1) {
-                newMaze.addBonusRoom(mazes.get(i-2).rcoords[0] - 1, mazes.get(i-2).rcoords[1] - 1, PyramidMap.ROOM2HIGH);
             }
             // set seed again
             setFixedMazeSeed(newMaze, i);

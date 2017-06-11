@@ -12,12 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 
 /**
- * This is a maze of cells and walls.
- * 
- * The cells are at odd numbered x and y values, and the walls are at even numbered ones.  This does make the storage slightly inefficient, but oh wells.
- * 
- * @author Ben
- *
+ * Based on a Twilight Forest maze by Benimatic.
  */
 public class PyramidMap {
 	

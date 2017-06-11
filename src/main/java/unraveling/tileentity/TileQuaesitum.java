@@ -11,11 +11,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 
-import unraveling.item.ItemAspectNote;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
+import unraveling.item.UItems;
 import unraveling.item.ItemScrutinyNote;
 import unraveling.EldritchLore;
 import unraveling.mechanics.ExaminationData;

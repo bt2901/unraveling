@@ -16,7 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
+import unraveling.item.UItems;
 import unraveling.tileentity.TileDarkGen;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,17 +32,15 @@ public class BlockDarkGen extends BlockContainer {
 	
 	protected BlockDarkGen() {
 		super(Material.rock);
-		//this.setBlockBounds(0.1875F, 0.0F, 0.1875F, 0.8125F, 1.0F, 0.8125F);
 		this.setHardness(1.0F);
 		this.setStepSound(Block.soundTypeStone);
-        }
+    }
 
     /**
      * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
      */
     @Override
-	public boolean renderAsNormalBlock()
-    {
+	public boolean renderAsNormalBlock() {
         return false;
     }
 
@@ -51,8 +49,7 @@ public class BlockDarkGen extends BlockContainer {
      * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
      */
     @Override
-	public boolean isOpaqueCube()
-    {
+	public boolean isOpaqueCube() {
         return false;
     }
     
@@ -60,8 +57,7 @@ public class BlockDarkGen extends BlockContainer {
      * The type of render function that is called for this block
      */
     @Override
-	public int getRenderType()
-    {
+	public int getRenderType() {
     	return UnravelingMod.proxy.getDarkGenRenderID();
     }
     
@@ -69,8 +65,7 @@ public class BlockDarkGen extends BlockContainer {
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
     @Override
-	public IIcon getIcon(int side, int meta)
-    {
+	public IIcon getIcon(int side, int meta) {
         // the darkness gem will be rendered separately
         if (side == 0)
             return slabBottom;
@@ -89,8 +84,7 @@ public class BlockDarkGen extends BlockContainer {
      * @return The light value
      */
     @Override
-	public int getLightValue(IBlockAccess world, int x, int y, int z) 
-    {
+	public int getLightValue(IBlockAccess world, int x, int y, int z) {
     	return 0;
     }
     
@@ -105,8 +99,7 @@ public class BlockDarkGen extends BlockContainer {
      * @param z Z position
      * @return True if the block is a full cube
      */
-    public boolean isBlockNormalCube(World world, int x, int y, int z) 
-    {
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
     	return false;
     }
     
@@ -117,19 +110,11 @@ public class BlockDarkGen extends BlockContainer {
   
     @Override
 	@SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         BlockDarkGen.gemDark = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgem");
         BlockDarkGen.slabSide = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_slabside");
         BlockDarkGen.slabTop = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_top");
         BlockDarkGen.slabBottom = par1IconRegister.registerIcon(UnravelingMod.ID + ":darkgen_bottom");
-    }
-    /**
-     * A randomly called display update to be able to add particles or other items for display
-     */
-    @Override
-	@SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
     }
     
     public void breakBlock(World world, int par2, int par3, int par4, int par5, int par6) {

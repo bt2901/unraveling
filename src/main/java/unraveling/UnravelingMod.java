@@ -17,7 +17,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
 
-import unraveling.block.TFBlocks;
+import unraveling.block.UBlocks;
 import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
 import unraveling.mechanics.PacketQResearch;
@@ -27,13 +27,9 @@ import unraveling.dim.WorldProviderDemiplane;
 
 
 import cpw.mods.fml.relauncher.Side;
-//import unraveling.item.BehaviorTFMobEggDispense;
-//import unraveling.item.ItemTFMagicMap;
-//import unraveling.item.ItemTFMazeMap;
-import unraveling.item.TFItems;
-import unraveling.item.TFRecipes;
-//import unraveling.structures.StructureTFMajorFeatureStart;
-//import unraveling.tileentity.TileEntityTFFlameJet;
+import unraveling.item.UItems;
+import unraveling.item.URecipes;
+
 import unraveling.tileentity.TileEntityTFLichSpawner;
 import unraveling.tileentity.TileDarkGenMain;
 import unraveling.tileentity.TileDarkGen;
@@ -71,40 +67,20 @@ import thaumcraft.common.config.ConfigItems;
 public class UnravelingMod {
 	
 	public static final String ID = "unraveling";
-	public static final String VERSION = "0.0alpha";
+	public static final String VERSION = "0.1alpha";
 	
-	public static final String MODEL_DIR = "unraveling:textures/model/";
-	public static final String GUI_DIR = "unraveling:textures/gui/";
-	public static final String ENVRIO_DIR = "unraveling:textures/environment/";
-	public static final String ARMOR_DIR = "unraveling:textures/armor/";
-	
-	//public static final int GUI_ID_UNCRAFTING = 1;
-	//public static final int GUI_ID_FURNACE = 2;
-
-
 	public static int dimensionID;
-	public static int backupdimensionID = -777;
 	public static int dimensionProviderID;
-    
-	// misc options
-    public static boolean creatureCompatibility;
-    public static boolean allowPortalsInOtherDimensions;
-    public static String unravelingSeed;
-    public static String portalCreationItemString;
-
-	public static int idMobLich;
-	public static int idMobLichMinion;
-	public static int idMobLoyalZombie;
-	public static int idMobDeathTome;
-	//public static int idMobFirefly;
-
-    
+        
 	public static int idVehicleSpawnLichBolt = 1;
 	public static int idVehicleSpawnTwilightWandBolt = 2;
 	public static int idVehicleSpawnLichBomb = 3;
 	public static int idVehicleSpawnTomeBolt = 4;
+
+    public static final String MODEL_DIR = "unraveling:textures/model/";
+    public static final String GUI_DIR = "unraveling:textures/gui/";
+
 	
-	// public static final TFEventListener eventListener = new TFEventListener();
 	public static FMLEventChannel genericChannel;
 	public static SimpleNetworkWrapper netHandler;
     //public static PacketHandler voidPacketHandler;
@@ -128,10 +104,10 @@ public class UnravelingMod {
 		proxy.doPreLoadRegistration();
 
 		// initialize & register blocks
-		TFBlocks.registerBlocks();
+		UBlocks.registerBlocks();
 
 		// items
-		TFItems.registerItems();
+		UItems.registerItems();
 				
 	}
 
@@ -139,23 +115,11 @@ public class UnravelingMod {
 	public void load(FMLInitializationEvent evt) {
 
 		registerCreatures();
-		TFRecipes.registerRecipes();
+		URecipes.registerRecipes();
 		registerTileEntities();
         
 		// GUI
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-
-		
-		// event listener, for those events that seem worth listening to
-		//MinecraftForge.EVENT_BUS.register(eventListener);
-		//FMLCommonHandler.instance().bus().register(eventListener); // we're getting events off this bus too
-		// tick listener
-		// FMLCommonHandler.instance().bus().register(tickHandler);
-		
-		// make some channels for our maps
-		// TFMapPacketHandler mapPacketHandler = new TFMapPacketHandler();
-		// NetworkRegistry.INSTANCE.newEventDrivenChannel(ItemTFMagicMap.STR_ID).register(mapPacketHandler);
-		// NetworkRegistry.INSTANCE.newEventDrivenChannel(ItemTFMazeMap.STR_ID).register(mapPacketHandler);
 
 		// generic channel that handles biome change packets, but could handle some other stuff in the future
 		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
@@ -182,41 +146,25 @@ public class UnravelingMod {
 	public void postInit(FMLPostInitializationEvent evt) 
 	{
 		// register dimension with Forge
-        /*
-		if (!DimensionManager.isDimensionRegistered(UnravelingMod.dimensionID))
-		{
-			DimensionManager.registerDimension(UnravelingMod.dimensionID, UnravelingMod.dimensionProviderID);
-		}
-		else
-		{
-			FMLLog.warning("[unraveling] Twilight Forest detected that the configured dimension id '%d' is being used.  Using backup ID.  It is recommended that you configure this mod to use a unique dimension ID.", dimensionID);
-			DimensionManager.registerDimension(UnravelingMod.backupdimensionID, UnravelingMod.dimensionProviderID);
-			UnravelingMod.dimensionID = UnravelingMod.backupdimensionID;
-		}*/
+		//if (!DimensionManager.isDimensionRegistered(UnravelingMod.dimensionID))
+        //DimensionManager.registerDimension(UnravelingMod.dimensionID, UnravelingMod.dimensionProviderID);
 		
 		// thaumcraft integration
-		if (Loader.isModLoaded("Thaumcraft"))
-		{
+		if (Loader.isModLoaded("Thaumcraft")) {
 			registerThaumcraftIntegration();
-		}
-		else
-		{
+		} else {
 			FMLLog.info("[unraveling] Did not find Thaumcraft, did not load ThaumcraftApi integration.");
 		}
 	}
 	
     @EventHandler
-	public void startServer(FMLServerStartingEvent event)
-	{
-		// dispenser behaviors
-		// registerDispenseBehaviors(event.getServer());
-	}
+	public void startServer(FMLServerStartingEvent event) {}
 
 	private void registerCreatures() {
-		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLich.class, "Twilight Lich", idMobLich, 0xaca489, 0x360472);
-		TFCreatures.registerTFCreature(unraveling.entity.EntityTFDeathTome.class, "Death Tome", idMobDeathTome, 0x774e22, 0xdbcdbe);
-		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLichMinion.class, "Lich Minion", idMobLichMinion);
-		TFCreatures.registerTFCreature(unraveling.entity.EntityTFLoyalZombie.class, "Loyal Zombie", idMobLoyalZombie);
+		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLich.class, "Twilight Lich", 190, 0xaca489, 0x360472);
+		TFCreatures.registerTFCreature(unraveling.entity.EntityTFDeathTome.class, "Death Tome", 191, 0x774e22, 0xdbcdbe);
+		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLichMinion.class, "Lich Minion", 192);
+		TFCreatures.registerTFCreature(unraveling.entity.EntityTFLoyalZombie.class, "Loyal Zombie", 81);
 		
 		EntityRegistry.registerModEntity(unraveling.entity.boss.EntityTFLichBolt.class, "tflichbolt",  idVehicleSpawnLichBolt, this, 150, 2, true);
 		EntityRegistry.registerModEntity(unraveling.entity.EntityTFTwilightWandBolt.class, "tftwilightwandbolt", idVehicleSpawnTwilightWandBolt, this, 150, 5, true);
@@ -226,15 +174,11 @@ public class UnravelingMod {
 	
 	
 	private void registerTileEntities() {
-		//GameRegistry.registerTileEntity(TileEntityTFFirefly.class, "Firefly");
 		GameRegistry.registerTileEntity(TileEntityTFLichSpawner.class, "Lich Spawner");
 		GameRegistry.registerTileEntity(TileDarkGenMain.class, "Void Aggregator");
 		GameRegistry.registerTileEntity(TileDarkGen.class, "Darkness Generator");
         GameRegistry.registerTileEntity(TileQuaesitum.class, "Quaesitum");
         GameRegistry.registerTileEntity(TileVoidPortal.class, "Void Portal");
-		//GameRegistry.registerTileEntity(TileEntityTFSmoker.class, "Swamp Smoker");
-		//GameRegistry.registerTileEntity(TileEntityTFPoppingJet.class, "Popping Flame Jet");
-		//GameRegistry.registerTileEntity(TileEntityTFFlameJet.class, "Lit Flame Jet");
 	}
 
 	/**
@@ -245,22 +189,11 @@ public class UnravelingMod {
 		try {
 	
 			// items
-			registerTCObjectTag(TFItems.scepterTwilight, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.ELDRITCH, 8).add(Aspect.WEAPON, 8));
-			registerTCObjectTag(TFItems.scepterLifeDrain, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.LIFE, 8).add(Aspect.HUNGER, 8));
-			registerTCObjectTag(TFItems.scepterZombie, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.UNDEAD, 8).add(Aspect.ENTROPY, 8));
-			//registerTCObjectTag(TFItems.magicMapFocus, -1, (new AspectList()).add(Aspect.MAGIC, 4).add(Aspect.SENSES, 8));
-			//registerTCObjectTag(TFItems.mazeMapFocus, -1, (new AspectList()).add(Aspect.MAGIC, 4).add(Aspect.SENSES, 8).add(Aspect.ORDER, 4));
+			registerTCObjectTag(UItems.scepterTwilight, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.ELDRITCH, 8).add(Aspect.WEAPON, 8));
+			registerTCObjectTag(UItems.scepterLifeDrain, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.LIFE, 8).add(Aspect.HUNGER, 8));
+			registerTCObjectTag(UItems.scepterZombie, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.UNDEAD, 8).add(Aspect.ENTROPY, 8));
 
-            
-			// blocks
-			// registerTCObjectTag(TFBlocks.firefly, -1, (new AspectList()).add(Aspect.FLIGHT, 1).add(Aspect.LIGHT, 2));
-			//registerTCObjectTag(TFBlocks.uncraftingTable, -1, (new AspectList()).add(Aspect.TREE, 4).add(Aspect.ENTROPY, 8).add(Aspect.EXCHANGE, 12).add(Aspect.CRAFT, 16));
-			//registerTCObjectTag(TFBlocks.fireJet, -1, (new AspectList()).add(Aspect.FIRE, 4).add(Aspect.AIR, 2).add(Aspect.MOTION, 2));
-			//registerTCObjectTag(TFBlocks.forceField, -1, (new AspectList()).add(Aspect.MAGIC, 3).add(Aspect.ARMOR, 4));
-			
-            ThaumcraftApi.addSmeltingBonus(new ItemStack(TFBlocks.voidOre), new ItemStack(ConfigItems.itemNugget, 1, 7));
-
-			
+            ThaumcraftApi.addSmeltingBonus(new ItemStack(UBlocks.voidOre), new ItemStack(ConfigItems.itemNugget, 1, 7));
 		} 
 		catch (Exception e) 
 		{
@@ -296,13 +229,7 @@ public class UnravelingMod {
 	 */
 	private void loadConfiguration(Configuration configFile) {
 		configFile.load();
-		
-    	// fixed values, don't even read the config
-    	idMobLich = 190;
-    	idMobLichMinion = 192;
-    	idMobLoyalZombie = 193;
-    	idMobDeathTome = 203;
-	    
+			    
 	    if (configFile.hasChanged()) {
 	    	configFile.save();
 	    }

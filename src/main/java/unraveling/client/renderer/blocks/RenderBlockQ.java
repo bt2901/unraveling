@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.ItemRenderer;
 
 import unraveling.block.BlockQuaesitum;
-import unraveling.block.TFBlocks;
+import unraveling.block.UBlocks;
 import unraveling.tileentity.TileQuaesitum;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -60,8 +60,8 @@ public class RenderBlockQ extends TileEntitySpecialRenderer implements ISimpleBl
     
     @Override
     public final void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-        renderInventoryBlock(TFBlocks.quaesitum, 0, 0, RenderBlocks.getInstance());
-        //renderBlock(Tessellator.instance, Minecraft.getMinecraft().theWorld, 0, 0, 0, TFBlocks.quaesitum, dummy, 0, 0, RenderBlocks.getInstance(), true);
+        renderInventoryBlock(UBlocks.quaesitum, 0, 0, RenderBlocks.getInstance());
+        //renderBlock(Tessellator.instance, Minecraft.getMinecraft().theWorld, 0, 0, 0, UBlocks.quaesitum, dummy, 0, 0, RenderBlocks.getInstance(), true);
     }    
     /*
     @Override

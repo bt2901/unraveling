@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-import unraveling.item.TFItems;
-import unraveling.block.TFBlocks;
+import unraveling.item.UItems;
+import unraveling.block.UBlocks;
 import unraveling.UnravelingMod;
 import unraveling.item.ItemArtifact;
 
@@ -68,12 +68,12 @@ public class EldritchLore {
             ResearchItem research = new UResearchItem("VOIDORE", "UNRAVELING", 
                 new AspectList(), 
                 -8, -5, 1, 
-                new ItemStack(TFBlocks.voidOre)
+                new ItemStack(UBlocks.voidOre)
             ).registerResearchItem();
             
             ItemStack empty = new ItemStack(ConfigBlocks.blockHole, 1, 15);
             ItemStack iron = new ItemStack(Blocks.iron_ore);
-            ItemStack dg = new ItemStack(TFBlocks.darkGen);
+            ItemStack dg = new ItemStack(UBlocks.darkGen);
             
             registerResearchItemC("CREATEVOIDORE", Arrays.asList(new Object[] { 
     			new AspectList(), 
@@ -103,7 +103,7 @@ public class EldritchLore {
         (new UResearchItem("INTRO", "UNRAVELING", 
             new AspectList(), 
             -4, -8, 0, 
-            new ItemStack(TFItems.necroFocus, 1, 0))
+            new ItemStack(UItems.necroFocus, 1, 0))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("INTRO.1"), 
             new ResearchPage("INTRO.2") 
@@ -112,7 +112,7 @@ public class EldritchLore {
         // --------- Quaesitum ------------
         recipes.put("QBlock", 
             ThaumcraftApi.addArcaneCraftingRecipe(
-                "QBLOCK", new ItemStack(TFBlocks.quaesitum), 
+                "QBLOCK", new ItemStack(UBlocks.quaesitum), 
                 new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), 
                 new Object[]{"   ", "GSG", "RRR", 
                     Character.valueOf('G'), Items.gold_ingot, 
@@ -121,7 +121,7 @@ public class EldritchLore {
         (new UResearchItem("Q", "UNRAVELING", 
             new AspectList(), 
             -8, -8, 0, 
-            new ItemStack(TFBlocks.quaesitum))
+            new ItemStack(UBlocks.quaesitum))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
@@ -141,7 +141,7 @@ public class EldritchLore {
         (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
             new AspectList(), 
             -8, 2, 0, 
-            new ItemStack(TFBlocks.quaesitum))
+            new ItemStack(UBlocks.quaesitum))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage("2") 

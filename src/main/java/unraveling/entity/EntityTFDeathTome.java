@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import unraveling.entity.ai.EntityAITFMagicAttack;
-import unraveling.item.TFItems;
 
 public class EntityTFDeathTome extends EntityMob {
 
@@ -135,7 +134,6 @@ public class EntityTFDeathTome extends EntityMob {
 	protected void dropRareDrop(int par1)
     {
         this.dropItem(Items.book, 1);
-        //this.dropItem(TFItems.magicMapFocus, 1);
     }
 	
 

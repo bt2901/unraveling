@@ -3,11 +3,6 @@ package unraveling.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-//import fox.spiteful.forbidden.Config;
-//import fox.spiteful.forbidden.DarkAspects;
-//import fox.spiteful.forbidden.Forbidden;
-//import fox.spiteful.forbidden.items.ForbiddenItems;
-
 import unraveling.UnravelingMod;
 import unraveling.entity.EntityTFLoyalZombie;
 import net.minecraft.potion.Potion;

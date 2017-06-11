@@ -9,18 +9,13 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 import unraveling.dim.PyramidFeatureStart;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
-//MapGenTFMajorFeature
 public class PyramidFeature extends MapGenStructure {
 	
     public PyramidFeature() {}
 
 	@Override
 	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
-        //return false;
-        // return true;
-		// return !(chunkZ < 5 && chunkX < 5);
 		return (chunkZ % 32 == 0 && chunkX % 32 == 0);
 	}
 

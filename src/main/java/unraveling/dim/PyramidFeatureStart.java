@@ -31,9 +31,6 @@ public class PyramidFeatureStart extends StructureStart {
 		int z = (chunkZ * 16) + 8;
 		int y = 50; //TODO: maybe a biome-specific altitude for some of them?
 
-		//int x = 100;
-		//int z = 100;
-		
 		StructureComponent firstComponent = new PyramidMain(world, rand, x, y, z);
         components.add(firstComponent);
         firstComponent.buildComponent(firstComponent, components, rand);

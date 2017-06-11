@@ -8,11 +8,10 @@ import io.netty.buffer.ByteBuf;
 import unraveling.tileentity.TileQuaesitum;
 import unraveling.mechanics.PacketTile;
 import unraveling.UnravelingMod;
-import unraveling.item.TFItems;
 
 public class PacketQResearch extends PacketTile<TileQuaesitum> implements IMessageHandler<PacketQResearch, IMessage> {
 
-    private static final long serialVersionUID = 1497188581985763661L;
+    private static final long serialVersionUID = 1497188581985763661L; // TODO: why? I copied this from TT, don't know what this number does
     boolean locked;
 
     public PacketQResearch() {
@@ -26,13 +25,11 @@ public class PacketQResearch extends PacketTile<TileQuaesitum> implements IMessa
     @Override
     public void toBytes(ByteBuf byteBuf) {
         super.toBytes(byteBuf);
-        //byteBuf.writeBoolean(locked);
     }
 
     @Override
     public void fromBytes(ByteBuf byteBuf) {
         super.fromBytes(byteBuf);
-        //locked = byteBuf.readBoolean();
     }
 
     @Override

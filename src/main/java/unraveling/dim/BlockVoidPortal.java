@@ -14,7 +14,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
 import unraveling.dim.TileVoidPortal;
-import unraveling.item.TFItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

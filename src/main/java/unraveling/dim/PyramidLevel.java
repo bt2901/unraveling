@@ -1,10 +1,5 @@
 package unraveling.dim;
 
-// save to nbt: move to storage
-// nbt: size, room coords
-// storage now is "level storage"
-// move to storage: addRoomsToMaze
-
 import java.util.Random;
 import java.util.Arrays;
 
@@ -12,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import unraveling.block.TFBlocks;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import java.util.List;
@@ -24,12 +18,7 @@ import thaumcraft.common.config.ConfigBlocks;
 
 
 /**
- * This is a maze of cells and walls.
- * 
- * The cells are at odd numbered x and y values, and the walls are at even numbered ones.  This does make the storage slightly inefficient, but oh wells.
- * 
- * @author Ben
- *
+ * Based on a Twilight Forest maze by Benimatic.
  */
 public class PyramidLevel extends StructureComponent {
     
@@ -49,17 +38,13 @@ public class PyramidLevel extends StructureComponent {
     }
 	public PyramidLevel(Random rand, int x, int y, int z, int myLevel, PyramidMap myMaze) {
 		super(0);
-        int entranceX = 11;
-        int entranceZ = 11;
         
         cellsWidth = myMaze.cellsWidth;
         cellsDepth = myMaze.cellsDepth;
         
         this.rawWidth = cellsWidth * 2 + 1;
 		this.rawDepth = cellsDepth * 2 + 1;
-        // default values
         pstorage = myMaze;
-		
 		
         this.rand = rand;
 
@@ -100,19 +85,12 @@ public class PyramidLevel extends StructureComponent {
 		// clear the area
 		fillWithAir(world, sbb, 1, 2, 1, getDiameter(), PyramidMain.height, getDiameter());
         
-        // fillWithBlocks(world, sbb, 0, 0, 0, getDiameter(), 0, getDiameter(), TFBlocks.mazestone, Blocks.stone, false);
-        // fillWithBlocks(world, sbb, 0, 5, 0, getDiameter(), 5, getDiameter(), TFBlocks.mazestone, Blocks.stone, true);
 		fillWithMetadataBlocks(world, sbb, 
-            1, PyramidMain.height + 1, 1, 
-            getDiameter(), PyramidMain.height + 1, getDiameter(), 
+            1, PyramidMain.height + 1, 1, getDiameter(), PyramidMain.height + 1, getDiameter(), 
             PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
-		//fillWithMetadataBlocks(world, sbb, 1, 1, 1, getDiameter() + 1, 1, getDiameter() + 1, 
-        //    PyramidMain.rootBlockID, PyramidMain.rootBlockMeta, PyramidMain.rootBlockID, PyramidMain.rootBlockMeta, false);
 		
 		copyToStructure(world, 1, 2, 1, this, sbb);
-
 		return true;
-
 	}
 
 
@@ -133,7 +111,7 @@ public class PyramidLevel extends StructureComponent {
                     mdx--;
                     mdz--;
                 }
-                // only draw walls.  if the data is 0 the there's a wall
+                // draw walls.  if the data is 0 the there's a wall
 				if (getRaw(x, z) == 0) {
 					if(isEven(x) && isEven(z)) {
 							for(int even = 0; even < PyramidMain.evenBias; even++) {
@@ -175,17 +153,9 @@ public class PyramidLevel extends StructureComponent {
                         what = PyramidMain.rootBlockID;
                         meta = PyramidMain.rootBlockMeta;
                     }
-                    if (level == 2) {
-                        //System.out.println("Making fancy floor! " + x + " " + z);
-                        //System.out.println("set: " + mdx + " " + mdz + " " + dy);
-                        //System.out.println("set: " + (mdx + PyramidMain.oddBias + PyramidMain.evenBias)
-                        //    + " " + (mdz + PyramidMain.oddBias + PyramidMain.evenBias) + " " + dy);
-                    }
                     for(int i = 0; i < PyramidMain.oddBias + PyramidMain.evenBias; ++i) {
                         for(int j = 0; j < PyramidMain.oddBias + PyramidMain.evenBias; ++j) {
-                            // for(int y = 0; y < PyramidMain.height + 1; y++) {
                             super.placeBlockAtCurrentPosition(world, what, meta, mdx + i, dy - 1, mdz + j, sbb);
-
                         }
                     }
                 }
@@ -270,7 +240,6 @@ public class PyramidLevel extends StructureComponent {
 	 */
 	@Override
 	protected void func_143011_b(NBTTagCompound par1NBTTagCompound) {
-		// super.func_143011_b(par1NBTTagCompound);
         pstorage = PyramidMap.readFromNBT(par1NBTTagCompound);
  	}
 	

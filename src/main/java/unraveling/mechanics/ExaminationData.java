@@ -40,12 +40,14 @@ public class ExaminationData {
     public String aspectTag = null;
     public String ResearchData = null;
     
+    public static int ON_ASPECT = 0;
+    public static int ON_ITEM = 1;
 
 	public ExaminationData() {}
     
     public static ExaminationData onAspect(Aspect a) {
         ExaminationData ed = new ExaminationData();
-        ed.noteType = 0;
+        ed.noteType = ON_ASPECT;
         ed.value = 1;
         ed.aspectTag = a.getTag();
         ed.ResearchData = "";
@@ -54,17 +56,16 @@ public class ExaminationData {
 
     public static ExaminationData forResearch(String desc, int value) {
         ExaminationData ed = new ExaminationData();
-        ed.noteType = 1;
+        ed.noteType = ON_ITEM;
         ed.value = value;
         ed.aspectTag = "";
         ed.ResearchData = desc;
         return ed;
     }
 
-
     public String whyICannotUseIt(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
-        if (noteType == 0) {
+        if (noteType == ON_ASPECT) {
             Aspect aspect = Aspect.getAspect(aspectTag);
             if (aspect == null) {
                 return StatCollector.translateToLocal("tc.unknownobject");
@@ -86,9 +87,7 @@ public class ExaminationData {
             }
             return null;
         }
-        if (noteType == 1) {
-            //System.out.println("doesPlayerHaveRequisites: " + ResearchData);
-            //System.out.println("Research: " + );
+        if (noteType == ON_ITEM) {
             if (ResearchCategories.getResearch(ResearchData) == null) {
                 return StatCollector.translateToLocal("tc.unknownobject");
             }
@@ -109,10 +108,10 @@ public class ExaminationData {
             return details;
         }
         String prefix = StatCollector.translateToLocal("u.note." + noteType);
-        if (noteType == 0) {
+        if (noteType == ON_ASPECT) {
             details = StatCollector.translateToLocal("tc.aspect.help." + aspectTag);
         } 
-        if (noteType == 1) {
+        if (noteType == ON_ITEM) {
             details = ResearchData;
         }
         String desc = new ChatComponentTranslation(prefix, new Object[]{details}).getUnformattedText();
@@ -124,12 +123,8 @@ public class ExaminationData {
     public boolean canSeeAdvancedDescription(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
         return ResearchManager.isResearchComplete(playerName, "RESEARCHER2");
-        // return true;
     }
 
-    
-
-	
 	public ExaminationData readFromNBT(NBTTagCompound nbttagcompound) {
         noteType = nbttagcompound.getInteger("noteType");
         ResearchData = nbttagcompound.getString("ResearchData");
@@ -148,14 +143,12 @@ public class ExaminationData {
             nbttagcompound.setString("aspect", aspectTag);
         }
     }
-    // assuming !world.isRemote
+
     public void onUse(World world, EntityPlayer player) {
-        
-        System.out.println("use note: "  + noteType + "|" + aspectTag + "|" + ResearchData);
         if (world.isRemote) {
             return;
         }
-        if (noteType == 0) {
+        if (noteType == ON_ASPECT) {
             String playerName = player.getCommandSenderName();
             PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
             int amount = ScanManager.checkAndSyncAspectKnowledge(player, Aspect.getAspect(aspectTag), value);
@@ -164,14 +157,13 @@ public class ExaminationData {
             ResearchManager.scheduleSave(player);
             return;
         }
-        if (noteType == 1) {
+        if (noteType == ON_ITEM) {
             String playerName = player.getCommandSenderName();
-            // String key = "CRIMSON";
             String key = ResearchData;
             if (!ResearchManager.isResearchComplete(playerName, key)) {
                 PacketHandler.INSTANCE.sendTo((IMessage)new PacketResearchComplete(key), (EntityPlayerMP)player);
                 Thaumcraft.proxy.getResearchManager().completeResearch(player, key);
-                world.playSoundAtEntity((Entity)player, "thaumcraft:learn", 0.75f, 1.0f);
+                world.playSoundAtEntity((Entity)player, UnravelingMod.ID + ":research.clue", 1.0f, 1.0f);
             }
             ResearchManager.scheduleSave(player);
 
