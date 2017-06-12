@@ -36,18 +36,6 @@ Machine Parts:
 
 
 
-absolutely bare bones:
-
-new dim
-empty pyramid
->1 rooms with devices
-research
-
-
-
-
-
-
     
         for (ArrayList<Item> itemArrayList : itemRegistry.values()) {
             for (Item item : itemArrayList) {

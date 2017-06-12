@@ -27,6 +27,8 @@ public class PyramidMap {
 	protected int rawDepth;
 	protected int[] storage;
     private long mySeed;
+
+	public static final int ROOM_INFO_LEN = 3;
 	
 	public static final int OUT_OF_BOUNDS = Integer.MIN_VALUE;
 	public static final int OOB = OUT_OF_BOUNDS;
@@ -34,9 +36,11 @@ public class PyramidMap {
 	public static final int ROOMCENTRAL = 6;
 	public static final int ROOM2LOW = 7;
 	public static final int ROOM2HIGH = 8;
+	public static final int ROOM2SUDDEN_LOW = 9;
+	public static final int ROOM_VIRTUAL = 10;
 	
 	public Random rand;
-    public int[] rcoords;
+    public int[] rcoords = new int[0];
 	
 	public PyramidMap(int cellsWidth, int cellsDepth) {
 		
@@ -180,6 +184,9 @@ public class PyramidMap {
 	 */
 	public void carveCustomRoom(int cx, int cz, int type)
 	{
+        if (type == ROOM_VIRTUAL) {
+            return;
+        }
 		int rx = cx * 2  + 1;
 		int rz = cz * 2  + 1;
 		
@@ -200,16 +207,16 @@ public class PyramidMap {
 		
 		// make 4 exits (if not at the edge of the maze)
 		if (getRaw(rx, rz + 4) != OUT_OF_BOUNDS) {
-			putRaw(rx, rz + 3, type);
+			putRaw(rx, rz + 3, ROOM);
 		}
 		if (getRaw(rx, rz - 4) != OUT_OF_BOUNDS) {
-			putRaw(rx, rz - 3, type);
+			putRaw(rx, rz - 3, ROOM);
 		}
 		if (getRaw(rx + 4, rz) != OUT_OF_BOUNDS) {
-			putRaw(rx + 3, rz, type);
+			putRaw(rx + 3, rz, ROOM);
 		}
 		if (getRaw(rx- 4, rz) != OUT_OF_BOUNDS) {
-			putRaw(rx - 3, rz, type);
+			putRaw(rx - 3, rz, ROOM);
 		}
 	}	
 	
@@ -234,9 +241,16 @@ public class PyramidMap {
 	 * @param sx The starting x coordinate
 	 * @param sz The starting y coordinate
 	 */
-	public void generateRecursiveBacktracker(int sx, int sz)
-	{
-		rbGen(sx, sz);
+	public void generateRecursiveBacktracker(int sx, int sz) {
+        boolean roomHere = !cellEquals(sx, sz, 0);
+        int attempts = 0;
+        while(roomHere && attempts < 10) {
+            sx = rand.nextInt(cellsWidth - 2) + 1;
+            sz = rand.nextInt(cellsDepth - 2) + 1;
+            attempts += 1;
+            roomHere = !cellEquals(sx, sz, 0);
+        }
+        rbGen(sx, sz);
 	}
 	
 	/**
@@ -321,11 +335,11 @@ public class PyramidMap {
 			return true;
 		}
 		
-		for (int i = 0; i < rcoords.length / 3; i++)
+		for (int i = 0; i < rcoords.length / ROOM_INFO_LEN; i++)
 		{
-			int rx = rcoords[i * 3];
-			int rz = rcoords[i * 3 + 1];
-			int rtype = rcoords[i * 3 + 2];
+			int rx = rcoords[i * ROOM_INFO_LEN];
+			int rz = rcoords[i * ROOM_INFO_LEN + 1];
+			int rtype = rcoords[i * ROOM_INFO_LEN + 2];
 			
 			if (rx == 0 && rz == 0) {
 				continue;
@@ -338,31 +352,38 @@ public class PyramidMap {
 		return false;
 	}
     
-	public void addRoomsToMaze(int nrooms) {
-        rcoords = new int[nrooms * 3];
-
+	public void addRandomRoom(int minDistWalls, int minDistRooms, int type) {
+        int l = rcoords.length;
+        int[] rcoords2 = new int[l + ROOM_INFO_LEN];
+        System.arraycopy(rcoords, 0, rcoords2, 0, l);
+        rcoords = rcoords2;
+        
+        minDistWalls += 1;
 		// add room coordinates, trying to keep them separate from existing rooms
-		for (int i = 0; i < nrooms; i++)
-		{
-			int rx, rz;
-			do {
-				rx = rand.nextInt(cellsWidth - 2) + 1;
-				rz = rand.nextInt(cellsDepth - 2) + 1;
-			} while(isNearRoom(rx, rz, rcoords, i == 1 ? 7 : 4));
 
-			carveCustomRoom(rx, rz, ROOM);
-			
-			//System.out.println("Initially carving room " + rx + ", " + rz);
+        int attempts = 0;
+        int rx, rz;
+        boolean badPlace;
+        do {
+				rx = rand.nextInt(cellsWidth - 2*minDistWalls) + minDistWalls;
+				rz = rand.nextInt(cellsDepth - 2*minDistWalls) + minDistWalls;
+                attempts += 1;
+                badPlace = isNearRoom(rx, rz, rcoords, minDistRooms);
+        } while(badPlace && attempts < 10);
 
-			rcoords[i * 3] = rx;
-			rcoords[i * 3 + 1] = rz;
-			rcoords[i * 3 + 2] = ROOM;
-		}
+        if (!badPlace) {
+                carveCustomRoom(rx, rz, type);
+                rcoords[l] = rx;
+                rcoords[l + 1] = rz;
+                rcoords[l + 2] = type;
+        } else {
+                System.out.println("failed to make room of type " + type + " at size " + cellsWidth);
+        }
 	}
 
 	public void addBonusRoom(int entranceX, int entranceZ, int type) {
         int l = rcoords.length;
-        int[] rcoords2 = new int[l + 3];
+        int[] rcoords2 = new int[l + ROOM_INFO_LEN];
         System.arraycopy(rcoords, 0, rcoords2, 0, l);
 
 		rcoords2[l] = entranceX;

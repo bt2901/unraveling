@@ -97,7 +97,7 @@ public class VoidAggregationHandler {
                 return id;
             }
         }
-        System.out.println("VAH: in assignId(). ");
+        System.out.println("VAH: in assignId(). orphans: " + orphanGenerators.size());
         if (orphanGenerators.size() < 3) {
             orphanGenerators.add(wc);
             return -1;

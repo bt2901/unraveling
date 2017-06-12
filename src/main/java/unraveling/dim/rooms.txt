@@ -19,7 +19,7 @@ pyramid layout:
  
  
  Ancient Stone
- не работает с Portable Hole
+ не работает с Portable Hole?
  
 верхний этаж - башня из Ancient Stone 
 похожая на Twilight. Там будет сражение.
@@ -275,23 +275,18 @@ Macerator.addRecipe(<minecraft:dye:15> * 15, <BiomesOPlenty:bones:2>);
     Liquid Death in walls?
     
 
-################
-#              |
-#              |
-#  ######      |
-#  #           |
-#  #           |
-#  #           |
-#  #           |
-#              |
-#              |
-#              |
-#          #####
-#          #   |
-#          #   |
-#          #   |
-#----------#----
+    
+2 leveled rooms:
 
+room on a top of other room
+
+room on a top of maze (terrarium / aquarium)
+
+maze on a top of room (balcony? / glass)
+
+2DO: no rooms close to border
+
+    
 
 hadesX32.png.mcmeta
 
@@ -301,3 +296,26 @@ hadesX32.png.mcmeta
 		"frametime": 5
 	}
 }
+
+
+block cosmetic solid
+
+11 ancient rock
+12 ancient stone
+14 crusty stone
+
+7 arcane brick
+6 arcane block
+
+1 obsidian tile
+
+block eldritch 4
+glowy
+
+blocksStairEldritch 
+minecraft:stonebrick
+
+2DO: wall thickness, floor thickness
+
+pretty rooms: head block -> wall block at the edges
+

@@ -19,6 +19,7 @@ public class PyramidFeatureStart extends StructureStart {
     static
     {
     	MapGenStructureIO.registerStructure(PyramidFeatureStart.class, "Ziggurath");
+        MapGenStructureIO.func_143031_a(ComponentPyramidRoom.class, "ZRoom");
         MapGenStructureIO.func_143031_a(PyramidMain.class, "ZMain");
         MapGenStructureIO.func_143031_a(PyramidLevel.class, "ZLevel");
     }
@@ -29,7 +30,7 @@ public class PyramidFeatureStart extends StructureStart {
 	public PyramidFeatureStart(World world, Random rand, int chunkX, int chunkZ)  {
 		int x = (chunkX * 16) + 8;
 		int z = (chunkZ * 16) + 8;
-		int y = 50; //TODO: maybe a biome-specific altitude for some of them?
+		int y = 50 - PyramidMain.height; //TODO: maybe a biome-specific altitude for some of them?
 
 		StructureComponent firstComponent = new PyramidMain(world, rand, x, y, z);
         components.add(firstComponent);

@@ -35,7 +35,7 @@ public class PyramidMain extends StructureComponent {
 	public static int head = 0;   // blocks placed above the maze
 	public static int roots = 0;  // blocks placed under the maze (used for hedge mazes)
 
-	public static int levelsTall = 4;
+	public static int levelsTall = 6;
 	
 	public int worldX; // set when we first copy the maze into the world
 	public int worldY;
@@ -61,8 +61,8 @@ public class PyramidMain extends StructureComponent {
 	protected int rawDepth;
 	
 	public static final int OUT_OF_BOUNDS = Integer.MIN_VALUE;
-    public    int cellsWidth = 12;
-    public    int cellsDepth = 12;
+    public    int cellsWidth = 22;
+    public    int cellsDepth = 22;
 	
     private ArrayList<PyramidMap> mazes = new ArrayList<PyramidMap>();
     
@@ -72,7 +72,6 @@ public class PyramidMain extends StructureComponent {
 	public PyramidMain(World world, Random rand, int x, int y, int z) {
 		super(0);
 
-        levelsTall = 3;
         int entranceX = cellsDepth/2;
         int entranceZ = cellsWidth/2;
 		this.width = cellsWidth;
@@ -85,18 +84,37 @@ public class PyramidMain extends StructureComponent {
 
         int radius = (int) ((cellsWidth + 2) * (evenBias + oddBias) * 0.5);
 		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+1), z + radius);
-        
+        //int prev_x = mazes.get(i-1).rcoords[j * 3];
+        //int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
+        //int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
         for (int i=0; i < levelsTall; ++i) {
             PyramidMap newMaze = new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2);
             
             // set the seed to a fixed value based on this maze's x and z
             setFixedMazeSeed(newMaze, i);
-
-            newMaze.addRoomsToMaze(2);
+            // room 0
             newMaze.addBonusRoom(entranceX-i, entranceZ-i, PyramidMap.ROOMCENTRAL);
+            // room 1
+            boolean twoleveled = false;
             if (i > 0) {
-                newMaze.addBonusRoom(mazes.get(i-1).rcoords[0] - 1, mazes.get(i-1).rcoords[1] - 1, PyramidMap.ROOM2HIGH);
+                int j = 2;
+                int prev_x = mazes.get(i-1).rcoords[j * 3];
+                int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
+                int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
+                if (prev_x != 0 && prev_z != 0 && prev_t == PyramidMap.ROOM2LOW) {
+                    newMaze.addBonusRoom(prev_x - 1, prev_z - 1, PyramidMap.ROOM2HIGH);
+                    twoleveled = true;
+                }
             }
+            if (!twoleveled) {
+                newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+            }
+            // room 2
+            newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2LOW);
+            // room 3
+            // newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+            
+            
             // set seed again
             setFixedMazeSeed(newMaze, i);
             // make actual maze
@@ -104,7 +122,29 @@ public class PyramidMain extends StructureComponent {
             mazes.add(newMaze);
         }
         
-        
+/*
+                if (room_index == 1) { // try to add a single 2 leveled room
+                        for (int j = 0; j < mazes.get(i-1).rcoords.length/PyramidMap.ROOM_INFO_LEN; ++j) {
+                                break;
+                            }
+                        }
+                        // newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+                    } else {
+                    }
+                    newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+                }
+                if (room_index > 1) {
+                    if (room_index == room2index && false) {
+                        newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+                    } else {
+                        newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
+                    // } else if (room_index == room2index + 1) {
+                    // newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2SUDDEN_LOW);
+                    }
+                }
+            }
+
+*/        
 		
 		
 	}
@@ -174,12 +214,33 @@ public class PyramidMain extends StructureComponent {
 					
         int centerX = boundingBox.minX + ((boundingBox.maxX - boundingBox.minX) / 2);
         int centerZ = boundingBox.minZ + ((boundingBox.maxZ - boundingBox.minZ) / 2);
-        for (int i=0; i < levelsTall; ++i) {
+        for (int l=0; l < levelsTall; ++l) {
 			PyramidLevel levelBuilder = new PyramidLevel(random, 
-                centerX, boundingBox.minY + (height)*i, centerZ, i, mazes.get(i));
+                centerX, boundingBox.minY + (height)*l, centerZ, l, mazes.get(l));
 			list.add(levelBuilder);
 			levelBuilder.buildComponent(this, list, random);
+            int[] rooms = mazes.get(l).rcoords;
+            
+            // add rooms where we have our coordinates
+            for (int i = 0; i < rooms.length / PyramidMap.ROOM_INFO_LEN; i++) {
+                int dx = rooms[i * PyramidMap.ROOM_INFO_LEN];
+                int dz = rooms[i * PyramidMap.ROOM_INFO_LEN + 1];
+                int type = rooms[i * PyramidMap.ROOM_INFO_LEN + 2];
+        
+                // add the room as a component
+                ComponentPyramidRoom room = makeRoom(random, type, dx, dz, l, levelBuilder);
+                list.add(room);
+                room.buildComponent(this, list, random);
+            }
         }
+	}
+    protected ComponentPyramidRoom makeRoom(Random random, int type, int dx, int dz, int i, PyramidLevel levelBuilder) {
+
+		int worldX = levelBuilder.getBoundingBox().minX + dx * (evenBias + oddBias) - 3;
+		int worldY = levelBuilder.getBoundingBox().minY - 3;
+		int worldZ = levelBuilder.getBoundingBox().minZ + dz * (evenBias + oddBias) - 3;
+        ComponentPyramidRoom room = new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
+        return room;
 	}
 
 	@Override
@@ -190,7 +251,7 @@ public class PyramidMain extends StructureComponent {
         //int startH = boundingBox.minY;
         //int endH = boundingBox.minY + (height)*levelsTall;
         int startH = 1;
-        int endH = (height)*(levelsTall + 3) + startH;
+        int endH = (height)*(levelsTall + 1) + startH;
         for (int i=startH; i < endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 
                 headBlockID, headBlockMeta, headBlockID, headBlockMeta, false);

@@ -100,9 +100,8 @@ public class PyramidLevel extends StructureComponent {
 	public void copyToStructure(World world, int dx, int dy, int dz, StructureComponent component, StructureBoundingBox sbb) {
         System.out.println("level: " + level + " w " + cellsWidth);
         System.out.println(Arrays.toString(pstorage.rcoords));
-        if (level == 2) {
-            System.out.println(Arrays.toString(pstorage.storage));
-        }
+        System.out.println(level + " " + pstorage.storage.length);
+        // System.out.println(Arrays.toString(pstorage.storage));
 		for(int x = 0; x < rawWidth; x++) {
 			for(int z = 0; z < rawDepth; z++) {
                 int mdx = dx + (x / 2 * (PyramidMain.evenBias + PyramidMain.oddBias));
@@ -119,7 +118,7 @@ public class PyramidLevel extends StructureComponent {
 									for(int y = 0; y < PyramidMain.head; y++) {
 										putHeadBlock(world, mdx + even, dy + PyramidMain.height + y, mdz + even2, component, sbb);
 									}
-									for(int y = 0; y < PyramidMain.height; y++) {
+									for(int y = 0; y < PyramidMain.height - 3; y++) { // DEBUG
                                         putWallBlock(world, mdx + even, dy + y, mdz + even2, component, sbb);
 									}
 									for(int y = 1; y <= PyramidMain.roots; y++) {
@@ -146,19 +145,7 @@ public class PyramidLevel extends StructureComponent {
 					}
 				}
                 
-				if (getRaw(x, z) == PyramidMap.ROOM2HIGH || getRaw(x, z) == PyramidMap.ROOMCENTRAL) {
-                    Block what = Blocks.air;
-                    int meta = 0;
-                    if (getRaw(x, z) == PyramidMap.ROOMCENTRAL) {
-                        what = PyramidMain.rootBlockID;
-                        meta = PyramidMain.rootBlockMeta;
-                    }
-                    for(int i = 0; i < PyramidMain.oddBias + PyramidMain.evenBias; ++i) {
-                        for(int j = 0; j < PyramidMain.oddBias + PyramidMain.evenBias; ++j) {
-                            super.placeBlockAtCurrentPosition(world, what, meta, mdx + i, dy - 1, mdz + j, sbb);
-                        }
-                    }
-                }
+
 			}
 		}
 	}
