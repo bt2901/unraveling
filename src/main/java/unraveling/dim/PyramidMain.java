@@ -22,8 +22,6 @@ import thaumcraft.common.config.ConfigBlocks;
  */
 public class PyramidMain extends StructureComponent {
     
-    private static final int FLOOR_LEVEL = 1;
-
 	public int width; // cells wide (x)
 	public int depth; // cells deep (z)
 	
@@ -61,8 +59,8 @@ public class PyramidMain extends StructureComponent {
 	protected int rawDepth;
 	
 	public static final int OUT_OF_BOUNDS = Integer.MIN_VALUE;
-    public    int cellsWidth = 22;
-    public    int cellsDepth = 22;
+    public    int cellsWidth = 23;
+    public    int cellsDepth = 23;
 	
     private ArrayList<PyramidMap> mazes = new ArrayList<PyramidMap>();
     
@@ -88,7 +86,9 @@ public class PyramidMain extends StructureComponent {
         //int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
         //int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
         for (int i=0; i < levelsTall; ++i) {
-            PyramidMap newMaze = new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2);
+            mazes.add(new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2));
+
+            PyramidMap newMaze = mazes.get(i);
             
             // set the seed to a fixed value based on this maze's x and z
             setFixedMazeSeed(newMaze, i);
@@ -102,15 +102,21 @@ public class PyramidMain extends StructureComponent {
                 int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
                 int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
                 if (prev_x != 0 && prev_z != 0 && prev_t == PyramidMap.ROOM2LOW) {
+                    // newMaze.addBonusRoom(prev_x - 1 - 2, prev_z - 1 - 1, PyramidMap.ROOM2HIGH);
                     newMaze.addBonusRoom(prev_x - 1, prev_z - 1, PyramidMap.ROOM2HIGH);
                     twoleveled = true;
                 }
             }
+            // while len() < total_len: add random room
+            // also, convert to ArrayList
             if (!twoleveled) {
                 newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
             }
+            
             // room 2
             newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2LOW);
+            //newMaze.addRandomRoom(1, 3, PyramidMap.ROOM_VIRTUAL);
+            // newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2HIGH);
             // room 3
             // newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
             
@@ -119,7 +125,6 @@ public class PyramidMain extends StructureComponent {
             setFixedMazeSeed(newMaze, i);
             // make actual maze
             newMaze.generateRecursiveBacktracker(0, 0);
-            mazes.add(newMaze);
         }
         
 /*
@@ -237,10 +242,12 @@ public class PyramidMain extends StructureComponent {
     protected ComponentPyramidRoom makeRoom(Random random, int type, int dx, int dz, int i, PyramidLevel levelBuilder) {
 
 		int worldX = levelBuilder.getBoundingBox().minX + dx * (evenBias + oddBias) - 3;
-		int worldY = levelBuilder.getBoundingBox().minY - 3;
+		int worldY = levelBuilder.getBoundingBox().minY;
 		int worldZ = levelBuilder.getBoundingBox().minZ + dz * (evenBias + oddBias) - 3;
-        ComponentPyramidRoom room = new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
-        return room;
+        if (type == PyramidMap.ROOMCENTRAL) {
+            return new ComponentPyramidCentralRoom(random, worldX, worldY, worldZ, i);
+        }
+        return new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
 	}
 
 	@Override

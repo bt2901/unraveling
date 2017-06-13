@@ -83,25 +83,26 @@ public class PyramidLevel extends StructureComponent {
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
 		// clear the area
-		fillWithAir(world, sbb, 1, 2, 1, getDiameter(), PyramidMain.height, getDiameter());
+		fillWithAir(world, sbb, 1, 1, 1, getDiameter(), PyramidMain.height - 1, getDiameter());
         
 		fillWithMetadataBlocks(world, sbb, 
-            1, PyramidMain.height + 1, 1, getDiameter(), PyramidMain.height + 1, getDiameter(), 
+            1, PyramidMain.height, 1, getDiameter(), PyramidMain.height, getDiameter(), 
             PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
 		
-		copyToStructure(world, 1, 2, 1, this, sbb);
+		copyToStructure(world, 1, 1, 1, this, sbb);
 		return true;
 	}
-
+    public void describe() {
+        System.out.println("level: " + level + " w " + cellsWidth);
+        System.out.println(Arrays.toString(pstorage.rcoords));
+        System.out.println(level + " " + pstorage.storage.length);
+        System.out.println(Arrays.toString(pstorage.storage));
+    }
 
     /**
 	 * Copy the maze into a StructureComponent
 	 */
 	public void copyToStructure(World world, int dx, int dy, int dz, StructureComponent component, StructureBoundingBox sbb) {
-        System.out.println("level: " + level + " w " + cellsWidth);
-        System.out.println(Arrays.toString(pstorage.rcoords));
-        System.out.println(level + " " + pstorage.storage.length);
-        // System.out.println(Arrays.toString(pstorage.storage));
 		for(int x = 0; x < rawWidth; x++) {
 			for(int z = 0; z < rawDepth; z++) {
                 int mdx = dx + (x / 2 * (PyramidMain.evenBias + PyramidMain.oddBias));
@@ -118,7 +119,7 @@ public class PyramidLevel extends StructureComponent {
 									for(int y = 0; y < PyramidMain.head; y++) {
 										putHeadBlock(world, mdx + even, dy + PyramidMain.height + y, mdz + even2, component, sbb);
 									}
-									for(int y = 0; y < PyramidMain.height - 3; y++) { // DEBUG
+									for(int y = 0; y < PyramidMain.height; y++) { // DEBUG
                                         putWallBlock(world, mdx + even, dy + y, mdz + even2, component, sbb);
 									}
 									for(int y = 1; y <= PyramidMain.roots; y++) {
@@ -154,7 +155,7 @@ public class PyramidLevel extends StructureComponent {
 		for(int y = 0; y < PyramidMain.head; y++) {
 			putHeadBlock(world, mdx + even, dy + PyramidMain.height + y, mdz + odd, component, sbb);
 		}
-		for(int y = 0; y < PyramidMain.height - 3; y++) { // DEBUG
+		for(int y = 0; y < PyramidMain.height; y++) { // DEBUG
 			putWallBlock(world, mdx + even, dy + y, mdz + odd, component, sbb);
 		}
 		for(int y = 1; y <= PyramidMain.roots; y++) {
