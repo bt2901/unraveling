@@ -163,6 +163,13 @@ public class EldritchLore {
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
+        (new UResearchItem("RESEARCHMASTERY", "UNRAVELING", 
+            new AspectList().add(Aspect.MIND, 5), 
+            0, 0, 1, 
+            new ResourceLocation("unraveling", "textures/mastery.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setSpecial().registerResearchItem();
     }
     
     

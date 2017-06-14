@@ -392,7 +392,24 @@ public class PyramidMap {
 		carveCustomRoom(entranceX, entranceZ, type);
         rcoords = rcoords2;
 	}
-    
+    public int matchingRoom(int room) {
+        switch (room) {
+            case ROOM2LOW: return ROOM2HIGH;
+            case ROOM2SUDDEN_LOW: return ROOM_VIRTUAL;
+            case ROOMCENTRAL: return ROOMCENTRAL;
+            default: return 0;
+        }
+    }
+    public int randomRoomShape() {
+        float rf = rand.nextFloat();
+        if (rf < 0.4F) {
+            return ROOM2LOW;
+        }
+        if (rf < 0.6F) {
+            return ROOM2SUDDEN_LOW;
+        }
+        return ROOM;
+    }
     
 	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
         par1NBTTagCompound.setInteger("cellsWidth", this.cellsWidth);

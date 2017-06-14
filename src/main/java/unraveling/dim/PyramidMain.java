@@ -82,76 +82,38 @@ public class PyramidMain extends StructureComponent {
 
         int radius = (int) ((cellsWidth + 2) * (evenBias + oddBias) * 0.5);
 		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+1), z + radius);
-        //int prev_x = mazes.get(i-1).rcoords[j * 3];
-        //int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
-        //int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
+        int nrooms = 4;
         for (int i=0; i < levelsTall; ++i) {
             mazes.add(new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2));
-
             PyramidMap newMaze = mazes.get(i);
-            
             // set the seed to a fixed value based on this maze's x and z
             setFixedMazeSeed(newMaze, i);
-            // room 0
-            newMaze.addBonusRoom(entranceX-i, entranceZ-i, PyramidMap.ROOMCENTRAL);
-            // room 1
-            boolean twoleveled = false;
-            if (i > 0) {
-                int j = 2;
-                int prev_x = mazes.get(i-1).rcoords[j * 3];
-                int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
-                int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];
-                if (prev_x != 0 && prev_z != 0 && prev_t == PyramidMap.ROOM2LOW) {
-                    // newMaze.addBonusRoom(prev_x - 1 - 2, prev_z - 1 - 1, PyramidMap.ROOM2HIGH);
-                    newMaze.addBonusRoom(prev_x - 1, prev_z - 1, PyramidMap.ROOM2HIGH);
-                    twoleveled = true;
+            if (i == 0) {
+                newMaze.addBonusRoom(entranceX-i, entranceZ-i, PyramidMap.ROOMCENTRAL);
+                for (int j = 1; j <= nrooms; ++j) {
+                    newMaze.addRandomRoom(2, 3, newMaze.randomRoomShape());
+                }
+            } else {
+                for (int j = 0; j <= nrooms; ++j) {
+                    int prev_x = mazes.get(i-1).rcoords[j * 3];
+                    int prev_z = mazes.get(i-1).rcoords[j * 3 + 1];
+                    int prev_t = mazes.get(i-1).rcoords[j * 3 + 2];                
+                    if (prev_x != 0 && prev_z != 0 && prev_t != 0) {
+                        int nextType = newMaze.matchingRoom(prev_t);
+                        if (nextType != 0) {
+                            newMaze.addBonusRoom(prev_x - 1, prev_z - 1, nextType);
+                        } else {
+                            newMaze.addRandomRoom(1, 3, newMaze.randomRoomShape());
+                        }
+                    }
                 }
             }
-            // while len() < total_len: add random room
-            // also, convert to ArrayList
-            if (!twoleveled) {
-                newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-            }
-            
-            // room 2
-            newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2LOW);
-            //newMaze.addRandomRoom(1, 3, PyramidMap.ROOM_VIRTUAL);
-            // newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2HIGH);
-            // room 3
-            // newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-            
-            
+
             // set seed again
             setFixedMazeSeed(newMaze, i);
             // make actual maze
             newMaze.generateRecursiveBacktracker(0, 0);
         }
-        
-/*
-                if (room_index == 1) { // try to add a single 2 leveled room
-                        for (int j = 0; j < mazes.get(i-1).rcoords.length/PyramidMap.ROOM_INFO_LEN; ++j) {
-                                break;
-                            }
-                        }
-                        // newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-                    } else {
-                    }
-                    newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-                }
-                if (room_index > 1) {
-                    if (room_index == room2index && false) {
-                        newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-                    } else {
-                        newMaze.addRandomRoom(0, 3, PyramidMap.ROOM);
-                    // } else if (room_index == room2index + 1) {
-                    // newMaze.addRandomRoom(1, 3, PyramidMap.ROOM2SUDDEN_LOW);
-                    }
-                }
-            }
-
-*/        
-		
-		
 	}
     			
 	/**
@@ -255,8 +217,6 @@ public class PyramidMain extends StructureComponent {
         int ringMin;
         int ringMax;
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
-        //int startH = boundingBox.minY;
-        //int endH = boundingBox.minY + (height)*levelsTall;
         int startH = 1;
         int endH = (height)*(levelsTall + 1) + startH;
         for (int i=startH; i < endH; ++i) {

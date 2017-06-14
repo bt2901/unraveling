@@ -63,10 +63,16 @@ public class ComponentPyramidRoom extends StructureComponent {
         if (type == PyramidMap.ROOM2SUDDEN_LOW) {
         }
         if (type == PyramidMap.ROOM_VIRTUAL) {
+            fillWithAir(world, sbb, 1, 0, 1, roomWidth - 1, roomHeight - 1, roomDepth - 1);
         }
         if (type == PyramidMap.ROOM2HIGH || type == PyramidMap.ROOM_VIRTUAL) {
             fillWithWalls(world, sbb, 0, 0, 0, roomWidth, 0, roomDepth);
             fillWithAir(world, sbb, 1, 0, 1, roomWidth - 1, 0, roomDepth - 1);
+        }
+        if (type == PyramidMap.ROOM_VIRTUAL) {
+            // if (rand.nextFloat() > 0.33) {
+                fillWithAir(world, sbb, roomWidth, 1, 1, roomWidth + PyramidMain.oddBias, roomHeight - 1, roomDepth - 1);
+            //}
         }
         if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
             // fillWithMetadataBlocks(world, sbb, 1, roomHeight, 1, roomWidth - 1, roomHeight, roomDepth - 1, Blocks.air, 0, Blocks.air, 0, false);

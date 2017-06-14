@@ -84,12 +84,16 @@ public class PyramidLevel extends StructureComponent {
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
 		// clear the area
 		fillWithAir(world, sbb, 1, 1, 1, getDiameter(), PyramidMain.height - 1, getDiameter());
+        	
         
 		fillWithMetadataBlocks(world, sbb, 
             1, PyramidMain.height, 1, getDiameter(), PyramidMain.height, getDiameter(), 
             PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
-		
-		copyToStructure(world, 1, 1, 1, this, sbb);
+
+        copyToStructure(world, 1, 1, 1, this, sbb);
+		fillWithMetadataBlocks(world, sbb, 
+            1, 0, 1, getDiameter(), 0, getDiameter(), 
+            PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
 		return true;
 	}
     public void describe() {

@@ -1,21 +1,9 @@
 tile.TFBossSpawner.1.name=Lich Spawner
-tile.TFFireflyJar.name=Firefly Jar
-tile.TFUncraftingTable.name=Uncrafting Table
 
 
 item.scepterTwilight.name=Scepter of Twilight
 item.scepterLifeDrain.name=Scepter of Life Draining
 item.scepterZombie.name=Zombie Scepter
-
-item.magicMap.name=Magic Map
-item.mazeMap.name=Maze Map
-item.oreMap.name=Maze/Ore Map
-item.magicMapFocus.name=Magic Map Focus
-item.mazeMapFocus.name=Maze Map Focus
-item.emptyMagicMap.name=Blank Magic Map
-item.emptyMazeMap.name=Blank Maze Map
-item.emptyOreMap.name=Blank Maze/Ore Map
-
     
 item.any_artifact.tooltip=Enigmatic Artifact
 
@@ -39,8 +27,6 @@ tile.darkGen.name=Void Aggregator
 tile.darkGenMain.name=Void Condenser
 
 tile.voidOre.name=Void Metal Ore
-
-item.aspectNote.name=Research Note: Aspect
 
 #===============
 # Research 
@@ -124,7 +110,7 @@ u.page.ENDERCOMPASS.1=After carefully studying Eye of Ender, you realised someth
 
 u.name.DEMIPLANEDISCOVERY=Portal
 u.text.DEMIPLANEDISCOVERY=What could go wrong?
-u.page.DEMIPLANEDISCOVERY.1=You have begun studying the strange energies circulating in the void between the world. You have noticed something. In the void, something is screaming. Such arcane echoes are probably coming from a mind of an unequaled magician hidden in a pocket dimension. Such a person would likely be batshit insane. You can triangulate the position of this dimension. 
+u.page.DEMIPLANEDISCOVERY.1=You have begun studying the strange energies circulating in the void between the worlds. You have noticed something. In the void, something is screaming. Such arcane echoes are probably coming from a mind of an unequaled magician hidden in a pocket dimension. Such a person would likely be batshit insane. You can triangulate the position of this dimension. 
 u.page.DEMIPLANEDISCOVERY.2=Of course, such enterprise will be extremely dangerous.
 
 
@@ -168,9 +154,16 @@ unraveling.research_text.VOIDPURE=Witty text
 
 u.name.ANTIBUILDER=Anti Builder
 u.name.MAGICMAP=Magic Map
-u.name.RESEARCHMASTERY=Research Mastery
 u.name.WITHERCOAL=Petrified Wood
 u.name.UNCRAFTING=Arcane Uncrafting
+u.name.CURSEDFIRE=Cursed Fire
+u.text.CURSEDFIRE=Az-reth, the Great Devourer
+u.page.CURSEDFIRE.1=Burns underwater!
+
+u.name.RESEARCHMASTERY=Research Mastery
+u.text.RESEARCHMASTERY=Research Mastery
+u.page.RESEARCHMASTERY.1=Now you are more proficient at reverse engineering.
+
 
 u.name.NECROFOCUS=Focus: Necromancy
 u.name.NECROFOCUS.1=Archer Upgrade
@@ -185,7 +178,7 @@ tc.research_lore.eldritch=[TH] A strange culture...
 tc.research_page.eldritch.0= The lost culture of the Eldritch<BR>Mystical dungeons and strange artefacts. They managed to create some extremely powerful objects of wonder. You're sure you can try to recreate these things after some further research... <BR><IMG>th:textures/misc/eldritchPicture.png:256:256:256:160:0.5</IMG>
 
 u.name.lost=Lost Knowledge
-u.text.lost=Now it isn't lost any more!
+u.text.lost=[TH] Now it isn't lost any more!
 u.page.lost.1=With the help of these long lost and broken artifacts, you think you can can finally begin to understand how they may have once worked... And possibly recreate them... <BR><IMG>unraveling:textures/lostPicture.png:256:256:256:160:0.5</IMG>
 
 

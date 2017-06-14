@@ -26,6 +26,7 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
 	public ComponentPyramidCentralRoom(Random rand, int x, int y, int z, int i) {
 		super(rand, x, y, z, PyramidMap.ROOMCENTRAL);
         this.level = i;
+        this.coordBaseMode = 0;
 	}
     
     public void createDoorway(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block what, int meta) {
@@ -35,20 +36,7 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
         placeBlockAtCurrentPosition(world, Blocks.air, 0, cX, minY, cZ, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, cX, minY + 1, cZ, sbb);
     }
-    public void makeStairsXPos(World world, StructureBoundingBox sbb, int minZ, int maxZ, int startX, int startY, int howLong) {
-        Block brick = PyramidMain.wallBlockID;
-        int meta = PyramidMain.wallBlockMeta;
-        int x = startX;
-        int y = startY;
-        for (int z = minZ; z <= maxZ; ++z) {
-            for (int i = 0; i <= howLong; ++i) {
-                x = startX + i;
-                y = (i == 0)? startY : startY + i - 1;
-                placeBlockAtCurrentPosition(world, brick, meta, x, y, z, sbb);
-            }
-        }
-    }
-    
+
     public void createPlatforms(World world, StructureBoundingBox sbb) {
         int myX; 
         int myZ; 
@@ -95,7 +83,10 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
 	 */
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
-		;
+            ComponentPyramidStairs stairBuilder = new ComponentPyramidStairs(random, 
+                boundingBox.minX, boundingBox.minY, boundingBox.minZ, level % 4, 1);
+			list.add(stairBuilder);
+			stairBuilder.buildComponent(this, list, random);
 	}
 
 	@Override
@@ -103,12 +94,7 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
         fillWithAir(world, sbb, 1, 0, 1, roomWidth - 1, roomHeight - 1, roomDepth - 1);
         createPlatforms(world, sbb);
         createFourDoorways(world, sbb);
-
-        int minZ = 1;
-        int maxZ = 2;
-        int startX = roomWidth/2 + 1;
-        int startY = 0;
-        makeStairsXPos(world, sbb, minZ, maxZ, startX, startY, 3);
+        // makeStairs(world, sbb, level);
 		return true;
 	}
 	/**
