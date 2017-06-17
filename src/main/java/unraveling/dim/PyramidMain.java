@@ -33,7 +33,7 @@ public class PyramidMain extends StructureComponent {
 	public static int head = 0;   // blocks placed above the maze
 	public static int roots = 0;  // blocks placed under the maze (used for hedge mazes)
 
-	public static int levelsTall = 6;
+	public static int levelsTall = 8;
 	
 	public int worldX; // set when we first copy the maze into the world
 	public int worldY;

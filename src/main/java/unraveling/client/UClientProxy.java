@@ -24,7 +24,7 @@ import unraveling.client.renderer.blocks.RenderBlockQ;
 
 import unraveling.client.renderer.entity.RenderTFLich;
 import unraveling.client.renderer.entity.RenderTFBiped;
-import unraveling.mechanics.VoidPacketHandler;
+import unraveling.mechanics.voidgen.VoidPacketHandler;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;

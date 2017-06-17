@@ -1,4 +1,4 @@
-package unraveling.mechanics;
+package unraveling.mechanics.voidgen;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import thaumcraft.api.WorldCoordinates;
+import net.minecraft.world.World;
 
 
 public class ShapeData {
@@ -142,6 +143,20 @@ public class ShapeData {
         myCorners.add(Vec3.createVectorHelper(maxx, cury, maxz));
 
         return myCorners;        
+    }
+    
+    public ArrayList<TileEntity> cornersTiles(World worldObj) {
+        ArrayList<Vec3> myCorners = cornersList();
+        ArrayList<TileEntity> myTiles = new ArrayList<TileEntity>();
+        for(Vec3 genPos : myCorners) {
+            int x = (int)genPos.xCoord;
+            int y = (int)genPos.yCoord;
+            int z = (int)genPos.zCoord;
+            TileEntity gen = worldObj.getTileEntity(x, y, z);
+            myTiles.add(gen);
+        }
+
+        return myTiles;
     }
 
     

@@ -76,6 +76,13 @@ public class ComponentPyramidRoom extends StructureComponent {
         }
         if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
             // fillWithMetadataBlocks(world, sbb, 1, roomHeight, 1, roomWidth - 1, roomHeight, roomDepth - 1, Blocks.air, 0, Blocks.air, 0, false);
+            // if (rand.nextFloat() > 0.33) {
+            placeBlockAtCurrentPosition(world, UBlocks.darkGen, 0, 3, 1, 3, sbb);
+            placeBlockAtCurrentPosition(world, UBlocks.darkGen, 0, 6, 1, 3, sbb);
+            placeBlockAtCurrentPosition(world, UBlocks.darkGen, 0, 3, 1, 6, sbb);
+            placeBlockAtCurrentPosition(world, UBlocks.darkGen, 0, 6, 1, 6, sbb);
+            //}
+
         }
         return true;
 	}

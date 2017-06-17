@@ -1,4 +1,4 @@
-package unraveling.tileentity;
+package unraveling.mechanics.voidgen;
 
 import java.lang.Math;
 import java.awt.Color;
@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import unraveling.block.UBlocks;
-import unraveling.mechanics.VoidAggregationHandler;
+import unraveling.mechanics.voidgen.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
 
@@ -37,16 +37,12 @@ import unraveling.UnravelingMod;
 
 public class TileDarkGenMain extends TileVisNode {
 
-    //private static final String NBT_CATALYST = "enchantsIntArray";
     private static final String NBT_CONVERSION_TIME_LEFT = "conversion_time_left";
     private static final String NBT_WORKING = "working";
     public static final String NBT_GEN_ID = "my_generators_id";
     public int ticksExisted = 0;
     public int my_generators_id;
     public WeakReference<TileVisNode> above = null;
-    // TODO:
-    // send infusion data
-    // last block updated
 	    
     @Override
 	public int getRange() {
@@ -58,7 +54,6 @@ public class TileDarkGenMain extends TileVisNode {
         //return worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     };
     public boolean isWorking() {
-        // TileEntity tileDirectlyAbove = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
         TileEntity tileDirectlyAbove = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
         boolean redstone = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
         return redstone && (tileDirectlyAbove != null) && (tileDirectlyAbove instanceof TileVisNode);
@@ -78,7 +73,6 @@ public class TileDarkGenMain extends TileVisNode {
             this.vis.reduce(aspect, drain);
         }*/
         int drain = Math.min(4, amount);
-        //System.out.println("DGM: in consumeVis(). " + aspect + " amount: " + amount + " returning: " + drain);
         return drain;
 	}
         
@@ -131,7 +125,6 @@ public class TileDarkGenMain extends TileVisNode {
         if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
             HashMap<WorldCoordinates, WeakReference<TileVisNode>> sourcelist = VisNetHandler.sources.get(worldObj.provider.dimensionId);
             if (sourcelist != null && sourcelist.containsKey(getLocation())) {
-                System.out.println("DGM: removing node . . .");
                 invalidate();
                 // removeThisNode();
                 nodeRefresh = true;
@@ -141,7 +134,6 @@ public class TileDarkGenMain extends TileVisNode {
     @Override
     public void updateEntity() {
 
-        // if (worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
         if (isWorking()) {
             super.updateEntity();
             if (!worldObj.isRemote && (nodeCounter % 40==0 || nodeRefresh) && (getChildren().size() > 1)) {
@@ -154,20 +146,16 @@ public class TileDarkGenMain extends TileVisNode {
                     TileVisNode n = child.get();
 
                     if (n != null && n.getParent() != null && n.getParent().get() == (TileVisNode)this) {
-                    //if (n != null) {
                         boolean isDirectlyAbove = (n.xCoord == xCoord && n.yCoord == yCoord + 1 && n.zCoord == zCoord);
                         if (!isDirectlyAbove) {
                             // move the vis source
                             System.out.println("rerouting from " + n.getParent() + " to " + above);
                             n.setParent(above);
-                            //n.nodeRefresh = true;
                             System.out.println("now parent is " + n.getParent());
                             worldObj.markBlockForUpdate(n.xCoord, n.yCoord, n.zCoord);
-                            //n.parentChanged();
                         }
                     }
                 }
-                //nodeRefresh = true;
             }
         }
     }

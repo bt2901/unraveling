@@ -1,4 +1,4 @@
-package unraveling.mechanics;
+package unraveling.mechanics.voidgen;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

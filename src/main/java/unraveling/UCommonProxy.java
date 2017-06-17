@@ -4,9 +4,12 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import unraveling.mechanics.voidgen.TileDarkGen;
 import unraveling.tileentity.TileQuaesitum;
 import unraveling.mechanics.ContainerQ;
 import unraveling.mechanics.GuiQTileEntity;
+import unraveling.mechanics.voidgen.GuiDarkGen;
+import unraveling.mechanics.voidgen.ContainerDarkGen;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -28,9 +31,6 @@ public class UCommonProxy implements IGuiHandler {
 		;
 	}
 
-	public int getComplexBlockRenderID() {
-		return 0;
-	}
 	public int getDarkGenRenderID() {
 		return 0;
 	}
@@ -51,11 +51,14 @@ public class UCommonProxy implements IGuiHandler {
 	}
 
     public static final int GUI_ID_Q = 0;
+    public static final int GUI_ID_DG = 1;
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == GUI_ID_Q)
             return new ContainerQ((TileQuaesitum) world.getTileEntity(x, y, z), player.inventory);
+        if (ID == GUI_ID_DG)
+            return new ContainerDarkGen((TileDarkGen) world.getTileEntity(x, y, z), player.inventory);
 
         return null;
     }
@@ -64,6 +67,8 @@ public class UCommonProxy implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == GUI_ID_Q)
             return new GuiQTileEntity((TileQuaesitum) world.getTileEntity(x, y, z), player.inventory);
+        if (ID == GUI_ID_DG)
+            return new GuiDarkGen((TileDarkGen) world.getTileEntity(x, y, z), player.inventory);
 
         return null;
     }

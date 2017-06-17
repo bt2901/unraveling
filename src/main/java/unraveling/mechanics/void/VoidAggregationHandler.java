@@ -1,4 +1,4 @@
-package unraveling.mechanics;
+package unraveling.mechanics.voidgen;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Iterator;
+import net.minecraft.item.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -17,9 +20,9 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import unraveling.UnravelingMod;
 import unraveling.block.UBlocks;
-import unraveling.tileentity.TileDarkGenMain;
-import unraveling.tileentity.TileDarkGen;
-import unraveling.mechanics.VoidPacketHandler;
+import unraveling.mechanics.voidgen.TileDarkGenMain;
+import unraveling.mechanics.voidgen.TileDarkGen;
+import unraveling.mechanics.voidgen.VoidPacketHandler;
 import thaumcraft.common.Thaumcraft;
 
 import net.minecraft.util.MovingObjectPosition;
@@ -31,6 +34,9 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.WorldCoordinates;
 import thaumcraft.api.aspects.Aspect;
 import net.minecraft.tileentity.TileEntity;
+
+import thaumcraft.common.config.ConfigItems;
+
 
 /*
 How it works?
@@ -62,9 +68,36 @@ public class VoidAggregationHandler {
 	private static Random rand = new Random();
     
     public static void notifyOfDestruction(TileEntity tileentity) {
+        resetGroupOf(tileentity);
         System.out.println("Destruction");
     }
-    
+
+    public static void resetGroupOf(TileEntity tileentity) {
+        WorldCoordinates wc =  new WorldCoordinates(tileentity);
+        if (generatorsGroupId.containsKey(wc)) {
+            int group_id = generatorsGroupId.get(wc);
+            ShapeData shape = generatorsShape.get(group_id);
+            ArrayList<TileEntity> myTiles = shape.cornersTiles(tileentity.getWorldObj());
+            for(int i = 0; i < GEN_NUM; i++) {
+                TileEntity te = myTiles.get(i);
+                if (te != null) {
+                    WorldCoordinates gwc = new WorldCoordinates(te);
+                    generatorsGroupId.remove(gwc);
+                }
+            }
+            generatorsShape.remove(group_id);
+            generatorsUpdated.remove(group_id);
+        }
+    }
+    public static int genNextFreeID() {
+        for (int i=0; i < 64; ++i) {
+            if (!generatorsShape.containsKey(i)) {
+                return i;
+            }
+        }
+        return 64;
+    }
+   
     private static boolean search(WorldCoordinates wc) {
         // very stupid bruteforce approach
         ArrayList<WorldCoordinates> tmp = new ArrayList<WorldCoordinates>(orphanGenerators);
@@ -73,7 +106,7 @@ public class VoidAggregationHandler {
                 for (int k = j + 1; k < tmp.size(); ++k) {
                     if (ShapeData.isValid(tmp.get(i), tmp.get(j), tmp.get(k), wc)) {
                         //ShapeData sd = new ShapeData(tmp.get(i), tmp.get(j), tmp.get(k), wc);
-                        int new_id = 0; // TODO
+                        int new_id = genNextFreeID();
                         generatorsGroupId.put(wc, new_id); 
                         generatorsGroupId.put(tmp.get(i), new_id); 
                         generatorsGroupId.put(tmp.get(j), new_id); 
@@ -97,7 +130,8 @@ public class VoidAggregationHandler {
                 return id;
             }
         }
-        System.out.println("VAH: in assignId(). orphans: " + orphanGenerators.size());
+        // System.out.println("VAH: in assignId() for " + dg + ". orphans: " + orphanGenerators.size() + ": " + orphanGenerators);
+        // System.out.println("groups: " + generatorsGroupId);
         if (orphanGenerators.size() < 3) {
             orphanGenerators.add(wc);
             return -1;
@@ -117,6 +151,7 @@ public class VoidAggregationHandler {
     
     public static void generatorUpdateCallback(int group_id, TileEntity dg, World worldObj) {
         WorldCoordinates wc = new WorldCoordinates(dg);
+        // System.out.println("VAH: update for " + dg + " at " + wc);
         HashSet<WorldCoordinates> validGens = generatorsUpdated.get(group_id);
         if (validGens == null) {
             if (group_id == -1) {
@@ -140,6 +175,7 @@ public class VoidAggregationHandler {
             sendMessage(m, dg.xCoord, dg.yCoord, dg.zCoord, worldObj);
             // we already checked this group on previous tick 
             // break
+            resetGroupOf(dg);
             return;
         }
         validGens.add(wc);
@@ -149,7 +185,7 @@ public class VoidAggregationHandler {
             validGens.clear();
         }
     }
-    // @SideOnly(Side.SERVER)
+
 	public static void processTransformation(World worldObj, int group_id) {
         if (!generatorsShape.containsKey(group_id)) {
             System.out.println("VAH: unknown shape!");
@@ -197,36 +233,26 @@ public class VoidAggregationHandler {
 		return;
 	}
 
-    public boolean searchForGenerators(World worldObj, TileDarkGenMain dgm) {
-        WorldCoordinates wc = new WorldCoordinates(dgm);
-        //if (!generatorsGroupId.containsKey(wc) {
-		//	calculateNearbyNodes(world, x, y, z);
-		//}
-        ArrayList<WorldCoordinates> myGenerators = new ArrayList<WorldCoordinates>();
-        System.out.println("searching for gens . . .");
-        int y = dgm.yCoord;
-        //for (int y = yCoord - 8; y <= yCoord + 8; y++) {
-        for (int x = dgm.xCoord - 8; x <= dgm.xCoord + 8; x++) {
-            for (int z = dgm.zCoord - 8; z <= dgm.zCoord + 8; z++) {
-                Block id = worldObj.getBlock(x, y, z);
-                if (id == UBlocks.darkGen) {
-                    System.out.println("found gens at " + x + " " + y + " " + z);
-                    // TODO: 
-                    myGenerators.add(new WorldCoordinates(x, y, z, worldObj.provider.dimensionId));
-                    //Thaumcraft.proxy.drawInfusionParticles3(world, x, y, z, x + 1, y + 5, z + 3);
-                }
-            }
+    public static int getCatalystPower(ItemStack stack) {
+        if (stack == null) {
+            return 0;
         }
-        if (myGenerators.size() != GEN_NUM) {
-            return false;
+        Item item = stack.getItem();
+        if (stack.equals(new ItemStack(ConfigItems.itemResource, 1, 0))) { // alumentum
+            return 1;
         }
-        ShapeData sd = new ShapeData(myGenerators, GEN_NUM);
-        int new_id = generatorsGroupId.size();
-        generatorsGroupId.put(wc, new_id);
-        //generatorsMain.put(new_id, wc);
-        generatorsShape.put(new_id, sd);
-        return true;
+        if (item == Items.ender_pearl || item == Items.ender_eye) {
+            return 2;
+        }
+        if (stack.equals(new ItemStack(ConfigItems.itemResource, 1, 16)) || stack.equals(new ItemStack(ConfigItems.itemResource, 1, 17)))        { // void seed / void ingot
+            return 3;
+        }
+        // ender lily: 4
+        // element of darkness: 5
+
+        return 0;
     }
+    
     public int calcPotency(int group_id, World worldObj) {
         ShapeData shape = generatorsShape.get(group_id);
         int squareSide = shape.maxx - shape.minx;
@@ -265,21 +291,16 @@ public class VoidAggregationHandler {
         int brightestPlace = 0;
 
         ShapeData shape = generatorsShape.get(group_id);
-        
-        ArrayList<Vec3> myGenerators = shape.cornersList();
+        ArrayList<TileEntity> myTiles = shape.cornersTiles(worldObj);
 		for(int i = 0; i < GEN_NUM; i++) {
-            Vec3 genPos = myGenerators.get(i);
-            int x = (int)genPos.xCoord;
-            int y = (int)genPos.yCoord;
-            int z = (int)genPos.zCoord;
-            TileEntity gen = worldObj.getTileEntity(x, y, z);
-            Block id = worldObj.getBlock(x, y, z);
-            int meta = worldObj.getBlockMetadata(x, y, z);
-            if (id != UBlocks.darkGen || meta != 0) {
+            TileEntity gen = myTiles.get(i);
+            if (gen == null) {
                 return -1; // EVERYBODY PANIC
             }
-            // TODO: check Tile Entity: light, catalyst
-            // if gen is not valid: retutn -1
+            Block id = gen.getBlockType();
+            brightestPlace = Math.max(brightestPlace, id.getLightValue(worldObj, gen.xCoord, gen.yCoord, gen.zCoord));
+            ItemStack stack = ((TileDarkGen)gen).getStackInSlot(0);
+            weakestCatalyst = Math.min(weakestCatalyst, getCatalystPower(stack));
         }
         return base - weakestCatalyst + brightestPlace / 2;
     }
@@ -323,6 +344,9 @@ public class VoidAggregationHandler {
             maybe spawn wisp (tenebrae, vacuous, alienis)
             if (potency >= 400)
                 EntityUtils.makeChampion(EntityMob entity, boolean persist)
+        }
+        if (potency >= 200) {
+            explode ore block
         }
         if (potency >= 100) {
             spawn shadow gas from TT

@@ -153,9 +153,13 @@ unraveling.research_name.VOIDPURE=Void Purification
 unraveling.research_text.VOIDPURE=Witty text
 
 u.name.ANTIBUILDER=Anti Builder
+
 u.name.MAGICMAP=Magic Map
+
 u.name.WITHERCOAL=Petrified Wood
+
 u.name.UNCRAFTING=Arcane Uncrafting
+
 u.name.CURSEDFIRE=Cursed Fire
 u.text.CURSEDFIRE=Az-reth, the Great Devourer
 u.page.CURSEDFIRE.1=Burns underwater!

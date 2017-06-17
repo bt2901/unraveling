@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
 import unraveling.item.UItems;
-import unraveling.tileentity.TileDarkGenMain;
+import unraveling.mechanics.voidgen.TileDarkGenMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

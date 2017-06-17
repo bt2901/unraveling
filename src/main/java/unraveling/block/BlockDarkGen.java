@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.entity.player.EntityPlayer;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,11 +18,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import unraveling.UnravelingMod;
 import unraveling.item.UItems;
-import unraveling.tileentity.TileDarkGen;
+import unraveling.mechanics.voidgen.TileDarkGen;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import unraveling.mechanics.VoidAggregationHandler;
+import unraveling.mechanics.voidgen.VoidAggregationHandler;
 
 public class BlockDarkGen extends BlockContainer {
 	
@@ -122,13 +123,23 @@ public class BlockDarkGen extends BlockContainer {
         
         if(tileentity != null) {
             if (!world.isRemote) {
-                VoidAggregationHandler.notifyOfDestruction((TileEntity)tileentity);
+                // VoidAggregationHandler.notifyOfDestruction((TileEntity)tileentity);
                 tileentity.removeThisNode();
             }
         }
     }
 
-
+    @Override
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+        if (!par1World.isRemote) {
+            TileDarkGen tile = (TileDarkGen) par1World.getTileEntity(par2, par3, par4);
+            if (tile != null) {
+                System.out.println("activated!");
+                par5EntityPlayer.openGui(UnravelingMod.instance, UnravelingMod.proxy.GUI_ID_DG, par1World, par2, par3, par4);
+            }
+        }
+        return true;
+    }
 }
 
 

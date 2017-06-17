@@ -39,12 +39,16 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import thaumcraft.client.lib.PlayerNotifications;
 
+import unraveling.UnravelingMod;
 
 public class ItemCompassStone
 extends Item {
-    public IIcon[] icon = new IIcon[2];
+    public IIcon[] icon = new IIcon[3];
     private IIcon t = null;
 
+    public static HashMap<WorldCoordinates, Long> warpedPortals = new HashMap();
+    public static ChunkPosition strongholdPos;
+    
     public ItemCompassStone() {
         this.setMaxStackSize(1);
         this.setHasSubtypes(true);
@@ -53,8 +57,9 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerIcons(IIconRegister ir) {
-        this.icon[0] = ir.registerIcon("thaumcraft:sinister_stone");
-        this.icon[1] = ir.registerIcon("thaumcraft:sinister_stone_active");
+        this.icon[0] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone");
+        this.icon[1] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_active");
+        this.icon[2] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_inactive");
     }
 
     @SideOnly(value=Side.CLIENT)

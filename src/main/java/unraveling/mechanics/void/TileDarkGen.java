@@ -1,12 +1,15 @@
-package unraveling.tileentity;
+package unraveling.mechanics.voidgen;
+//package unraveling.tileentity;
 
 import unraveling.UnravelingMod;
-import unraveling.mechanics.VoidAggregationHandler;
+import unraveling.mechanics.voidgen.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.WorldCoordinates;
 
+
+import net.minecraft.entity.player.EntityPlayer;
 import java.lang.reflect.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -23,8 +26,12 @@ import thaumcraft.api.aspects.IAspectContainer;
 import thaumcraft.api.aspects.IEssentiaTransport;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 
-public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
+public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInventory {
         
     private static final String NBT_CHARGES = "charges";
     private static final String NBT_RESERVE = "reserve";
@@ -36,6 +43,7 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
     public boolean reserve = false;
     public int power = 0;
     int drawDelay = 0;
+    ItemStack[] inventorySlots = new ItemStack[1];
 
     @Override
     public void readCustomNBT(NBTTagCompound nbt) {
@@ -43,6 +51,16 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
         charges = nbt.getInteger(NBT_CHARGES);
         my_cluster_id = nbt.getInteger(NBT_ID);
         reserve = (nbt.getInteger(NBT_RESERVE) != 0) ? true : false;
+        
+        NBTTagList var2 = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+        inventorySlots = new ItemStack[getSizeInventory()];
+        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
+            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
+            byte var5 = var4.getByte("Slot");
+            if (var5 >= 0 && var5 < inventorySlots.length)
+                inventorySlots[var5] = ItemStack.loadItemStackFromNBT(var4);
+        }
+
     }
     @Override
     public void writeCustomNBT(NBTTagCompound nbt) {
@@ -50,6 +68,17 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
         nbt.setInteger(NBT_POWER, power);
         nbt.setInteger(NBT_ID, my_cluster_id);
         nbt.setInteger(NBT_CHARGES, charges);
+        
+        NBTTagList var2 = new NBTTagList();
+        for (int var3 = 0; var3 < inventorySlots.length; ++var3) {
+            if (inventorySlots[var3] != null) {
+                NBTTagCompound var4 = new NBTTagCompound();
+                var4.setByte("Slot", (byte) var3);
+                inventorySlots[var3].writeToNBT(var4);
+                var2.appendTag(var4);
+            }
+        }
+        nbt.setTag("Items", var2);
     }
     
 	@Override
@@ -211,5 +240,79 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport {
     
     @Override
 	public void triggerConsumeEffect(Aspect aspect) {	}
+    //////////////////////
+    // Inventory
+    //////////////////////
+    
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return (VoidAggregationHandler.getCatalystPower(stack) > 0);
+    }
+    @Override
+    public String getInventoryName() {
+        return "TODO";
+    }
 
+    @Override
+    public boolean hasCustomInventoryName() {
+        return false;
+    }
+    /////// IInventory boilerplate
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityplayer.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
+    }
+    @Override
+    public ItemStack decrStackSize(int i, int j) {
+        if (inventorySlots[i] != null) {
+            ItemStack stackAt;
+
+            if (inventorySlots[i].stackSize <= j) {
+                stackAt = inventorySlots[i];
+                inventorySlots[i] = null;
+                return stackAt;
+            } else {
+                stackAt = inventorySlots[i].splitStack(j);
+
+                if (inventorySlots[i].stackSize == 0)
+                    inventorySlots[i] = null;
+
+                return stackAt;
+            }
+        }
+
+        return null;
+    }
+    @Override
+    public int getSizeInventory() {
+        return inventorySlots.length;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int i) {
+        return inventorySlots[i];
+    }
+
+    @Override
+    public void openInventory() {
+    }
+
+    @Override
+    public void closeInventory() {
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
+        return getStackInSlot(i);
+    }
+
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
+        inventorySlots[i] = itemstack;
+    }
 }

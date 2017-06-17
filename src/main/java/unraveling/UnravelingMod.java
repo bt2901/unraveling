@@ -31,8 +31,9 @@ import unraveling.item.UItems;
 import unraveling.item.URecipes;
 
 import unraveling.tileentity.TileEntityTFLichSpawner;
-import unraveling.tileentity.TileDarkGenMain;
-import unraveling.tileentity.TileDarkGen;
+
+import unraveling.mechanics.voidgen.TileDarkGenMain;
+import unraveling.mechanics.voidgen.TileDarkGen;
 import unraveling.tileentity.TileQuaesitum;
 import unraveling.dim.TileVoidPortal;
 
