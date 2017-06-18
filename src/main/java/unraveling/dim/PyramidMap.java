@@ -38,6 +38,8 @@ public class PyramidMap {
 	public static final int ROOM2HIGH = 8;
 	public static final int ROOM2SUDDEN_LOW = 9;
 	public static final int ROOM_VIRTUAL = 10;
+
+	public static final int ROOM_VPR = 100;
 	
 	public Random rand;
     public int[] rcoords = new int[0];
@@ -244,6 +246,9 @@ public class PyramidMap {
 	public void generateRecursiveBacktracker(int sx, int sz) {
         boolean roomHere = !cellEquals(sx, sz, 0);
         int attempts = 0;
+        if (cellsWidth < 2 || cellsDepth < 2) {
+            return;
+        }
         while(roomHere && attempts < 10) {
             sx = rand.nextInt(cellsWidth - 2) + 1;
             sz = rand.nextInt(cellsDepth - 2) + 1;
@@ -408,7 +413,8 @@ public class PyramidMap {
         if (rf < 0.6F) {
             return ROOM2SUDDEN_LOW;
         }
-        return ROOM;
+        // return ROOM;
+        return ROOM2SUDDEN_LOW;
     }
     
 	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {

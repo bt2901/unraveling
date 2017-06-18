@@ -33,7 +33,8 @@ public class PyramidMain extends StructureComponent {
 	public static int head = 0;   // blocks placed above the maze
 	public static int roots = 0;  // blocks placed under the maze (used for hedge mazes)
 
-	public static int levelsTall = 8;
+	//public static int levelsTall = 8;
+	public static int levelsTall = 5;
 	
 	public int worldX; // set when we first copy the maze into the world
 	public int worldY;
@@ -61,6 +62,8 @@ public class PyramidMain extends StructureComponent {
 	public static final int OUT_OF_BOUNDS = Integer.MIN_VALUE;
     public    int cellsWidth = 23;
     public    int cellsDepth = 23;
+    // public    int cellsWidth = 33;
+    // public    int cellsDepth = 33;
 	
     private ArrayList<PyramidMap> mazes = new ArrayList<PyramidMap>();
     
@@ -178,7 +181,8 @@ public class PyramidMain extends StructureComponent {
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
 		super.buildComponent(structurecomponent, list, random);
-					
+        
+        ArrayList<PyramidLevel> levels = new ArrayList<PyramidLevel>();
         int centerX = boundingBox.minX + ((boundingBox.maxX - boundingBox.minX) / 2);
         int centerZ = boundingBox.minZ + ((boundingBox.maxZ - boundingBox.minZ) / 2);
         for (int l=0; l < levelsTall; ++l) {
@@ -186,6 +190,7 @@ public class PyramidMain extends StructureComponent {
                 centerX, boundingBox.minY + (height)*l, centerZ, l, mazes.get(l));
 			list.add(levelBuilder);
 			levelBuilder.buildComponent(this, list, random);
+            levels.add(levelBuilder);
             int[] rooms = mazes.get(l).rcoords;
             
             // add rooms where we have our coordinates
@@ -200,6 +205,25 @@ public class PyramidMain extends StructureComponent {
                 room.buildComponent(this, list, random);
             }
         }
+        // decorate rooms
+        for (int l=0; l < levelsTall; ++l) {
+            
+            int[] rooms = mazes.get(l).rcoords;
+            for (int i = 0; i < rooms.length / PyramidMap.ROOM_INFO_LEN; i++) {
+                int dx = rooms[i * PyramidMap.ROOM_INFO_LEN];
+                int dz = rooms[i * PyramidMap.ROOM_INFO_LEN + 1];
+                int type = rooms[i * PyramidMap.ROOM_INFO_LEN + 2];
+                
+                if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
+                    // if (rand.nextFloat() > 0.33) {
+                    ComponentPyramidRoom room = makeRoom(random, PyramidMap.ROOM_VPR, dx, dz, l, levels.get(l));
+                    list.add(room);
+                    room.buildComponent(this, list, random);
+                    //}
+                }
+            }
+        }
+        
 	}
     protected ComponentPyramidRoom makeRoom(Random random, int type, int dx, int dz, int i, PyramidLevel levelBuilder) {
 
@@ -208,6 +232,9 @@ public class PyramidMain extends StructureComponent {
 		int worldZ = levelBuilder.getBoundingBox().minZ + dz * (evenBias + oddBias) - 3;
         if (type == PyramidMap.ROOMCENTRAL) {
             return new ComponentPyramidCentralRoom(random, worldX, worldY, worldZ, i);
+        }
+        if (type == PyramidMap.ROOM_VPR) {
+            return new ComponentVoidProductionRoom(random, worldX, worldY, worldZ);
         }
         return new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
 	}

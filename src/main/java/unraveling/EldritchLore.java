@@ -173,26 +173,7 @@ public class EldritchLore {
     }
     
     
-    public static String RelatedResearch(ItemStack is) {
-        // TODO: config
-        boolean alternate = false;
-        Item item = is.getItem();
-        if (alternate) {
-            // if (item == )
-        }
-        if (item == Items.ender_eye) {
-            return "ENDERCOMPASS";
-        }
-        if (item == ConfigItems.itemSanityChecker) {
-            return "ASTRALSNARE";
-        }
-        if (item instanceof ItemArtifact) {
-            return "lost";
-        }
-        // http://takahikokawasaki.github.io/minecraft-resources/javadoc/forge/1.7.10-10.13.2.1291/net/minecraft/init/Items.html
-        
-        return null;
-    }
+
 }
 
 /*

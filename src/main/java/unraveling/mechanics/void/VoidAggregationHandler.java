@@ -18,6 +18,7 @@ import cpw.mods.fml.common.network.internal.FMLProxyPacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import unraveling.UnravelingConfig;
 import unraveling.UnravelingMod;
 import unraveling.block.UBlocks;
 import unraveling.mechanics.voidgen.TileDarkGenMain;
@@ -233,25 +234,6 @@ public class VoidAggregationHandler {
 		return;
 	}
 
-    public static int getCatalystPower(ItemStack stack) {
-        if (stack == null) {
-            return 0;
-        }
-        Item item = stack.getItem();
-        if (stack.equals(new ItemStack(ConfigItems.itemResource, 1, 0))) { // alumentum
-            return 1;
-        }
-        if (item == Items.ender_pearl || item == Items.ender_eye) {
-            return 2;
-        }
-        if (stack.equals(new ItemStack(ConfigItems.itemResource, 1, 16)) || stack.equals(new ItemStack(ConfigItems.itemResource, 1, 17)))        { // void seed / void ingot
-            return 3;
-        }
-        // ender lily: 4
-        // element of darkness: 5
-
-        return 0;
-    }
     
     public int calcPotency(int group_id, World worldObj) {
         ShapeData shape = generatorsShape.get(group_id);
@@ -300,7 +282,7 @@ public class VoidAggregationHandler {
             Block id = gen.getBlockType();
             brightestPlace = Math.max(brightestPlace, id.getLightValue(worldObj, gen.xCoord, gen.yCoord, gen.zCoord));
             ItemStack stack = ((TileDarkGen)gen).getStackInSlot(0);
-            weakestCatalyst = Math.min(weakestCatalyst, getCatalystPower(stack));
+            weakestCatalyst = Math.min(weakestCatalyst, UnravelingConfig.getCatalystPower(stack));
         }
         return base - weakestCatalyst + brightestPlace / 2;
     }

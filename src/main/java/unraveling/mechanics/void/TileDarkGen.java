@@ -2,6 +2,8 @@ package unraveling.mechanics.voidgen;
 //package unraveling.tileentity;
 
 import unraveling.UnravelingMod;
+import unraveling.UnravelingConfig;
+
 import unraveling.mechanics.voidgen.VoidAggregationHandler;
 import thaumcraft.api.visnet.TileVisNode;
 import thaumcraft.api.visnet.VisNetHandler;
@@ -246,8 +248,12 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
     
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return (VoidAggregationHandler.getCatalystPower(stack) > 0);
+        if (UnravelingConfig.getCatalystPower(stack) > 0) {
+            return true;
+        }
+        return false;
     }
+    
     @Override
     public String getInventoryName() {
         return "TODO";

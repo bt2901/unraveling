@@ -17,6 +17,8 @@ import unraveling.mechanics.ContainerQ;
 import unraveling.UnravelingMod;
 import unraveling.tileentity.TileQuaesitum;
 
+import unraveling.UnravelingConfig;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -51,8 +53,8 @@ public class GuiDarkGen extends GuiContainer {
         //GL11.glEnable(3042);
 
         ItemStack stack = gen.getStackInSlot(0);
-        int power = VoidAggregationHandler.getCatalystPower(stack);
-        this.drawTexturedModalRect(x + 90, y + 44, 176, power * 16 * 4, 16, 16);
+        int power = UnravelingConfig.getCatalystPower(stack);
+        this.drawTexturedModalRect(x + 86, y + 40, 176, power * 16 * 4, 16, 16);
         //GL11.glDisable(3042);
     }
 

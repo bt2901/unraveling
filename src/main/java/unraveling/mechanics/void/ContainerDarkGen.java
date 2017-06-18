@@ -17,6 +17,7 @@ import thaumcraft.api.IScribeTools;
 public class ContainerDarkGen extends Container {
 
     public TileDarkGen gen;
+
     Slot slotInput;
     InventoryPlayer playerInv;
 
@@ -26,7 +27,7 @@ public class ContainerDarkGen extends Container {
         
         this.gen = gen;
 
-        addSlotToContainer(slotInput = new SlotLimitedCatalyst(gen, 0, 88, 18));
+        addSlotToContainer(slotInput = new SlotLimitedCatalyst(gen, 0, 86, 16));
 
         initPlayerInv();
     }
@@ -87,6 +88,32 @@ public class ContainerDarkGen extends Container {
     public int getInvXStart() {
         return 8;
     }
+    
 
 
+
+        /*
+    @Override
+    public void addCraftingToCrafters(ICrafting par1ICrafting) {
+        super.addCraftingToCrafters(par1ICrafting);
+        par1ICrafting.sendProgressBarUpdate(this, 0, X);
+    }
+
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting icrafting = (ICrafting)this.crafters.get(i);
+            if (this.lastPower != X) {
+                icrafting.sendProgressBarUpdate((Container)this, 0, X);
+            }
+        }
+        this.lastPower = X;
+    }
+    @SideOnly(value=Side.CLIENT)
+    public void updateProgressBar(int par1, int par2) {
+        if (par1 == 0) {
+            this.gen.power = par2;
+        }
+    }
+    */
 }

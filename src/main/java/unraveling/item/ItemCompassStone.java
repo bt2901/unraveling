@@ -1,19 +1,4 @@
-/*
- * Decompiled with CFR 0_118.
- * 
- * Could not load the following classes:
- *  cpw.mods.fml.relauncher.Side
- *  cpw.mods.fml.relauncher.SideOnly
- *  net.minecraft.client.renderer.texture.IIconRegister
- *  net.minecraft.creativetab.CreativeTabs
- *  net.minecraft.entity.Entity
- *  net.minecraft.item.EnumRarity
- *  net.minecraft.item.Item
- *  net.minecraft.item.ItemStack
- *  net.minecraft.util.IIcon
- *  net.minecraft.world.World
- *  net.minecraft.world.WorldProvider
- */
+
 package unraveling.item;
 
 import cpw.mods.fml.relauncher.Side;
@@ -57,9 +42,9 @@ extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerIcons(IIconRegister ir) {
-        this.icon[0] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone");
+        this.icon[0] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_inactive");
         this.icon[1] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_active");
-        this.icon[2] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_inactive");
+        this.icon[2] = ir.registerIcon(UnravelingMod.ID + ":sinister_stone_active2");
     }
 
     @SideOnly(value=Side.CLIENT)
@@ -73,15 +58,15 @@ extends Item {
             this.t = null;
             ChunkPosition pos = world.findClosestStructure("Stronghold", (int)entity.posX, (int)entity.posY, (int)entity.posZ);
             if (pos != null && EntityUtils.isVisibleTo(0.66f, entity, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, 512.0f)) {
+                this.t = this.icon[2];
+                return;
+            }
+            for (WorldCoordinates wc2 : warpedPortals.keySet()) {
+                if (wc2.dim != world.provider.dimensionId || !EntityUtils.isVisibleTo(0.66f, entity, (double)wc2.x + 0.5, (double)wc2.y + 0.5, (double)wc2.z + 0.5, 256.0f)) continue;
                 this.t = this.icon[1];
+                return;            
             }
         }
-    }
-
-    private double directionToPoint(double x1, double z1, double x2, double z2) {
-        double dx = x1 - x2;
-        double dz = z1 - z2;
-        return Math.atan2(dz, dx) * 180.0 / 3.141592653589793;
     }
 
     @SideOnly(value=Side.CLIENT)

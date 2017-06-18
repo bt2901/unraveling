@@ -16,7 +16,7 @@ import thaumcraft.api.aspects.AspectList;
 import unraveling.UnravelingMod;
 import unraveling.item.UItems;
 import unraveling.item.ItemScrutinyNote;
-import unraveling.EldritchLore;
+import unraveling.UnravelingConfig;
 import unraveling.mechanics.ExaminationData;
 
 import net.minecraft.entity.item.EntityItem;
@@ -180,7 +180,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             this.inventorySlots[1].stackSize--;
             
             ItemStack finishedResearch;
-            String r = EldritchLore.RelatedResearch(thingResearched);
+            String r = UnravelingConfig.RelatedResearch(thingResearched);
             if (r != null) {
                 finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, rand.nextInt(5));
             } else {

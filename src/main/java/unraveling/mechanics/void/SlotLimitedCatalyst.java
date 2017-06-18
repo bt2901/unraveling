@@ -3,6 +3,7 @@ package unraveling.mechanics.voidgen;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import unraveling.UnravelingConfig;
 
 public class SlotLimitedCatalyst
 extends Slot {
@@ -11,6 +12,6 @@ extends Slot {
     }
 
     public boolean isItemValid(ItemStack stack) {
-        return (VoidAggregationHandler.getCatalystPower(stack) > 0);
+        return (UnravelingConfig.getCatalystPower(stack) > 0);
     }
 }

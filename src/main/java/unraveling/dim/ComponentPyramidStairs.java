@@ -32,16 +32,16 @@ public class ComponentPyramidStairs extends StructureComponent {
 
 	public ComponentPyramidStairs(Random rand, int x, int y, int z, int mode, int clock) {
 		super(clock);
-        /*
+        mode = mode % 4;
         if (mode == 1) {
             clock = 1-clock;
             mode = 3;
         } else if (mode == 0) {
             clock = 1-clock;
             mode = 1;
-        }*/
-        // this.clock = clock;
-        this.clock = clock / 4;
+        }
+        this.clock = clock;
+        // this.clock = clock / 4;
         this.coordBaseMode = mode % 4;
         
         roomWidth = (PyramidMain.oddBias + PyramidMain.evenBias) * 3;

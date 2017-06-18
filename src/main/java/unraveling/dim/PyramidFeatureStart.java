@@ -24,6 +24,7 @@ public class PyramidFeatureStart extends StructureStart {
         MapGenStructureIO.func_143031_a(PyramidMain.class, "ZMain");
         MapGenStructureIO.func_143031_a(PyramidLevel.class, "ZLevel");
         MapGenStructureIO.func_143031_a(ComponentPyramidStairs.class, "ZStairs");
+        MapGenStructureIO.func_143031_a(ComponentVoidProductionRoom.class, "ZVPR");
     }
     
     public PyramidFeatureStart() {}
