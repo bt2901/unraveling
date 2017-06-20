@@ -50,7 +50,7 @@ tile.voidOre.name=Void Metal Ore
 tc.research_category.UNRAVELING=Unraveling the Eldritch Realm
 u.researchPrefix=[UER]
 
-u.note.name=Scrutiny Report
+item.scrutinyNote.name=Scrutiny Report
 u.note.0=Contains observations about %s
 u.note.1=A thorough investigation of %s properties
 u.note.hasread=You already know this

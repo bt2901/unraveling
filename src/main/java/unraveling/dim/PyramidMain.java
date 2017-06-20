@@ -73,8 +73,8 @@ public class PyramidMain extends StructureComponent {
 	public PyramidMain(World world, Random rand, int x, int y, int z) {
 		super(0);
 
-        int entranceX = cellsDepth/2;
-        int entranceZ = cellsWidth/2;
+        int centerRoomX = cellsDepth/2;
+        int centerRoomZ = cellsWidth/2;
 		this.width = cellsWidth;
 		this.depth = cellsDepth;
 		
@@ -92,10 +92,11 @@ public class PyramidMain extends StructureComponent {
             // set the seed to a fixed value based on this maze's x and z
             setFixedMazeSeed(newMaze, i);
             if (i == 0) {
-                newMaze.addBonusRoom(entranceX-i, entranceZ-i, PyramidMap.ROOMCENTRAL);
+                newMaze.addBonusRoom(centerRoomX-i, centerRoomZ-i, PyramidMap.ROOMCENTRAL);
                 for (int j = 1; j <= nrooms; ++j) {
                     newMaze.addRandomRoom(2, 3, newMaze.randomRoomShape());
                 }
+                newMaze.addBonusRoom(centerRoomX, 2, PyramidMap.ENTRANCE);
             } else {
                 for (int j = 0; j <= nrooms; ++j) {
                     int prev_x = mazes.get(i-1).rcoords[j * 3];
@@ -221,6 +222,13 @@ public class PyramidMain extends StructureComponent {
                     room.buildComponent(this, list, random);
                     //}
                 }
+                if (type == PyramidMap.ENTRANCE) {
+                    // if (rand.nextFloat() > 0.33) {
+                    ComponentPyramidRoom room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, levels.get(l));
+                    list.add(room);
+                    room.buildComponent(this, list, random);
+                    //}
+                }
             }
         }
         
@@ -235,6 +243,9 @@ public class PyramidMain extends StructureComponent {
         }
         if (type == PyramidMap.ROOM_VPR) {
             return new ComponentVoidProductionRoom(random, worldX, worldY, worldZ);
+        }
+        if (type == PyramidMap.ENTRANCE) {
+            return new ComponentPyramidEntrance(random, worldX, worldY, worldZ);
         }
         return new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
 	}

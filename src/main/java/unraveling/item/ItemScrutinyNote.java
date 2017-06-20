@@ -75,7 +75,7 @@ public class ItemScrutinyNote extends Item {
     public void registerIcons(IIconRegister ir) {
         this.iconAspect = ir.registerIcon(UnravelingMod.ID + ":scroll_basic");
         this.iconItem = ir.registerIcon(UnravelingMod.ID + ":scroll_advanced");
-        this.iconTorn = ir.registerIcon(UnravelingMod.ID + ":emptyMazeMap");
+        this.iconTorn = ir.registerIcon(UnravelingMod.ID + ":vellum");
     }
     /*
     @SideOnly(Side.CLIENT)
@@ -120,6 +120,8 @@ public class ItemScrutinyNote extends Item {
         list.add(createNoteOnResearch("NITOR", 3));
         list.add(createNoteOnResearch("SINSTONE", 5));
         list.add(createNoteOnAspect(Aspect.MAGIC));
+        list.add(createNoteOnAspect(Aspect.MAN));
+        list.add(createNoteOnAspect(Aspect.VOID));
     }
 
     @Override

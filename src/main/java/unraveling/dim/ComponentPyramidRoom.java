@@ -37,6 +37,11 @@ public class ComponentPyramidRoom extends StructureComponent {
             roomHeight = PyramidMain.height * 2;
         }
         this.boundingBox = new StructureBoundingBox(x, y, z, x + roomWidth, y + roomHeight, z + roomDepth);
+        if (type == PyramidMap.ENTRANCE) {
+            this.boundingBox = new StructureBoundingBox(x, y, z - 3 * roomDepth, x + roomWidth, y + roomHeight, z + roomDepth);
+            // this.boundingBox = new StructureBoundingBox(x, y, z, x + roomWidth, y + roomHeight, z + roomDepth);
+            // roomDepth *= 3;
+        }
 	}
     public void fillWithWalls(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
        fillWithMetadataBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, false);

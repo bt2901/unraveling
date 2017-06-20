@@ -39,6 +39,7 @@ public class PyramidMap {
 	public static final int ROOM2SUDDEN_LOW = 9;
 	public static final int ROOM_VIRTUAL = 10;
 
+	public static final int ENTRANCE = 99;
 	public static final int ROOM_VPR = 100;
 	
 	public Random rand;

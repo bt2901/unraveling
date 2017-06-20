@@ -161,14 +161,14 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
     
     @Override
     public boolean isConnectable(ForgeDirection face) {
-        //return face != ForgeDirection.UP;
-        return face == ForgeDirection.DOWN;
+        // return (face != ForgeDirection.UP && face != ForgeDirection.DOWN)
+        return (face != ForgeDirection.UP);
     }
 
     @Override
     public boolean canInputFrom(ForgeDirection face) {
-        // return face != ForgeDirection.UP;
-        return face == ForgeDirection.DOWN;
+        return face != ForgeDirection.UP;
+        // return face == ForgeDirection.DOWN;
     }
 
     @Override

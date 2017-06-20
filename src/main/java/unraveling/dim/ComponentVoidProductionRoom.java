@@ -47,7 +47,8 @@ public class ComponentVoidProductionRoom extends ComponentPyramidRoom {
 	}
 	public void placeGenAny(World world, StructureBoundingBox sbb, int x, int minY, int z, int dx, int maxY, int dz, boolean fancy) {
 		if(fancy){
-                    placeGenFancy(world, sbb, x, minY, z, dx, maxY, dz);
+                    // placeGenFancy(world, sbb, x, minY, z, dx, maxY, dz);
+                    placeGenOutsideFancy(world, sbb, x, minY, z, dx, maxY, dz);
 		} else {
                     placeGen(world, sbb, x, minY, z, maxY);
 		}
