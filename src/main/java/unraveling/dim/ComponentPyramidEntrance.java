@@ -44,26 +44,44 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
 	}
+    
+    public boolean replaceIfNotPartOfStructure(World world, StructureBoundingBox sbb, int x, int y, int z) {
+        Block b = getBlockAtCurrentPosition(world, x, y, z, sbb);
+        if (b == PyramidMain.wallBlockID || b == PyramidMain.headBlockID || b == PyramidMain.rootBlockID) {
+            return false;
+        }
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y, z, sbb);
+        return true;
+    }
 
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int z0 = 3*roomDepth + 1;
         fillWithAir(world, sbb, 1, 1, z0, roomWidth - 1, roomHeight - 1, z0 + roomDepth - 2);
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
-        int z = z0 - roomDepth - 2;
-        fillWithMetadataBlocks(world, sbb, pace,     1, z, 2 * pace, roomHeight - 1, z0,
-            Blocks.dirt, 0, Blocks.dirt, 0, false);
-        //fillWithMetadataBlocks(world, sbb, 1, 1, z0, roomWidth - 1, roomHeight - 1, z0 + roomDepth - 2,
-        fillWithMetadataBlocks(world, sbb, pace - 1, 1, z - 16, 2 * pace + 1, roomHeight, z, 
-            Blocks.gravel, 0, Blocks.gravel, 0, false);
-        for (int ylevel = 0; ylevel < PyramidMain.height; ++ylevel) {
+        int z = z0 - roomDepth;
+        fillWithMetadataBlocks(world, sbb, pace + 1,     1, z, 2 * pace - 1, roomHeight - 1, z0,
+            Blocks.air, 0, Blocks.air, 0, false);
+
+        for (int z2 = z; z2 < z + roomDepth; ++z2) {
+            for (int ylevel = 1; ylevel < PyramidMain.height; ++ylevel) {
+                replaceIfNotPartOfStructure(world, sbb, pace, ylevel, z2);
+                replaceIfNotPartOfStructure(world, sbb, pace - 1, ylevel, z2);
+                replaceIfNotPartOfStructure(world, sbb, 2*pace, ylevel, z2);
+                replaceIfNotPartOfStructure(world, sbb, 2*pace + 1, ylevel, z2);
+            }
+        }
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, pace, 1, z + 5, sbb);
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 2*pace, 1, z + 5, sbb);
+        for (int ylevel = 1; ylevel <= PyramidMain.height; ++ylevel) {
             z -= 4;
-            System.out.println("filling from " + z + " to " + (z+4));
-            fillWithWalls(world, sbb, pace - 1, ylevel, z, 2 * pace + 1, roomHeight, z + 4);
-            fillWithMetadataBlocks(world, sbb, pace - 1, ylevel, z + 2, 2 * pace + 1, ylevel + 1, z + 4, 
+            fillWithWalls(world, sbb, pace - 1, ylevel, z, 2 * pace + 1, roomHeight, z + 3);
+            fillWithMetadataBlocks(world, sbb, pace - 1, ylevel, z + 2, 2 * pace + 1, ylevel + 1, z + 3, 
                 ConfigBlocks.blockSlabStone, 1, ConfigBlocks.blockSlabStone, 1, false);
             fillWithAir(world, sbb, pace - 1, ylevel + 1, z, 2 * pace + 1, roomHeight, z + 4);
         }
+        fillWithAir(world, sbb, pace - 1, PyramidMain.height + 1, z, 2 * pace + 1, PyramidMain.height + 2, z + 8);
+
         // createStairs(world, sbb);
         // createDoorway(world, sbb);
 		return true;

@@ -34,7 +34,7 @@ public class PyramidMain extends StructureComponent {
 	public static int roots = 0;  // blocks placed under the maze (used for hedge mazes)
 
 	//public static int levelsTall = 8;
-	public static int levelsTall = 5;
+	public static int levelsTall = 7;
 	
 	public int worldX; // set when we first copy the maze into the world
 	public int worldY;
@@ -84,7 +84,7 @@ public class PyramidMain extends StructureComponent {
         this.coordBaseMode = 0;
 
         int radius = (int) ((cellsWidth + 2) * (evenBias + oddBias) * 0.5);
-		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+1), z + radius);
+		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+3), z + radius);
         int nrooms = 4;
         for (int i=0; i < levelsTall; ++i) {
             mazes.add(new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2));
