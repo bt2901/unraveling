@@ -73,6 +73,9 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
         }
         placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, pace, 1, z + 5, sbb);
         placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 2*pace, 1, z + 5, sbb);
+        fillWithMetadataBlocks(world, sbb, pace - 1, 0, z + 5, 2 * pace + 1, 0, z+4,
+            ConfigBlocks.blockCosmeticSolid, 3, ConfigBlocks.blockCosmeticSolid, 3, false);
+            
         for (int ylevel = 1; ylevel <= PyramidMain.height; ++ylevel) {
             z -= 4;
             fillWithWalls(world, sbb, pace - 1, ylevel, z, 2 * pace + 1, roomHeight, z + 3);
@@ -82,7 +85,6 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
         }
         fillWithAir(world, sbb, pace - 1, PyramidMain.height + 1, z, 2 * pace + 1, PyramidMain.height + 2, z + 8);
 
-        // createStairs(world, sbb);
         // createDoorway(world, sbb);
 		return true;
 	}

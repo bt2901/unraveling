@@ -1,31 +1,28 @@
-Lich Dimension:
-астероид 
-в центре пирамида
-и портал 
+== Demiplane ==
+out of crusted stone?
+place to have portal?
+look at End generation?
+obelisk / Eldritch Portal near entrance?
 
-иногда там может быть:
-руины деревни
-http://imgur.com/a/jKFyK#0
-http://imgur.com/a/sS96W#0
+== Progression Considerations ==
+Route 1
+Central Staircase is closed; Lich has key
+Ancient Stone is in Portable Hole blacklist 
+Entrance is dangerous: so either Blink, invisibility or... some parts of outer hull are damaged, and you can Portahole here.
+(?) Some of doors/walls are broken; crumbled. You can use Portable Hole on them
+^^^ top two floors
 
-странная пирамида https://www.reddit.com/r/Minecraft/comments/1f426w/a_funky_pyramid_i_made/
-площадка с обелисками https://www.reddit.com/r/Minecraft/comments/ulvad/i_like_the_addition_of_pyramids_but_i_thought/?ref=search_posts
+Route 2
+Nothing is closed.
+You can go anywhere, portable hole is fair game. You can go to the boss. Cthulhu bless your soul
 
+Warded doors are in separate buildings. Lich drops key
 
-pyramid layout:
-в центре лестница (а-ля Twilight)
-вокруг лабиринт
-входы на лестницу закрыты ключом 
- 
- 
- Ancient Stone
- не работает с Portable Hole?
- 
-верхний этаж - башня из Ancient Stone 
-похожая на Twilight. Там будет сражение.
-наружный слой пирамиды - возможно тоже Ancient Stone  
-может быть нет, там есть дырки и Portable Hole работает 
-
+== Levels ==
+Basement: entrance lead here. Walls are thick. Many traps here.
+Middle: usual maze, central stairs.
+Top:
+Roof: tower out of Ancient Stone (?). Boss spawns in this room. Bone tree here. It heals lich and allows for skeleton summon
 
 == Room List ==
 
@@ -33,14 +30,7 @@ pyramid layout:
 
 Warded Stone at entrance
 
-Entrance like in The Guide
-
-Eldritch Portal near entrance
-
-Central hallway with ladders
 Windows out of Warded Glass
-(?) Some of doors/walls are broken; crumbled. You can use Portable Hole on them
-^^^ top two floors
 
 Tower Room
 
@@ -52,8 +42,6 @@ Trap corridors:
 * Poison and liquid death traps!
 * Golems in walls
 * runic coridor
-
-
 
 === Rooms ===
 Dye Room:
@@ -83,7 +71,7 @@ Potions and jars:
 * Empty jars, some of them are with fireflies or glowstone
 
 Treasure
-* like Twilight
+* chest in a small house, like in TF
 * Thaumium and amber blocks storage
 * Void metal cluster
 * Trophy room
@@ -92,16 +80,10 @@ Treasure
 Utility:
 * Room with giant bones growing
 * Room with jars. Some with fireflies
-* Room qith crystal clusters. And shards
-* Void Metal Ore Transformation Room
-There is room when you can convert iron ore to thaum ore
-Or maybe into void ore if you supply it with something. It a bit more efficient than making void seeds
-
-* The Darkness Generator uses regular wheat seeds to create Seeds of Darkness, which you need to create other Eldritch items.
-
-In order to be able to work, the darkness generator needs to be placed close to an Eldritch Monolith, and it also needs to be sheltered from light - any light (even moonlight) hinders its operation. The secret treasure chambers below an Eldritch Monolith which you can unlock using the Eldritch Keystone: Tlhutlh each contain one monolith and are thus ideally suited for the placement of darkness generators. 
-
-
+* Room with crystal clusters. And shards
+* Antibuilder
+* Antiflight
+* Void Production Room: it should be dark
 
 == Lab Block List ==
 
@@ -119,9 +101,6 @@ bone meal like redstone
 
 Maybe something like horadric cube
 
-Or antibuilder which can be turned off
-
-Ender lily grower?
 
 Each block has cradfting recipe but it's unavailable
 Materials:
@@ -131,8 +110,6 @@ Materials:
 * block of thaumium / block of void (?)
 * Focus
 * soul sand
-* machine frame?
-
 
 Wand parts? ? Bingo with uncrafting - —- doesn't really work
 
@@ -141,181 +118,10 @@ Lich tries to craft some machine
 Like a thermal expansion one
 With staff scepter instead of reception coil
 
-Unknown
-block of thaumium
-Staff, 2 thaumium gears?
-
-Half crafted focus
-
-
-
-
-
-
-
-
-Reverse engineering the scepters into foci
-
-
-
-Some sort of reception coil
-Like Redstone? You can place it
-
-Render tricks: death animation, different models for different phases
-
-Lich battle: there are several bone barrels
-Or bone tree. It heals lich
-
-Appearance
-Some bone trees have no outward appearance betraying their status (the bones are around the roots, having sunk deep within the trunk). This is most often the case when a bone tree takes root in or near a populated or well-travelled area. Most however, have obvious bits of bone dangling from their boughs, or tangled in their roots. The most aged and profane bone trees seem to be sheathed in a bony coating, complete with many terrible skull-faces and bony hands and ribs. Bone trees that grow from the seed of a greater bone tree resemble the original tree but with a malignant, evil twist to the orignal form.
-
-https://dodermandefense.wordpress.com/2015/02/17/extreme-environments-1/
-https://dodermandefense.wordpress.com/2015/02/24/extreme-environments-2/
-
-
-Well, you've got the right mindset for a lich to-be. Trying to compromise with that kind of ludicrous evil will help set you down the path of darkness.
-
-
-
-
-
     
-Iron golems
-
-
-
-
-
-Warded doors. Maybe in separate buildings? Lich drops key
-
-Maze: could be a lair? Of lich?
-
-
-        
-// --- Small Bone Segment
-mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones>, "corpus 1, exanimis 3, mortuus 2");
-
-// --- Medium Bone Segment
-mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones:1>, "corpus 2, exanimis 6, mortuus 4");
-
-// --- Large Bone Segment
-mods.thaumcraft.Aspects.set(<BiomesOPlenty:bones:2>, "corpus 3, exanimis 9, mortuus 6");
-
-
-// --- Small Bone Segment
-Macerator.addRecipe(<minecraft:dye:15> * 5, <BiomesOPlenty:bones>);
-
-// --- Medium Bone Segment
-Macerator.addRecipe(<minecraft:dye:15> * 10, <BiomesOPlenty:bones:1>);
-
-// --- Large Bone Segment
-Macerator.addRecipe(<minecraft:dye:15> * 15, <BiomesOPlenty:bones:2>);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * Returns a list of creatures of the specified type that can spawn at the
-	 * given location.
-	 * 
-	 * Twilight Forest varient! First check features, then only if we're not in
-	 * a feature, check the biome.
-	 */
-     /*
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, int mapX, int mapY, int mapZ) {
-		// are the specified coordinates precicely in a feature?
-		TFFeature nearestFeature = TFFeature.getFeatureForRegion(mapX >> 4, mapZ >> 4, worldObj);
-
-		if (nearestFeature != TFFeature.nothing) {
-			// if the feature is already conquered, no spawns
-			if (this.isStructureConquered(mapX, mapY, mapZ)) {
-				return null;
-			}
-
-			// check the precise coords.
-			int spawnListIndex = this.majorFeatureGenerator.getSpawnListIndexAt(mapX, mapY, mapZ);
-			if (spawnListIndex >= 0) {
-				return nearestFeature.getSpawnableList(creatureType, spawnListIndex);
-			}
-		}
-
-		BiomeGenBase biome = worldObj.getBiomeGenForCoords(mapX, mapZ);
-
-		if (biome == null) {
-			return null;
-		} else if (mapY < TFWorld.SEALEVEL && creatureType == EnumCreatureType.monster && biome instanceof TFBiomeBase) {
-			// cave monsters!
-			return ((TFBiomeBase)biome).getUndergroundSpawnableList();
-		} else {
-			return biome.getSpawnableList(creatureType);
-		}
-	}*/
-
-    
-    
-    Liquid Death in walls?
-    
-
-    
-2 leveled rooms:
-
-room on a top of other room
-
-room on a top of maze (terrarium / aquarium)
-
-maze on a top of room (balcony? / glass)
-
-2DO: no rooms close to border
-
-    
-
-hadesX32.png.mcmeta
-
-{
-	"animation": {
-        "interpolate": true,
-		"frametime": 5
-	}
-}
-
-
-block cosmetic solid
-
-11 ancient rock
-12 ancient stone
-14 crusty stone
-
 7 arcane brick
 6 arcane block
 
-1 obsidian tile
-
-block eldritch 4
-glowy
-
-blocksStairEldritch 
-minecraft:stonebrick
-
 2DO: wall thickness, floor thickness
 
-pretty rooms: head block -> wall block at the edges
 

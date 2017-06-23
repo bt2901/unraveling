@@ -35,25 +35,30 @@ import net.minecraftforge.common.util.Constants;
 
 public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInventory {
         
-    private static final String NBT_CHARGES = "charges";
-    private static final String NBT_RESERVE = "reserve";
-    private static final String NBT_POWER = "power";
+    // you can switch suction if you have knowledge
+    // you can empty a generator: remove a catalyst
+    // 
+    
     private static final String NBT_ID = "my_cluster_id";
     
+    public Aspect drainSelected; 
     public int my_cluster_id = -1;
-    public int charges = 0;
-    public boolean reserve = false;
+    public int reserve = 0;
     public int power = 0;
     int drawDelay = 0;
     ItemStack[] inventorySlots = new ItemStack[1];
 
     @Override
     public void readCustomNBT(NBTTagCompound nbt) {
-        power = nbt.getInteger(NBT_POWER);
-        charges = nbt.getInteger(NBT_CHARGES);
+        power = nbt.getInteger("power");
         my_cluster_id = nbt.getInteger(NBT_ID);
-        reserve = (nbt.getInteger(NBT_RESERVE) != 0) ? true : false;
-        
+        reserve = nbt.getInteger( "reserve");
+        if (nbt.hasKey("aspect")) {
+            drainSelected = Aspect.getAspect(nbt.getString("aspect"));
+        } else {
+            drainSelected = null;
+        }
+    
         NBTTagList var2 = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         inventorySlots = new ItemStack[getSizeInventory()];
         for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
@@ -62,14 +67,15 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
             if (var5 >= 0 && var5 < inventorySlots.length)
                 inventorySlots[var5] = ItemStack.loadItemStackFromNBT(var4);
         }
-
     }
     @Override
     public void writeCustomNBT(NBTTagCompound nbt) {
-        nbt.setInteger(NBT_RESERVE, reserve? 1 : 0);
-        nbt.setInteger(NBT_POWER, power);
+        nbt.setInteger( "reserve", reserve);
+        nbt.setInteger("power", power);
         nbt.setInteger(NBT_ID, my_cluster_id);
-        nbt.setInteger(NBT_CHARGES, charges);
+        if (drainSelected != null) {
+            nbt.setString("aspect", drainSelected.getTag());
+        } 
         
         NBTTagList var2 = new NBTTagList();
         for (int var3 = 0; var3 < inventorySlots.length; ++var3) {
@@ -82,52 +88,31 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
         }
         nbt.setTag("Items", var2);
     }
+    /*
+
+    */
     
 	@Override
 	public void updateEntity() {
-        //System.out.println("updating. ");
-        /*
-        WorldCoordinates drainer = new WorldCoordinates(xCoord, yCoord, zCoord, worldObj.provider.dimensionId);
-        Field field = VisNetHandler.class.getDeclaredField("nearbyNodes");
-        field.setAccessible(true);
-        HashMap<WorldCoordinates, ArrayList<WeakReference<TileVisNode>>> value = field.get(null);
-        if (!value.containsKey(drainer)) {
-            System.out.println("not containsKey");
-		}
-        */
         super.updateEntity();
         if (!this.worldObj.isRemote) {
-            // TODO: count
-            // System.out.println("updating. " + this.my_cluster_id + " reserve: " + this.reserve + " power; " + this.power);
-            //System.out.println("updating. " + this.my_cluster_id + " power; " + this.power);
-
-            if (this.charges <= 0) {
-                if (this.reserve) {
-                    this.charges = 100;
-                    this.reserve = false;
-                    this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                } else if (this.drawEssentia()) {
-                    this.charges = 100;
-                    this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                }
-            }
-            if (!this.reserve && this.drawEssentia()) {
-                this.reserve = true;
-            }
-            if (this.charges == 0) {
-                this.charges = -1;
-                this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-            }
             this.power = (this.power > 0)? this.power - 1: 0;
-            if (this.power < 5) {
+            if (this.power < UnravelingConfig.maxVisReserve) {
                 if (VisNetHandler.isNodeValid(getParent())) {
-                    //System.out.println("drain vis. " + xCoord +" "+ yCoord +" "+ zCoord);
                     this.power += VisNetHandler.drainVis(worldObj, xCoord, yCoord, zCoord, Aspect.ENTROPY, 10);
-                } else {
-                    //System.out.println("will not drain vis, invalid. ");
                 }
             }
+
             if (this.power > 0) {
+                if (this.reserve < UnravelingConfig.maxEssentiaReserve) {
+                    if (drainSelected == null) {
+                        drainSelected = Aspect.DARKNESS;
+                    }
+                    if (this.drawEssentia()) {
+                        this.reserve += 1;
+                        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    }
+                }
                 if (my_cluster_id == -1) {
                     my_cluster_id = VoidAggregationHandler.assignId(this, worldObj);
                     System.out.println("my id is " + my_cluster_id);
@@ -137,20 +122,30 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
         }
 	}
     
+    boolean drawEssentiaFrom(ForgeDirection from) {
+        TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.worldObj, xCoord, yCoord, zCoord, from);
+        ForgeDirection to = from.getOpposite();
+        if (te != null) {
+            IEssentiaTransport ic = (IEssentiaTransport)te;
+            if (!ic.canOutputTo(to)) {
+                return false;
+            }
+            if (ic.getSuctionAmount(to) < this.getSuctionAmount(from) && 
+                ic.takeEssentia(drainSelected, 1, to) == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
     boolean drawEssentia() {
         if (++this.drawDelay % 5 != 0) {
             return false;
         }
-        TileEntity te = ThaumcraftApiHelper.getConnectableTile(this.worldObj, xCoord, yCoord, zCoord, ForgeDirection.DOWN);
-        if (te != null) {
-            IEssentiaTransport ic = (IEssentiaTransport)te;
-            if (!ic.canOutputTo(ForgeDirection.UP)) {
-                return false;
-            }
-            if (ic.getSuctionAmount(ForgeDirection.UP) < this.getSuctionAmount(ForgeDirection.DOWN) && 
-                ic.takeEssentia(Aspect.DARKNESS, 1, ForgeDirection.UP) == 1) {
+        ForgeDirection[] directions = {ForgeDirection.NORTH, ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.EAST};
+        for (ForgeDirection dir : directions) {
+            if (drawEssentiaFrom(dir)) {
                 return true;
-            }
+            }            
         }
         return false;
     }
@@ -161,28 +156,28 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
     
     @Override
     public boolean isConnectable(ForgeDirection face) {
-        // return (face != ForgeDirection.UP && face != ForgeDirection.DOWN)
-        return (face != ForgeDirection.UP);
+        return (face != ForgeDirection.UP && face != ForgeDirection.DOWN);
+        // return (face != ForgeDirection.UP);
     }
 
     @Override
     public boolean canInputFrom(ForgeDirection face) {
-        return face != ForgeDirection.UP;
+        return (face != ForgeDirection.UP && face != ForgeDirection.DOWN);
+        // return face != ForgeDirection.UP;
         // return face == ForgeDirection.DOWN;
     }
 
     @Override
-    public boolean canOutputTo(ForgeDirection face) {
-        return false;
-    }
+    public boolean canOutputTo(ForgeDirection face) { return false; }
 
     @Override
     public void setSuction(Aspect aspect, int amount) {
+        drainSelected = aspect;
     }
 
     @Override
     public boolean renderExtendedTube() {
-        return false;
+        return true;
     }
 
     @Override
@@ -192,36 +187,29 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
 
     @Override
     public Aspect getSuctionType(ForgeDirection face) {
-        return Aspect.DARKNESS; // or Aspect.VOID or Aspect.ENTROPY
+        return drainSelected;
     }
 
     @Override
     public int getSuctionAmount(ForgeDirection face) {
-        if (face == ForgeDirection.UP) {
+        if (face == ForgeDirection.UP || face == ForgeDirection.DOWN) {
             return 0;
         }
-        return (!this.reserve || this.charges <= 0) ? 128 : 0;
+        return (this.power > 0 && this.reserve < UnravelingConfig.maxEssentiaReserve) ? 128 : 0;
     }
 
     @Override
-    public Aspect getEssentiaType(ForgeDirection loc) {
-        return null;
-    }
+    public Aspect getEssentiaType(ForgeDirection loc) { return null; }
 
     @Override
-    public int getEssentiaAmount(ForgeDirection loc) {
-        return 0;
-    }
+    public int getEssentiaAmount(ForgeDirection loc) { return 0; }
 
     @Override
-    public int takeEssentia(Aspect aspect, int amount, ForgeDirection loc) {
-        return 0;
-    }
+    public int takeEssentia(Aspect aspect, int amount, ForgeDirection loc) { return 0; }
 
     @Override
-    public int addEssentia(Aspect aspect, int amount, ForgeDirection loc) {
-        return 0;
-    }    
+    public int addEssentia(Aspect aspect, int amount, ForgeDirection loc) { return 0; }    
+    
     //////////////////////
     // Vis Net Member Interface stubs
     //////////////////////
@@ -236,7 +224,7 @@ public class TileDarkGen extends TileVisNode implements IEssentiaTransport, IInv
 	public boolean isSource() {
         return false;
     };
-    // TODO
+    // TODO?
     @Override
 	public void parentChanged() { }
     

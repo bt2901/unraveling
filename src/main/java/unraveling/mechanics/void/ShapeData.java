@@ -9,6 +9,7 @@ import net.minecraft.util.Vec3;
 import thaumcraft.api.WorldCoordinates;
 import net.minecraft.world.World;
 
+import unraveling.mechanics.voidgen.TileDarkGen;
 
 public class ShapeData {
     public int minx;
@@ -159,5 +160,13 @@ public class ShapeData {
         return myTiles;
     }
 
+    public ArrayList<TileDarkGen> cornersGens(World worldObj) {
+        ArrayList<TileEntity> myCorners = cornersTiles(worldObj);
+        ArrayList<TileDarkGen> myGens = new ArrayList<TileDarkGen>();
+        for(TileEntity te : myCorners) {
+            myGens.add((TileDarkGen)te);
+        }
+        return myGens;
+    }
     
 }

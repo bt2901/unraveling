@@ -21,6 +21,7 @@ import unraveling.block.UBlocks;
 import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
 import unraveling.mechanics.PacketQResearch;
+import unraveling.mechanics.voidgen.PacketDrainSwitch;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import unraveling.dim.WorldProviderDemiplane;
 
@@ -126,6 +127,7 @@ public class UnravelingMod {
 		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
 		UnravelingMod.netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(UnravelingMod.ID + "2");
 		UnravelingMod.netHandler.registerMessage(PacketQResearch.class, PacketQResearch.class, 2901, Side.SERVER);
+		UnravelingMod.netHandler.registerMessage(PacketDrainSwitch.class, PacketDrainSwitch.class, 2901, Side.SERVER);
 		// render and other client stuff
 		proxy.doOnLoadRegistration();
 		

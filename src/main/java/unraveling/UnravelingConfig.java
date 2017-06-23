@@ -21,6 +21,12 @@ import unraveling.item.ItemArtifact;
 
 public class UnravelingConfig {
     
+    public static float catalystDestroyChance = 0.25F;
+
+    public static int maxVisReserve = 8;
+    public static int maxEssentiaReserve = 16;
+    public static int baseVoidProductionCost = 11;
+    
     public static int getCatalystPower(ItemStack stack) {
         if (stack == null) {
             return 0;

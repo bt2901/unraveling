@@ -57,6 +57,21 @@ public class GuiDarkGen extends GuiContainer {
         this.drawTexturedModalRect(x + 86, y + 40, 176, power * 16 * 4, 16, 16);
         //GL11.glDisable(3042);
     }
+    protected void mouseClicked(int mx, int my, int par3) {
+        super.mouseClicked(mx, my, par3);
+        int buttonPosX = mx - (x + 86);
+        int buttonPosY = my - (y + 40);
+        if (buttonPosX >= 0 && buttonPosY >= 0 && buttonPosX < 16 && buttonPosY < 16) {
+            Aspect drain = Aspect.DARKNESS; // default
+            if (gen.drainSelected == Aspect.DARKNESS) {
+                drain = Aspect.VOID;
+            }
+            gen.setSuction(drain, 1);
+            UnravelingMod.netHandler.sendToServer(new PacketDrainSwitch(gen));
+            // this.playButtonClick();
+            return;
+        }
+    }
 
 
     @Override

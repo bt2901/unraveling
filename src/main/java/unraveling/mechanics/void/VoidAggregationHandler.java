@@ -35,6 +35,7 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.WorldCoordinates;
 import thaumcraft.api.aspects.Aspect;
 import net.minecraft.tileentity.TileEntity;
+import thaumcraft.api.aspects.AspectList;
 
 import thaumcraft.common.config.ConfigItems;
 
@@ -79,8 +80,7 @@ public class VoidAggregationHandler {
             int group_id = generatorsGroupId.get(wc);
             ShapeData shape = generatorsShape.get(group_id);
             ArrayList<TileEntity> myTiles = shape.cornersTiles(tileentity.getWorldObj());
-            for(int i = 0; i < GEN_NUM; i++) {
-                TileEntity te = myTiles.get(i);
+            for(TileEntity te : myTiles) {
                 if (te != null) {
                     WorldCoordinates gwc = new WorldCoordinates(te);
                     generatorsGroupId.remove(gwc);
@@ -115,7 +115,8 @@ public class VoidAggregationHandler {
                         
                         System.out.println("VAH: creating new shape for group " + new_id);
 
-                        WorldCoordinates[] gens = {tmp.get(i), tmp.get(j), tmp.get(k), wc};                        generatorsShape.put(new_id, new ShapeData(Arrays.asList(gens), GEN_NUM));
+                        WorldCoordinates[] gens = {tmp.get(i), tmp.get(j), tmp.get(k), wc};
+                        generatorsShape.put(new_id, new ShapeData(Arrays.asList(gens), GEN_NUM));
                         return true;
                     }
                 }
@@ -210,6 +211,21 @@ public class VoidAggregationHandler {
             FMLProxyPacket message = VoidPacketHandler.makeBlockParticlePacket(x, y, z, x2, y2, z2, col);
             sendMessage(message, x, y, z, worldObj);
         }
+        int cost = UnravelingConfig.baseVoidProductionCost -  calcPotency(group_id, worldObj); 
+        int minCost = calcCostCap(group_id, worldObj); 
+        cost = (cost < minCost) ? minCost : cost; 
+        AspectList essentiaNeeded = new AspectList().add(Aspect.VOID, cost).add(Aspect.DARKNESS, cost);
+        for (TileDarkGen te : shape.cornersGens(worldObj)) {
+		if (te.reserve > 0 && te.drainSelected != null) {
+			essentiaNeeded.remove(te.drainSelected, te.reserve); 
+		}
+	}
+	if (essentiaNeeded.size() != 0) {
+		return;
+	} 
+        
+        System.out.println("Ready to transform. Current cost is " + cost);
+        essentiaNeeded = new AspectList().add(Aspect.VOID, cost).add(Aspect.DARKNESS, cost);
         for (int x = shape.minx; x <= shape.maxx; x++) {
             for (int z = shape.minz; z <= shape.maxz; z++) {
                 for (int y = shape.cury; y <= shape.cury + squareSide; y++) {
@@ -222,9 +238,15 @@ public class VoidAggregationHandler {
                             
                             FMLProxyPacket message = VoidPacketHandler.makeTransformBlockPacket(x, y, z);
                             worldObj.playSoundEffect((double)x, (double)y, (double)z, UnravelingMod.ID + ":random.blockconvert", 1.0F, 1.0F);
-
+		            for (TileDarkGen te : shape.cornersGens(worldObj)) {
+				// TODO: add fragility if drain amounts are far from equal
+				int drainAmount = Math.min(essentiaNeeded.getAmount(te.drainSelected), te.reserve);
+			        essentiaNeeded.remove(te.drainSelected, drainAmount); 
+				te.reserve -= drainAmount;
+                                // System.out.println("draining " + drainAmount  + " of " + te.drainSelected.getTag());
+	                    }
                             sendMessage(message, x, y, z, worldObj);
-                            // return;
+                            return;
                         }
                     }
                 }
@@ -235,21 +257,15 @@ public class VoidAggregationHandler {
 	}
 
     
-    public int calcPotency(int group_id, World worldObj) {
+    public static int calcPotency(int group_id, World worldObj) {
         ShapeData shape = generatorsShape.get(group_id);
         int squareSide = shape.maxx - shape.minx;
         int result = 0;
         
-        ArrayList<Vec3> myGenerators = shape.cornersList();
-		for(int i = 0; i < GEN_NUM; i++) {
-            Vec3 genPos = myGenerators.get(i);
-            int x = (int)genPos.xCoord;
-            int y = (int)genPos.yCoord;
-            int z = (int)genPos.zCoord;
-            TileEntity gen = worldObj.getTileEntity(x, y, z);
-            // result += catalyst
-            // result += consumed vis
-
+        for (TileDarkGen te : shape.cornersGens(worldObj)) {
+            ItemStack stack = te.getStackInSlot(0);
+            result += UnravelingConfig.getCatalystPower(stack);
+            // result += consumed vis?
         }
         
         for (int x = shape.minx; x <= shape.maxx; x++) {
@@ -267,21 +283,16 @@ public class VoidAggregationHandler {
         }
         return result;
     }
-    public int calcCostCap(int group_id, World worldObj) {
+    public static int calcCostCap(int group_id, World worldObj) {
         int base = 5;
         int weakestCatalyst = 5;
         int brightestPlace = 0;
 
         ShapeData shape = generatorsShape.get(group_id);
-        ArrayList<TileEntity> myTiles = shape.cornersTiles(worldObj);
-		for(int i = 0; i < GEN_NUM; i++) {
-            TileEntity gen = myTiles.get(i);
-            if (gen == null) {
-                return -1; // EVERYBODY PANIC
-            }
+        for (TileDarkGen gen : shape.cornersGens(worldObj)) {
             Block id = gen.getBlockType();
             brightestPlace = Math.max(brightestPlace, id.getLightValue(worldObj, gen.xCoord, gen.yCoord, gen.zCoord));
-            ItemStack stack = ((TileDarkGen)gen).getStackInSlot(0);
+            ItemStack stack = gen.getStackInSlot(0);
             weakestCatalyst = Math.min(weakestCatalyst, UnravelingConfig.getCatalystPower(stack));
         }
         return base - weakestCatalyst + brightestPlace / 2;
