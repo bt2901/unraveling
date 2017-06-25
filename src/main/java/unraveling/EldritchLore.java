@@ -64,7 +64,6 @@ public class EldritchLore {
     }    
     public static void studyVoid() {
 
-            //).setParents("BRAINCURE","RESEARCHER2").setParentsHidden("INFUSION").setConcealed().registerResearchItem();
             ResearchItem research = new UResearchItem("VOIDORE", "UNRAVELING", 
                 new AspectList(), 
                 -8, -5, 1, 
@@ -96,7 +95,7 @@ public class EldritchLore {
                 //infusionPage(""), 
                 //new ResearchPage("2"), 
                 constructPage("CREATEVOIDORE")
-                ).setStub().setRound().setAutoUnlock();
+                ).setStub().setRound();
     }
     
     public static void explore() {

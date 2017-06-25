@@ -24,15 +24,33 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import thaumcraft.client.lib.PlayerNotifications;
 
+import net.minecraft.client.Minecraft;
+
+
+import unraveling.mechanics.MessageGetStrongholdPos;
+import unraveling.mechanics.MessageSetStrongholdPos;
+import cpw.mods.fml.client.FMLClientHandler;
+
+
+
+
 import unraveling.UnravelingMod;
 
 public class ItemCompassStone
 extends Item {
     public IIcon[] icon = new IIcon[3];
     private IIcon t = null;
-
+    /*
+    public static int WARPED_PORTAL = 0;
+    public static int STRONGHOLD = 1;
+    public static int NETHER_FORTRESS = 2;
+    public static int LICH = 3;
+    */
     public static HashMap<WorldCoordinates, Long> warpedPortals = new HashMap();
     public static ChunkPosition strongholdPos;
+    private static World strongholdWorld;
+
+    private static Minecraft minecraft;
     
     public ItemCompassStone() {
         this.setMaxStackSize(1);
@@ -54,15 +72,24 @@ extends Item {
 
     public void onUpdate(ItemStack p_77663_1_, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
         if (world.isRemote) {
-            ArrayList<WorldCoordinates> del = new ArrayList<WorldCoordinates>();
+            minecraft =  FMLClientHandler.instance().getClient();
+            if (minecraft.theWorld != strongholdWorld && minecraft.thePlayer != null) {
+                strongholdPos = null;
+                strongholdWorld = minecraft.theWorld;
+                UnravelingMod.netHandler.sendToServer(new MessageGetStrongholdPos());
+                return;
+            }
+            
+            
             this.t = null;
-            ChunkPosition pos = world.findClosestStructure("Stronghold", (int)entity.posX, (int)entity.posY, (int)entity.posZ);
-            if (pos != null && EntityUtils.isVisibleTo(0.66f, entity, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, 512.0f)) {
+            // ChunkPosition pos = world.findClosestStructure("Stronghold", (int)entity.posX, (int)entity.posY, (int)entity.posZ);
+            if (strongholdPos != null && EntityUtils.isVisibleTo(0.66f, entity, strongholdPos.chunkPosX, strongholdPos.chunkPosY, strongholdPos.chunkPosZ, 512.0f)) {
                 this.t = this.icon[2];
                 return;
             }
             for (WorldCoordinates wc2 : warpedPortals.keySet()) {
                 if (wc2.dim != world.provider.dimensionId || !EntityUtils.isVisibleTo(0.66f, entity, (double)wc2.x + 0.5, (double)wc2.y + 0.5, (double)wc2.z + 0.5, 256.0f)) continue;
+                long type = warpedPortals.get(wc2);
                 this.t = this.icon[1];
                 return;            
             }
@@ -77,14 +104,5 @@ extends Item {
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.rare;
     }
-        @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        
-        String msg = "pos: " + world.findClosestStructure("Stronghold", (int)player.posX, (int)player.posY, (int)player.posZ);
-
-        PlayerNotifications.addNotification(msg);
-        return stack;
-    }
-
 }
 

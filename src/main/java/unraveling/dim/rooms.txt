@@ -38,6 +38,8 @@ Windows out of Warded Glass
 
 Tower Room
 
+Trap room: thaumcraft golems above pistons in 2 blocks deep holes
+
 === Coridors ===
 
 Mundane coridor

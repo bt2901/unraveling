@@ -48,22 +48,28 @@ public class UnravelingConfig {
     }
     public static String RelatedResearch(ItemStack is) {
         // TODO: config
-        boolean alternate = false;
+        boolean alternate = true;
         Item item = is.getItem();
+        int meta = is.getItemDamage();
         if (alternate) {
-            // if (item == )
+            if (item == new ItemStack(Blocks.ender_chest, 1, 0).getItem()) {
+                return  "FOCUS_ENDER_CHEST";
+            }
         }
-        if (item == Items.ender_eye) {
-            return "ENDERCOMPASS";
+        // TODO: different recipes depending on. Using virtual research
+        if (item == Items.ender_eye || item == ConfigItems.itemCompassStone) {
+            return  "ENDERCOMPASS";
         }
         if (item == ConfigItems.itemSanityChecker) {
-            return "ASTRALSNARE";
+            return  "ASTRALSNARE";
         }
         if (item instanceof ItemArtifact) {
+            if (meta == 2 || meta == 3) {
+                return  "VOIDORE";
+            }
             // this.clazz.isAssignableFrom(is.func_77973_b().getClass()
-            return "lost";
+            return  "lost";
         }
-        // http://takahikokawasaki.github.io/minecraft-resources/javadoc/forge/1.7.10-10.13.2.1291/net/minecraft/init/Items.html
         
         return null;
     }

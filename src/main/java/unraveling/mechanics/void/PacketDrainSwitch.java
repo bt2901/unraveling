@@ -12,7 +12,6 @@ import unraveling.UnravelingMod;
 
 public class PacketDrainSwitch extends PacketTile<TileDarkGen> implements IMessageHandler<PacketDrainSwitch, IMessage> {
 
-    private static final long serialVersionUID = 1497188581985763661L; // TODO: why? I copied this from TT, don't know what this number does
     boolean isDarkness;
 
     public PacketDrainSwitch() {
