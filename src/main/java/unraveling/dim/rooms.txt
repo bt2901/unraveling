@@ -1,5 +1,5 @@
 # need to change walls material.
-# Ancient Stone gives off light; this is wrong for vid production room
+# Ancient Stone gives off light; this is wrong for void production room
 # also, ancient stone is too square.
 
 == Demiplane ==

@@ -32,7 +32,7 @@ import unraveling.UnravelingMod;
 
 public class ItemArtifact extends Item {
 
-    final int subtypes = 10;
+    final int subtypes = 14;
     IIcon[] icon = new IIcon[subtypes];
     public ItemArtifact() {
         this.setMaxStackSize(1);
@@ -52,6 +52,10 @@ public class ItemArtifact extends Item {
         this.icon[7] = ir.registerIcon(UnravelingMod.ID + ":artifacts/gear2");
         this.icon[8] = ir.registerIcon(UnravelingMod.ID + ":artifacts/glowing_eldritch_device");
         this.icon[9] = ir.registerIcon(UnravelingMod.ID + ":artifacts/eldritch_repository");
+        this.icon[10] = ir.registerIcon(UnravelingMod.ID + ":voidbook");
+        this.icon[11] = ir.registerIcon(UnravelingMod.ID + ":thaum_tome");
+        this.icon[12] = ir.registerIcon(UnravelingMod.ID + ":thaumbook_alt");
+        this.icon[13] = ir.registerIcon(UnravelingMod.ID + ":thaumbook");
     }
 
 

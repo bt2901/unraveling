@@ -33,7 +33,8 @@ public class PyramidMain extends StructureComponent {
 	public static int head = 0;   // blocks placed above the maze
 	public static int roots = 0;  // blocks placed under the maze (used for hedge mazes)
 
-	//public static int levelsTall = 8;
+	public static int floorThickness = 1;
+    
 	public static int levelsTall = 7;
 	
 	public int worldX; // set when we first copy the maze into the world
@@ -52,6 +53,10 @@ public class PyramidMain extends StructureComponent {
 	
 	public static Block rootBlockID = ConfigBlocks.blockCosmeticSolid;
 	public static int rootBlockMeta = 14;
+
+    int outerBlockMeta = headBlockMeta; 
+    Block outerBlockID = headBlockID; 
+
 	
 	public static Block pillarBlockID;
 	public static int pillarBlockMeta;
@@ -218,10 +223,10 @@ public class PyramidMain extends StructureComponent {
                 ComponentPyramidRoom room = null;
                 if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
                     float r = random.nextFloat();
-                    if (r > 1.75) {
+                    if (r > 0.75) {
                         room = makeRoom(random, PyramidMap.ROOM_VPR, dx, dz, l, levels.get(l));
                     }
-                    if (r <= 1.75) {
+                    if (r <= 0.75) {
                         room = makeRoom(random, PyramidMap.ROOM_GARDEN, dx, dz, l, levels.get(l));
                     }
                 }
@@ -262,11 +267,10 @@ public class PyramidMain extends StructureComponent {
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
         int startH = 1;
-        int outerBlockMeta = headBlockMeta; 
         int endH = (height)*(levelsTall + 1) + startH;
         for (int i=startH; i < endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 
-                headBlockID, outerBlockMeta, outerBlockID, outerBlockMeta, false);
+                outerBlockID, outerBlockMeta, outerBlockID, outerBlockMeta, false);
         }
 
 		return true;

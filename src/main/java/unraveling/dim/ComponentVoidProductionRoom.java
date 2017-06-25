@@ -66,7 +66,7 @@ public class ComponentVoidProductionRoom extends ComponentPyramidRoom {
                     placeBlockAtCurrentPosition(world, ConfigBlocks.blockTube, 0, x, y, z-dz, sbb);
 	        }
             placeBlockAtCurrentPosition(world, ConfigBlocks.blockMetalDevice, 14, x, maxY+1, z, sbb);
-            placeBlockAtCurrentPosition(world, ConfigBlocks.blockMetalDevice, 14, x, 2*roomHeight - 1, z, sbb);
+            // placeBlockAtCurrentPosition(world, ConfigBlocks.blockMetalDevice, 14, x, 2*roomHeight - 1, z, sbb);
 	}
 	public void placeGenFancy(World world, StructureBoundingBox sbb, int x, int minY, int z, int dx, int maxY, int dz) {
          
