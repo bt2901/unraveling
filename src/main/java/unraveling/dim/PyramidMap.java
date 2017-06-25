@@ -41,6 +41,7 @@ public class PyramidMap {
 
 	public static final int ENTRANCE = 99;
 	public static final int ROOM_VPR = 100;
+	public static final int ROOM_GARDEN = 101;
 	
 	public Random rand;
     public int[] rcoords = new int[0];

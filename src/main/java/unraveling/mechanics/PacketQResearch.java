@@ -12,7 +12,6 @@ import unraveling.UnravelingMod;
 public class PacketQResearch extends PacketTile<TileQuaesitum> implements IMessageHandler<PacketQResearch, IMessage> {
 
     private static final long serialVersionUID = 1497188581985763661L; // TODO: why? I copied this from TT, don't know what this number does
-    boolean locked;
 
     public PacketQResearch() {
         super();

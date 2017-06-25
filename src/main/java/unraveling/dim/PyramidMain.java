@@ -215,19 +215,24 @@ public class PyramidMain extends StructureComponent {
                 int dz = rooms[i * PyramidMap.ROOM_INFO_LEN + 1];
                 int type = rooms[i * PyramidMap.ROOM_INFO_LEN + 2];
                 
+                ComponentPyramidRoom room = null;
                 if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
-                    // if (rand.nextFloat() > 0.33) {
-                    ComponentPyramidRoom room = makeRoom(random, PyramidMap.ROOM_VPR, dx, dz, l, levels.get(l));
-                    list.add(room);
-                    room.buildComponent(this, list, random);
-                    //}
+                    float r = random.nextFloat();
+                    if (r > 1.75) {
+                        room = makeRoom(random, PyramidMap.ROOM_VPR, dx, dz, l, levels.get(l));
+                    }
+                    if (r <= 1.75) {
+                        room = makeRoom(random, PyramidMap.ROOM_GARDEN, dx, dz, l, levels.get(l));
+                    }
                 }
                 if (type == PyramidMap.ENTRANCE) {
                     // if (rand.nextFloat() > 0.33) {
-                    ComponentPyramidRoom room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, levels.get(l));
+                    room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, levels.get(l));
+                    //}
+                }
+                if (room != null) {
                     list.add(room);
                     room.buildComponent(this, list, random);
-                    //}
                 }
             }
         }
@@ -244,6 +249,9 @@ public class PyramidMain extends StructureComponent {
         if (type == PyramidMap.ROOM_VPR) {
             return new ComponentVoidProductionRoom(random, worldX, worldY, worldZ);
         }
+        if (type == PyramidMap.ROOM_GARDEN) {
+            return new ComponentGardenRoom(random, worldX, worldY, worldZ);
+        }
         if (type == PyramidMap.ENTRANCE) {
             return new ComponentPyramidEntrance(random, worldX, worldY, worldZ);
         }
@@ -252,14 +260,13 @@ public class PyramidMain extends StructureComponent {
 
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
-        int ringMin;
-        int ringMax;
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
         int startH = 1;
+        int outerBlockMeta = headBlockMeta; 
         int endH = (height)*(levelsTall + 1) + startH;
         for (int i=startH; i < endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 
-                headBlockID, headBlockMeta, headBlockID, headBlockMeta, false);
+                headBlockID, outerBlockMeta, outerBlockID, outerBlockMeta, false);
         }
 
 		return true;

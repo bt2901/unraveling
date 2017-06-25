@@ -66,6 +66,7 @@ public class ComponentVoidProductionRoom extends ComponentPyramidRoom {
                     placeBlockAtCurrentPosition(world, ConfigBlocks.blockTube, 0, x, y, z-dz, sbb);
 	        }
             placeBlockAtCurrentPosition(world, ConfigBlocks.blockMetalDevice, 14, x, maxY+1, z, sbb);
+            placeBlockAtCurrentPosition(world, ConfigBlocks.blockMetalDevice, 14, x, 2*roomHeight - 1, z, sbb);
 	}
 	public void placeGenFancy(World world, StructureBoundingBox sbb, int x, int minY, int z, int dx, int maxY, int dz) {
          
@@ -90,7 +91,7 @@ public class ComponentVoidProductionRoom extends ComponentPyramidRoom {
 	    Block otile = ConfigBlocks.blockCosmeticSolid;
 	    int otilemeta = 1;
             int pace = PyramidMain.oddBias + PyramidMain.evenBias;
-            int platf = 3;
+            int platf = 2;
             fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, otile, otilemeta, otile, otilemeta, false);
 
 	    boolean fancy = true;

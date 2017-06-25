@@ -11,6 +11,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import java.util.List;
 import java.util.Random;
+import net.minecraft.world.EnumSkyBlock;
 
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -80,8 +81,27 @@ public class PyramidLevel extends StructureComponent {
 		// find dead ends and corridors and make components for them
 		// decorateDeadEndsCorridors(random, list);
 	}
+    /**
+	 * Nullify all the sky light at the specified positions, using world coordinates
+	 */
+	public void nullifySkyLight(World world, int sx, int sy, int sz, int dx, int dy, int dz) 
+	{
+		for (int x = sx; x <= dx; x++) 
+		{
+         	for (int z = sz; z <= dz; z++) 
+         	{
+             	for (int y = sy; y <= dy; y++) 
+             	{
+             		world.setLightValue(EnumSkyBlock.Sky, x, y, z, 0);
+             	}
+         	}
+     	}
+	}
+
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
+        nullifySkyLight(world, boundingBox.minX - 1, boundingBox.minY - 1, boundingBox.minZ - 1, boundingBox.maxX + 1, boundingBox.maxY + 1, boundingBox.maxZ + 1);
+
 		// clear the area
 		fillWithAir(world, sbb, 1, 1, 1, getDiameter(), PyramidMain.height - 1, getDiameter());
         	
@@ -160,18 +180,11 @@ public class PyramidLevel extends StructureComponent {
 			putHeadBlock(world, mdx + even, dy + PyramidMain.height + y, mdz + odd, component, sbb);
 		}
 		for(int y = 0; y < PyramidMain.height; y++) { // DEBUG
-			putWallBlock(world, mdx + even, dy + y, mdz + odd, component, sbb);
+			putWallBlock2(world, mdx + even, dy + y, mdz + odd, component, sbb);
 		}
 		for(int y = 1; y <= PyramidMain.roots; y++) {
 			putRootBlock(world, mdx + even, dy - y, mdz + odd, component, sbb);
 		}
-	}
-	
-	/**
-	 * Puts a wall block in the world, at the specified world coordinates.
-	 */
-	protected void putWallBlock(World world, int x, int y, int z) {
-		world.setBlock(x, y, z, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, 2);
 	}
 	
 	/**
@@ -186,6 +199,10 @@ public class PyramidLevel extends StructureComponent {
 		{
 			super.placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y, z, sbb);
 		}
+	}
+	protected void putWallBlock2(World world, int x, int y, int z, StructureComponent component, StructureBoundingBox sbb) {
+        placeBlockAtCurrentPosition(world, PyramidMain.headBlockID, PyramidMain.headBlockMeta, x, y, z, sbb);
+		
 	}
 	
 

@@ -1,3 +1,7 @@
+# need to change walls material.
+# Ancient Stone gives off light; this is wrong for vid production room
+# also, ancient stone is too square.
+
 == Demiplane ==
 out of crusted stone?
 place to have portal?
