@@ -91,12 +91,10 @@ public class ExaminationData {
             if (ResearchCategories.getResearch(ResearchData) == null) {
                 return StatCollector.translateToLocal("tc.unknownobject");
             }
-            /*
-            if (!ResearchManager.doesPlayerHaveRequisites(playerName, ResearchData)) {
-                if (!"FOCUS_ENDER_CHEST".equals(ResearchData)) {
-                    return StatCollector.translateToLocal("u.note.notready");
-                }
-            }*/
+            boolean overrideRequisites = false; 
+            if (!overrideRequisites && !ResearchManager.doesPlayerHaveRequisites(playerName, ResearchData)) {
+                return StatCollector.translateToLocal("u.note.notready");
+            }
             if (ResearchManager.isResearchComplete(playerName, ResearchData)) {
                 return StatCollector.translateToLocal("u.note.hasread");
             }

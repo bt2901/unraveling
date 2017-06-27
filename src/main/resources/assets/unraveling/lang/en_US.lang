@@ -93,16 +93,15 @@ u.page.VOIDBOOKS.1=You can channel darkness now. Non enchantable. Try not to sta
 
 u.name.MAGICBOOKS=Thaumium Book Covers
 u.text.MAGICBOOKS=Why nobody had thought about this?
-u.page.MAGICBOOKS.1=After carefully studying books, you realised something. They also hold mystical enchantments very well and can hold powerful magic much better than even expensive armor.  
+u.page.MAGICBOOKS.1=After carefully studying books, you've realised something. They also hold mystical enchantments very well and can hold powerful magic much better than even expensive armor.  
 
 
 
 u.name.ASTRALSNARE=Astral Snare
-u.text.ASTRALSNARE=Witty text
-# prereq:  if TT then ender rift
-u.page.ASTRALSNARE.1=After carefully studying sanity checker, you realised something. Magic creates ripples of warp. These ripples are very noticeable when changing dimensions. You conjecture it's having to do something with the ultimate structure of reality.
-u.page.ASTRALSNARE.2=You created a block which can detect such disturbations. 
-# http://takahikokawasaki.github.io/minecraft-resources/javadoc/forge/1.7.10-10.13.2.1291/cpw/mods/fml/common/gameevent/PlayerEvent.PlayerChangedDimensionEvent.html
+u.text.ASTRALSNARE=Knowledge is a power, after all
+u.page.ASTRALSNARE.1=The curious thing about the sanity checker is that it doesn't need contact with you in order to work. Your experiments showed that the device can interact with redstone comparator even when you aren't nowhere near it. You used to think that sanity checker works by examining user's state of mind, but now you doubt this is the case.<BR>It almost looks like the state of your knowledge isn't entirely contained within your head, which is surprising.
+u.page.ASTRALSNARE.2=After some pondering, you've formulated a hypothesis. You know that the reality is divided into two planes: the material plane and the plane of energy, where vis comes from. Could there be another plane, the plane where pure mind resides? Large concentrantions of powerful knowledge cause the raw thought to leak into the material plane, manifesting as warp effects, just as the aura nodes are breaches transfering magical energy from that plane into the material plane. 
+u.page.ASTRALSNARE.3=You remember your earlier hunch, the fear that your enemies could use your Sanity Checker to some unknown end. You are suddenly very glad you decided to obfuscate the readings of the device. Could you use this mechanism to track down powerful thaumaturges? This bears further study. <BR>In theory, any magic should create detectable ripples in the fabric of the Third Plane, but you discovered that the mundane matter almost completely blocks them. However, when wizard changes dimensions, there is a split second when the mind is severed from the body; you conjecture you are able to detect these disturbations using a special machine.<BR>This invention allows you to find portals often used by powerful thaumaturges. The greater a toll knowledge took on mage's sanity, the more reliable the results.
 
 u.name.ENDERCOMPASS=Ender Compass
 u.text.ENDERCOMPASS=By Mr Ibby

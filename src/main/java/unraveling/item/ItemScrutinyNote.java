@@ -135,8 +135,10 @@ public class ItemScrutinyNote extends Item {
                 }
                 return stack;
             }
-            ed.onUse(world, player);
-            stack.stackSize--;
+            if (!world.isRemote) {
+                ed.onUse(world, player);
+                stack.stackSize--;
+            }
         }
         return stack;
     }

@@ -48,6 +48,7 @@ public class UnravelingConfig {
     }
     public static String RelatedResearch(ItemStack is) {
         // TODO: config
+        // TODO: class "Discovery". Holds information on the relevant item (for description), the relevant research (for effect) and the "override requirements" flag
         boolean alternate = true;
         Item item = is.getItem();
         int meta = is.getItemDamage();

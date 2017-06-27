@@ -80,9 +80,7 @@ extends Item {
                 return;
             }
             
-            
             this.t = null;
-            // ChunkPosition pos = world.findClosestStructure("Stronghold", (int)entity.posX, (int)entity.posY, (int)entity.posZ);
             if (strongholdPos != null && EntityUtils.isVisibleTo(0.66f, entity, strongholdPos.chunkPosX, strongholdPos.chunkPosY, strongholdPos.chunkPosZ, 512.0f)) {
                 this.t = this.icon[2];
                 return;
@@ -104,5 +102,14 @@ extends Item {
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.rare;
     }
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+        
+        // msg = "pos: " + world.findClosestStructure("Stronghold", (int)player.posX, (int)player.posY, (int)player.posZ);
+        // System.out.println("at: " + strongholdPos.chunkPosX + " " + strongholdPos.chunkPosY + " " + strongholdPos.chunkPosZ);
+        // PlayerNotifications.addNotification(msg);
+        
+        return stack;
+   }
 }
 

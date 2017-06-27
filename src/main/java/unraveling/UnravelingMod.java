@@ -82,6 +82,7 @@ public class UnravelingMod {
 	
 	public static final String ID = "unraveling";
 	public static final String VERSION = "0.1alpha";
+	public static final UEventListener eventListener = new UEventListener();
 	
 	public static int dimensionID;
 	public static int dimensionProviderID;
@@ -135,11 +136,13 @@ public class UnravelingMod {
 		// GUI
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
-		// generic channel that handles biome change packets, but could handle some other stuff in the future
+        MinecraftForge.EVENT_BUS.register(eventListener);
+		FMLCommonHandler.instance().bus().register(eventListener); 
+        
 		UnravelingMod.genericChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(UnravelingMod.ID);
 		UnravelingMod.netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(UnravelingMod.ID + "2");
-        int idx = 0;
 
+        int idx = 0;
 		UnravelingMod.netHandler.registerMessage(PacketQResearch.class, PacketQResearch.class, idx++, Side.SERVER);
 		UnravelingMod.netHandler.registerMessage(PacketDrainSwitch.class, PacketDrainSwitch.class, idx++, Side.SERVER);
 		UnravelingMod.netHandler.registerMessage(MessageGetStrongholdPos.class, MessageGetStrongholdPos.class, idx++, Side.SERVER);
@@ -256,22 +259,6 @@ public class UnravelingMod {
 	    }
 	}
 
-    /**
-     * When player changes dimensions, send the rule status if they're moving to the Twilight Forest
-	 */
-	@SubscribeEvent
-	public void playerPortals(PlayerChangedDimensionEvent event) {
-        System.out.println(event.player);
-        Thaumcraft.proxy.getPlayerKnowledge().getWarpTotal(event.player.getCommandSenderName());
-        // String msg = "pos: " + world.findClosestStructure("Stronghold", (int)player.posX, (int)player.posY, (int)player.posZ);
 
-        // PlayerNotifications.addNotification(msg);
-        // return stack;
-    
-
-		/*if (!event.player.worldObj.isRemote && event.player instanceof EntityPlayerMP && event.toDim == TwilightForestMod.dimensionID) {
-			this.sendEnforcedProgressionStatus((EntityPlayerMP)event.player, event.player.worldObj.getGameRules().getGameRuleBooleanValue(TwilightForestMod.ENFORCED_PROGRESSION_RULE));
-		}*/
-    }
 	
 }
