@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.init.Blocks;
 import thaumcraft.common.config.ConfigItems;
+import unraveling.mechanics.ExaminationData.Discovery;
 
 import unraveling.item.ItemArtifact;
 
@@ -46,7 +47,7 @@ public class UnravelingConfig {
 
         return 0;
     }
-    public static String RelatedResearch(ItemStack is) {
+    public static Discovery RelatedResearch(ItemStack is) {
         // TODO: config
         // TODO: class "Discovery". Holds information on the relevant item (for description), the relevant research (for effect) and the "override requirements" flag
         boolean alternate = true;
@@ -54,22 +55,22 @@ public class UnravelingConfig {
         int meta = is.getItemDamage();
         if (alternate) {
             if (item == new ItemStack(Blocks.ender_chest, 1, 0).getItem()) {
-                return  "FOCUS_ENDER_CHEST";
+                return new Discovery(is, "FOCUS_ENDER_CHEST", true);
             }
         }
         // TODO: different recipes depending on. Using virtual research
         if (item == Items.ender_eye || item == ConfigItems.itemCompassStone) {
-            return  "ENDERCOMPASS";
+            return new Discovery(is, "ENDERCOMPASS");
         }
         if (item == ConfigItems.itemSanityChecker) {
-            return  "ASTRALSNARE";
+            return new Discovery(is, "ASTRALSNARE");
         }
         if (item instanceof ItemArtifact) {
             if (meta == 2 || meta == 3) {
-                return  "VOIDORE";
+                return new Discovery(is, "VOIDORE");
             }
             // this.clazz.isAssignableFrom(is.func_77973_b().getClass()
-            return  "lost";
+            return new Discovery(is, "lost");
         }
         
         return null;

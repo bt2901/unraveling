@@ -2,6 +2,7 @@ package unraveling.mechanics;
 
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -34,11 +35,42 @@ import thaumcraft.api.research.ResearchCategories;
 
 
 public class ExaminationData {
+    // TODO: class "Discovery". Holds information. Not used yet.
+
+    public static class Discovery {
+        public ItemStack item;  // relevant item (for description)
+        public String researchKey; // relevant research (for effect)
+        public boolean overrideRequirements = false;
+        public Discovery() {}
+        public Discovery(ItemStack is, String key, boolean o) {
+            item = is; researchKey = key; overrideRequirements = o;
+        }
+        public Discovery(ItemStack is, String key) {
+            this(is, key, false);
+        }
+        public static Discovery readFromNBT(NBTTagCompound nbttagcompound) {
+            if (nbttagcompound.hasKey("research")) {
+                NBTTagCompound tag = nbttagcompound.getCompoundTag("research");
+                ItemStack is = ItemStack.loadItemStackFromNBT(tag);
+                String key = tag.getString("researchKey");
+                boolean overrideRequirements = tag.getBoolean("override");
+                return new Discovery(is, key, overrideRequirements);
+            }
+            return null;
+        }
+        public void writeToNBT(NBTTagCompound nbttagcompound) {
+            NBTTagCompound res = new NBTTagCompound();
+            item.writeToNBT(res);
+            res.setString("researchKey", researchKey);
+            res.setBoolean("override", overrideRequirements);
+            nbttagcompound.setTag("research", res);
+        }
+    }
     
     public Integer noteType = -1;
     public Integer value;
     public String aspectTag = null;
-    public String ResearchData = null;
+    public Discovery ResearchData = null;
     
     public static int ON_ASPECT = 0;
     public static int ON_ITEM = 1;
@@ -50,11 +82,11 @@ public class ExaminationData {
         ed.noteType = ON_ASPECT;
         ed.value = 1;
         ed.aspectTag = a.getTag();
-        ed.ResearchData = "";
+        ed.ResearchData = null;
         return ed;
     }
 
-    public static ExaminationData forResearch(String desc, int value) {
+    public static ExaminationData forResearch(Discovery desc, int value) {
         ExaminationData ed = new ExaminationData();
         ed.noteType = ON_ITEM;
         ed.value = value;
@@ -88,14 +120,14 @@ public class ExaminationData {
             return null;
         }
         if (noteType == ON_ITEM) {
-            if (ResearchCategories.getResearch(ResearchData) == null) {
+            if (ResearchCategories.getResearch(ResearchData.researchKey) == null) {
                 return StatCollector.translateToLocal("tc.unknownobject");
             }
-            boolean overrideRequisites = false; 
-            if (!overrideRequisites && !ResearchManager.doesPlayerHaveRequisites(playerName, ResearchData)) {
+            boolean overrideRequisites = ResearchData.overrideRequirements; 
+            if (!overrideRequisites && !ResearchManager.doesPlayerHaveRequisites(playerName, ResearchData.researchKey)) {
                 return StatCollector.translateToLocal("u.note.notready");
             }
-            if (ResearchManager.isResearchComplete(playerName, ResearchData)) {
+            if (ResearchManager.isResearchComplete(playerName, ResearchData.researchKey)) {
                 return StatCollector.translateToLocal("u.note.hasread");
             }
             return null;
@@ -113,7 +145,7 @@ public class ExaminationData {
             details = StatCollector.translateToLocal("tc.aspect.help." + aspectTag);
         } 
         if (noteType == ON_ITEM) {
-            details = ResearchData;
+            details = ResearchData.researchKey;
         }
         String desc = new ChatComponentTranslation(prefix, new Object[]{details}).getUnformattedText();
         return desc;
@@ -128,7 +160,11 @@ public class ExaminationData {
 
 	public ExaminationData readFromNBT(NBTTagCompound nbttagcompound) {
         noteType = nbttagcompound.getInteger("noteType");
-        ResearchData = nbttagcompound.getString("ResearchData");
+        ResearchData = null;
+        if (nbttagcompound.hasKey("research")) {
+            NBTTagCompound tag = nbttagcompound.getCompoundTag("research");
+            ResearchData = Discovery.readFromNBT(tag);
+        }
         value = nbttagcompound.getInteger("value");
         if (nbttagcompound.hasKey("aspect")) {
             aspectTag = nbttagcompound.getString("aspect");
@@ -138,7 +174,7 @@ public class ExaminationData {
     
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
         nbttagcompound.setInteger("noteType", noteType);
-        nbttagcompound.setString("ResearchData", ResearchData);
+        ResearchData.writeToNBT(nbttagcompound);
         nbttagcompound.setInteger("value", value);
         if (aspectTag != "" && aspectTag != null) {
             nbttagcompound.setString("aspect", aspectTag);
@@ -160,7 +196,7 @@ public class ExaminationData {
         }
         if (noteType == ON_ITEM) {
             String playerName = player.getCommandSenderName();
-            String key = ResearchData;
+            String key = ResearchData.researchKey;
             if (!ResearchManager.isResearchComplete(playerName, key)) {
                 PacketHandler.INSTANCE.sendTo((IMessage)new PacketResearchComplete(key), (EntityPlayerMP)player);
                 Thaumcraft.proxy.getResearchManager().completeResearch(player, key);

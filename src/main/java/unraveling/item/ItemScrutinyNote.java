@@ -44,6 +44,8 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.StatCollector;
 
+import net.minecraft.init.Blocks;
+import thaumcraft.common.config.ConfigItems;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -57,6 +59,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import unraveling.mechanics.ExaminationData;
+import unraveling.mechanics.ExaminationData.Discovery;
 
 public class ItemScrutinyNote extends Item {
     @SideOnly(Side.CLIENT)
@@ -106,7 +109,7 @@ public class ItemScrutinyNote extends Item {
         setData(finishedResearch, ed);
         return finishedResearch;
     }
-    public static ItemStack createNoteOnResearch(String which, int value) {
+    public static ItemStack createNoteOnResearch(Discovery which, int value) {
         int meta = 1;
         ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.forResearch(which, value);
@@ -117,8 +120,12 @@ public class ItemScrutinyNote extends Item {
     
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        list.add(createNoteOnResearch("NITOR", 3));
-        list.add(createNoteOnResearch("SINSTONE", 5));
+        ItemStack lodestone = new ItemStack(ConfigItems.itemCompassStone, 1, 0);
+        Discovery sinstone = new Discovery(lodestone, "SINSTONE", true);
+        ItemStack air = new ItemStack(Blocks.air, 1, 0);
+        Discovery nitor = new Discovery(air, "NITOR", false);
+        list.add(createNoteOnResearch(nitor, 3));
+        list.add(createNoteOnResearch(sinstone, 5));
         list.add(createNoteOnAspect(Aspect.MAGIC));
         list.add(createNoteOnAspect(Aspect.MAN));
         list.add(createNoteOnAspect(Aspect.VOID));

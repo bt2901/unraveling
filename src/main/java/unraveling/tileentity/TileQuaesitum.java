@@ -18,6 +18,7 @@ import unraveling.item.UItems;
 import unraveling.item.ItemScrutinyNote;
 import unraveling.UnravelingConfig;
 import unraveling.mechanics.ExaminationData;
+import unraveling.mechanics.ExaminationData.Discovery;
 
 import net.minecraft.entity.item.EntityItem;
 import java.util.Random;
@@ -180,7 +181,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             this.inventorySlots[1].stackSize--;
             
             ItemStack finishedResearch;
-            String r = UnravelingConfig.RelatedResearch(thingResearched);
+            Discovery r = UnravelingConfig.RelatedResearch(thingResearched);
             if (r != null) {
                 finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, rand.nextInt(5));
             } else {
@@ -249,95 +250,3 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
     
 }
 
-/*
-package thaumcraft.common.tiles;
-
-
-import java.util.Random;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import thaumcraft.api.TileThaumcraft;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
-import thaumcraft.common.lib.research.ResearchManager;
-
-public class TileDeconstructionTable
-extends TileThaumcraft
-implements ISidedInventory {
-    public Aspect aspect;
-    public int breaktime;
-    private ItemStack[] itemStacks = new ItemStack[1];
-    private String customName;
-    private static final int[] sides = new int[]{0};
-
-    public int func_70302_i_() {
-        return 1;
-    }
-
-    public ItemStack func_70301_a(int par1) {
-        return this.itemStacks[par1];
-    }
-
-    public ItemStack getStackInSlotOnClosing(int par1) {
-        if (this.itemStacks[par1] != null) {
-            ItemStack itemstack = this.itemStacks[par1];
-            this.itemStacks[par1] = null;
-            this.func_70296_d();
-            return itemstack;
-        }
-        return null;
-    }
-
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-        this.itemStacks[par1] = par2ItemStack;
-        if (par2ItemStack != null && par2ItemStack.field_77994_a > this.func_70297_j_()) {
-            par2ItemStack.field_77994_a = this.func_70297_j_();
-        }
-        this.func_70296_d();
-    }
-
-    public String func_145825_b() {
-        return this.func_145818_k_() ? this.customName : "container.decontable";
-    }
-
-    public boolean func_145818_k_() {
-        return this.customName != null && this.customName.length() > 0;
-    }
-
-    public void setGuiDisplayName(String par1Str) {
-        this.customName = par1Str;
-    }
-
-    public void openChest() {}
-    public void closeChest() {}
-
-    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack) {
-        AspectList al = ThaumcraftCraftingManager.getObjectTags(par2ItemStack);
-        if ((al = ThaumcraftCraftingManager.getBonusTags(par2ItemStack, al)) != null && al.size() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public int[] getSlotsForFace(int par1) {
-        return par1 != 1 ? sides : new int[]{};
-    }
-
-    public boolean canInsertItem(int slot, ItemStack par2ItemStack, int face) {
-        return face == 1 ? false : this.func_94041_b(slot, par2ItemStack);
-    }
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3) {
-        return true;
-    }
-
-
-}
-
-*/
