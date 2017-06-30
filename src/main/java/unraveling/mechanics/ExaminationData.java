@@ -49,9 +49,10 @@ public class ExaminationData {
             this(is, key, false);
         }
         public static Discovery readFromNBT(NBTTagCompound nbttagcompound) {
+            System.out.println(nbttagcompound.toString() + " has: " + nbttagcompound.hasKey("research"));
             if (nbttagcompound.hasKey("research")) {
                 NBTTagCompound tag = nbttagcompound.getCompoundTag("research");
-                ItemStack is = ItemStack.loadItemStackFromNBT(tag);
+                ItemStack is = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("item"));
                 String key = tag.getString("researchKey");
                 boolean overrideRequirements = tag.getBoolean("override");
                 return new Discovery(is, key, overrideRequirements);
@@ -60,10 +61,14 @@ public class ExaminationData {
         }
         public void writeToNBT(NBTTagCompound nbttagcompound) {
             NBTTagCompound res = new NBTTagCompound();
-            item.writeToNBT(res);
+            NBTTagCompound itemNBT = new NBTTagCompound();
+            System.out.println(researchKey);
+            item.writeToNBT(itemNBT);
             res.setString("researchKey", researchKey);
             res.setBoolean("override", overrideRequirements);
+            res.setTag("item", itemNBT);
             nbttagcompound.setTag("research", res);
+            System.out.println(nbttagcompound.toString() + " has: " + nbttagcompound.hasKey("research"));
         }
     }
     
@@ -145,7 +150,8 @@ public class ExaminationData {
             details = StatCollector.translateToLocal("tc.aspect.help." + aspectTag);
         } 
         if (noteType == ON_ITEM) {
-            details = ResearchData.researchKey;
+            // details = ResearchData.researchKey;
+            details = ResearchData.item.getDisplayName();
         }
         String desc = new ChatComponentTranslation(prefix, new Object[]{details}).getUnformattedText();
         return desc;
@@ -160,11 +166,7 @@ public class ExaminationData {
 
 	public ExaminationData readFromNBT(NBTTagCompound nbttagcompound) {
         noteType = nbttagcompound.getInteger("noteType");
-        ResearchData = null;
-        if (nbttagcompound.hasKey("research")) {
-            NBTTagCompound tag = nbttagcompound.getCompoundTag("research");
-            ResearchData = Discovery.readFromNBT(tag);
-        }
+        ResearchData = Discovery.readFromNBT(nbttagcompound);
         value = nbttagcompound.getInteger("value");
         if (nbttagcompound.hasKey("aspect")) {
             aspectTag = nbttagcompound.getString("aspect");
@@ -174,7 +176,9 @@ public class ExaminationData {
     
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
         nbttagcompound.setInteger("noteType", noteType);
-        ResearchData.writeToNBT(nbttagcompound);
+        if (ResearchData != null) {
+            ResearchData.writeToNBT(nbttagcompound);
+        }
         nbttagcompound.setInteger("value", value);
         if (aspectTag != "" && aspectTag != null) {
             nbttagcompound.setString("aspect", aspectTag);

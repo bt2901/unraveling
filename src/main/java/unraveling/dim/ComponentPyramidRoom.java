@@ -56,6 +56,15 @@ public class ComponentPyramidRoom extends StructureComponent {
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
         if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
         }
+        
+        if (type == PyramidMap.ROOM_TRAP) {
+            for (int i=0; i < 4; ++i) {
+                ComponentPyramidTrap trapBuilder = new ComponentPyramidTrap(random, 
+                    boundingBox.minX, boundingBox.minY, boundingBox.minZ, i);
+                list.add(trapBuilder);
+                trapBuilder.buildComponent(this, list, random);
+            }
+        }
 	}
 
 	@Override

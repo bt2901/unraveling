@@ -90,18 +90,19 @@ public class PyramidMain extends StructureComponent {
 
         int radius = (int) ((cellsWidth + 2) * (evenBias + oddBias) * 0.5);
 		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+3), z + radius);
-        int nrooms = 4;
+        int nrooms = 6;
         for (int i=0; i < levelsTall; ++i) {
+            nrooms = (i > 3)? 3 : 6;
             mazes.add(new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2));
             PyramidMap newMaze = mazes.get(i);
             // set the seed to a fixed value based on this maze's x and z
             setFixedMazeSeed(newMaze, i);
             if (i == 0) {
                 newMaze.addBonusRoom(centerRoomX-i, centerRoomZ-i, PyramidMap.ROOMCENTRAL);
-                for (int j = 1; j <= nrooms; ++j) {
-                    newMaze.addRandomRoom(2, 3, newMaze.randomRoomShape());
-                }
                 newMaze.addBonusRoom(centerRoomX, 2, PyramidMap.ENTRANCE);
+                for (int j = 1; j <= nrooms; ++j) {
+                    newMaze.addRandomRoom(2, 3, PyramidMap.ROOM_TRAP);
+                }
             } else {
                 for (int j = 0; j <= nrooms; ++j) {
                     int prev_x = mazes.get(i-1).rcoords[j * 3];
@@ -266,8 +267,8 @@ public class PyramidMain extends StructureComponent {
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
-        int startH = 1;
-        int endH = (height)*(levelsTall + 1) + startH;
+        int startH = -3;
+        int endH = (height)*(levelsTall + 2) + startH;
         for (int i=startH; i < endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 
                 outerBlockID, outerBlockMeta, outerBlockID, outerBlockMeta, false);

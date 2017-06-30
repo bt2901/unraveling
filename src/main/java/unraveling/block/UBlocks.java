@@ -11,8 +11,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class UBlocks {
 
-    // public static Block bossSpawner;
-    // bossSpawner = (new BlockTFBossSpawner()).setBlockName("TFBossSpawner");
+    public static Block golemSpawner;
+    
     public static Block voidOre;
     public static Block darkGen;
     public static Block darkGenMain;
@@ -33,6 +33,10 @@ public class UBlocks {
         registerMyBlock(darkGenMain, ItemBlock.class);
         registerMyBlock(quaesitum, ItemBlock.class);
         registerMyBlock(portal, ItemBlock.class);
+        
+        golemSpawner = (new BlockGolemSpawner()).setBlockName("GolemSpawner");
+        registerMyBlock(golemSpawner, ItemBlock.class);
+
 	}
 
 	private static void registerMyBlock(Block block, Class<? extends ItemBlock> pickup) {

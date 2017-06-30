@@ -50,6 +50,8 @@ import unraveling.mechanics.MessageSetStrongholdPos;
 import unraveling.tileentity.TileQuaesitum;
 import unraveling.dim.TileVoidPortal;
 
+import unraveling.tileentity.TileEntityTrapRoom;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -203,6 +205,7 @@ public class UnravelingMod {
 		GameRegistry.registerTileEntity(TileDarkGen.class, "Darkness Generator");
         GameRegistry.registerTileEntity(TileQuaesitum.class, "Quaesitum");
         GameRegistry.registerTileEntity(TileVoidPortal.class, "Void Portal");
+        GameRegistry.registerTileEntity(TileEntityTrapRoom.class, "GolemSpawner");
 	}
 
 	/**
