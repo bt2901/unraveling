@@ -107,30 +107,10 @@ u.name.ENDERCOMPASS=Ender Compass
 u.text.ENDERCOMPASS=By Mr Ibby
 u.page.ENDERCOMPASS.1=After carefully studying Eye of Ender, you realised something. You can find End Portal easier.
 
-u.name.DEMIPLANEDISCOVERY=Portal
-u.text.DEMIPLANEDISCOVERY=What could go wrong?
-u.page.DEMIPLANEDISCOVERY.1=You have begun studying the strange energies circulating in the void between the worlds. You have noticed something. In the void, something is screaming. Such arcane echoes are probably coming from a mind of an unequaled magician hidden in a pocket dimension. Such a person would likely be batshit insane. You can triangulate the position of this dimension. 
-u.page.DEMIPLANEDISCOVERY.2=Of course, such enterprise will be extremely dangerous.
-
-
-
-
-
-u.name.DIM=Pocket Dimensions
-u.text.DIM=Tear a hole in the universe!
-# if TT then ender rift is prereq
-u.page.DIM.1=You can create a your own pocket dimension using either RF power or books with mystical knowledge. 
-u.page.DIM.2=Planes: warp, vis, matter: mind, soul, body. Magic creates ripples of warp.
-
-u.name.WARPDETECTOR=Warp Detector Discovery
-u.text.WARPDETECTOR=Find a man with things man didn't mean to know!
-# if TT then ender rift is prereq
-# dim change: -> send packet with warp (no decay yet)
-# on right click: send packet with stronghold positions
-# show one icon when portal
-# show another when stronghold or nether fortress
-# sprite: lodestone but with radar dish / antennaes
-u.page.WARPDETECTOR.1=Magic creates ripples of warp.
+u.name.VOIDPORTAL=Pocket Plane Discovery
+u.text.VOIDPORTAL=What could go wrong?
+u.page.VOIDPORTAL.1=You have begun studying the strange energies circulating in the void between the worlds. You have noticed a curious anomaly standing out against the background: a powerful emission of warp from a far away, which doesn't appear to be natural. Such arcane echoes are probably coming from a mind of an unequaled magician hidden in a pocket dimension. 
+u.page.VOIDPORTAL.2=The strength of the ripples allows you to triangulate the position of this dimension. You can enter this realm and investigate the secrets underlying its insanity. Of course, such enterprise will be extremely dangerous.<BR>Find a man who knows things man didn't mean to know!
 
 
 
@@ -143,7 +123,7 @@ u.page.VOIDGEN.2=Moonlight.
 u.name.VOIDAGG=Advanced Void Aggregator
 u.text.VOIDAGG=First steps towards understanding
 u.page.VOIDAGG.1=This idea is obvious now, actually.<BR>The process of creating the strange metal made out of darkness involves imbuing the seed with the energy of void and then shaping it into metal using Metallum essentia. These steps are required because the power of void is far too delicate to handle in isolation.<BR>But recently you have discovered another way. To the eyes of sophisticated mage, the mundane iron ore is no more than drops of metal inside the minerals, shielded by stone. It is possible to inject the essence of void directly into these drops, producing the Void Metal Ore.
-u.page.unraveling.VOIDAGG.2=The process is very inefficient. You want to try this transformation in an old-fashioned way.
+u.page.VOIDAGG.2=You want to try this transformation in an old-fashioned way. You struggle to understand the workings otherwise. The process is very inefficient.
 u.page.VOIDAGG.3=After trying several catalysts, you got an inkling that this system can be expanded.
 
 
@@ -178,11 +158,11 @@ u.name.BONETREE=Bone Tree
 
 tc.research_name.eldritch=Eldritch Knowledge
 tc.research_lore.eldritch=[TH] A strange culture...
-tc.research_page.eldritch.0= The lost culture of the Eldritch<BR>Mystical dungeons and strange artefacts. They managed to create some extremely powerful objects of wonder. You're sure you can try to recreate these things after some further research... <BR><IMG>th:textures/misc/eldritchPicture.png:256:256:256:160:0.5</IMG>
+tc.research_page.eldritch.0= The lost culture of the Eldritch<BR>Mystical dungeons and strange artefacts. They managed to create some extremely powerful objects of wonder. You're sure you can try to recreate these things after some further research... <BR><IMG>th:textures/misc/eldritchPicture.png:256:256:256:256:0.5</IMG>
 
 u.name.lost=Lost Knowledge
 u.text.lost=[TH] Now it isn't lost any more!
-u.page.lost.1=With the help of these long lost and broken artifacts, you think you can can finally begin to understand how they may have once worked... And possibly recreate them... <BR><IMG>unraveling:textures/lostPicture.png:256:256:256:160:0.5</IMG>
+u.page.lost.1=With the help of these long lost and broken artifacts, you think you can can finally begin to understand how they may have once worked... And possibly recreate them... <BR><IMG>unraveling:textures/lostPicture.png:256:256:256:256:0.5</IMG>
 
 
 # 

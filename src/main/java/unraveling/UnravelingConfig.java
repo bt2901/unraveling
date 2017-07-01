@@ -10,6 +10,7 @@ import unraveling.mechanics.ContainerQ;
 import unraveling.mechanics.GuiQTileEntity;
 import unraveling.mechanics.voidgen.GuiDarkGen;
 import unraveling.mechanics.voidgen.ContainerDarkGen;
+import cpw.mods.fml.common.Loader;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.init.Items;
@@ -49,18 +50,19 @@ public class UnravelingConfig {
     }
     public static Discovery RelatedResearch(ItemStack is) {
         // TODO: config
-        // TODO: class "Discovery". Holds information on the relevant item (for description), the relevant research (for effect) and the "override requirements" flag
-        boolean alternate = true;
+        boolean alterRecipes = true;
         Item item = is.getItem();
         int meta = is.getItemDamage();
-        if (alternate) {
-            if (item == new ItemStack(Blocks.ender_chest, 1, 0).getItem()) {
-                return new Discovery(is, "FOCUS_ENDER_CHEST", true);
+        if (alterRecipes) {
+            if (Loader.isModLoaded("ThaumicTinkerer")) {
+                if (item == new ItemStack(Blocks.ender_chest, 1, 0).getItem()) {
+                    return new Discovery(is, "FOCUS_ENDER_CHEST", true);
+                }
             }
         }
         // TODO: different recipes depending on. Using virtual research
         if (item == Items.ender_eye || item == ConfigItems.itemCompassStone) {
-            return new Discovery(is, "ENDERCOMPASS");
+            return new Discovery(is, "ASTRALSNARE");
         }
         if (item == ConfigItems.itemSanityChecker) {
             return new Discovery(is, "ASTRALSNARE");

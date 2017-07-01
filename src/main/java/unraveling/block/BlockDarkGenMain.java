@@ -2,6 +2,7 @@ package unraveling.block;
 
 import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,16 +22,14 @@ import unraveling.mechanics.voidgen.TileDarkGenMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockDarkGenMain extends BlockContainer {
+public class BlockDarkGenMain extends BlockStrangeDevice {
 	
 	public static IIcon fullSide;
 	public static IIcon slabTop;
 	public static IIcon slabBottom;
     
 	protected BlockDarkGenMain() {
-		super(Material.rock);
-		this.setHardness(1.0F);
-		this.setStepSound(Block.soundTypeStone);
+		super();
     }
 
     /**
@@ -111,6 +110,14 @@ public class BlockDarkGenMain extends BlockContainer {
         }
     }
 
-
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int md, int fortune) {
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        if (md == 1) {
+            ret.add(new ItemStack(UBlocks.darkGenMain, 1, 0));
+        } else if (md == 0) {
+            ret.add(new ItemStack(UItems.artifact, 1 + fortune, 2));
+        }
+        return ret;
+    }
 
 }

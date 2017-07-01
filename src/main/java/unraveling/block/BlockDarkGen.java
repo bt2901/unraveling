@@ -2,6 +2,7 @@ package unraveling.block;
 
 import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -24,7 +25,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import unraveling.mechanics.voidgen.VoidAggregationHandler;
 
-public class BlockDarkGen extends BlockContainer {
+public class BlockDarkGen extends BlockStrangeDevice {
 	
 	public static IIcon gemDark;
 	public static IIcon slabSide;
@@ -32,9 +33,7 @@ public class BlockDarkGen extends BlockContainer {
 	public static IIcon slabBottom;
 	
 	protected BlockDarkGen() {
-		super(Material.rock);
-		this.setHardness(1.0F);
-		this.setStepSound(Block.soundTypeStone);
+		super();
     }
 
     /**
@@ -140,6 +139,16 @@ public class BlockDarkGen extends BlockContainer {
         }
         return true;
     }
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int md, int fortune) {
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+        if (md == 1) {
+            ret.add(new ItemStack(UBlocks.darkGen, 1, 0));
+        } else if (md == 0) {
+            ret.add(new ItemStack(UItems.artifact, 1 + fortune, 3));
+        }
+        return ret;
+    }
+
 }
 
 

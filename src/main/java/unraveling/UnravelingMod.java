@@ -132,7 +132,6 @@ public class UnravelingMod {
 	public void load(FMLInitializationEvent evt) {
 
 		registerCreatures();
-		URecipes.registerRecipes();
 		registerTileEntities();
         
 		// GUI
@@ -162,7 +161,6 @@ public class UnravelingMod {
         DimensionManager.registerDimension(2901, 2901);
         
         FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "Unraveling.Twilight Lich:95");
-        EldritchLore.addResearch();
 	}
 	
 	/**
@@ -171,6 +169,8 @@ public class UnravelingMod {
     @EventHandler
 	public void postInit(FMLPostInitializationEvent evt) 
 	{
+		URecipes.registerRecipes();
+        EldritchLore.addResearch();
 		// register dimension with Forge
 		//if (!DimensionManager.isDimensionRegistered(UnravelingMod.dimensionID))
         //DimensionManager.registerDimension(UnravelingMod.dimensionID, UnravelingMod.dimensionProviderID);
@@ -220,7 +220,6 @@ public class UnravelingMod {
 			registerTCObjectTag(UItems.scepterLifeDrain, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.LIFE, 8).add(Aspect.HUNGER, 8));
 			registerTCObjectTag(UItems.scepterZombie, -1, (new AspectList()).add(Aspect.MAGIC, 8).add(Aspect.UNDEAD, 8).add(Aspect.ENTROPY, 8));
 
-            ThaumcraftApi.addSmeltingBonus(new ItemStack(UBlocks.voidOre), new ItemStack(ConfigItems.itemNugget, 1, 7));
 		} 
 		catch (Exception e) 
 		{

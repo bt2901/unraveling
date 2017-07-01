@@ -35,50 +35,45 @@ public class ComponentCoridorTrap extends StructureComponent {
        fillWithMetadataBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
     }
 
-    public void createTripwire(World world, StructureBoundingBox sbb, int x, int y, int z) {
+    public void createTripwire(World world, StructureBoundingBox sbb, int z) {
+        int m = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
+        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
+        int y = 1;
+        int minX = -3;
+        int maxX = -1;
+        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, minX, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, maxX, y, z, sbb);
+        for (int x = minX+1; x < maxX; ++x) {
+            placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x, y, z, sbb);
+        }
+
     }
-    public void createTrapLevel(World world, StructureBoundingBox sbb) {
+    public void createSliceWithControl(World world, StructureBoundingBox sbb, int z) {
+        int y = 0;
+        int minX = 0;
+        int maxX = 3;
+        fillWithOutsideWalls(world, sbb, minX, -1, z, maxX, 1, z);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 2, minX, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX+1, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, minX+2, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX+3, y, z, sbb);
+    }
+    public void createSliceWithGolems(World world, StructureBoundingBox sbb, int z) {
+        int minY = -1;
+        int maxY = 1;
+        int minX = 0;
+        int maxX = 3;
+        fillWithOutsideWalls(world, sbb, minX, minY, z, maxX, maxY, z);
+        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, minX + 1, maxY, z, sbb);
 
-        int y;
-        int x;
-        int z;
-        y = 1;
-        x = 1;
-        fillWithOutsideWalls(world, sbb, 0, y, 1, 3, y, 3);
-        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, x, y, 1, sbb);
-        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, x, y, 3, sbb);
-
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX + 2, maxY-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 3, maxY-1, z, sbb);
         
-        y = 0;
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, minX, minY, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 1, minY, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 2, minY, z, sbb);
 
-        
-        
-        
-        y = -1;
-        x = 0;
-        fillWithOutsideWalls(world, sbb, x, y, 1, x+3, y, 3);
-        z = 1;
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, x, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y-2, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+2, y-2, z, sbb);
-
-        z = 3;
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, x, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y-2, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+2, y-2, z, sbb);
-
-        
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-2, 0, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, 0, y-2, z, sbb);
-        placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y-1, z, sbb);
-
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, 0, y+1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, x, y+1, 0, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, 0, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, x, y, 0, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, 0, y-1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, 0, sbb);
-    } 
+    }
 
 	/**
 	 * Initiates construction of the Structure Component picked, at the current Location of StructGen
@@ -90,8 +85,10 @@ public class ComponentCoridorTrap extends StructureComponent {
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
-        createTrapLevel(world, sbb);
-        createTripwire(world, sbb, pace, 0, pace );
+        createSliceWithGolems(world, sbb, 1);
+        createSliceWithControl(world, sbb, 2);
+        createSliceWithGolems(world, sbb, 3);
+        createTripwire(world, sbb, 2);
 		return true;
 	}
 	/**
@@ -107,32 +104,3 @@ public class ComponentCoridorTrap extends StructureComponent {
 	protected void func_143011_b(NBTTagCompound par1NBTTagCompound) { }
     
 }
-/*
-Schematic
-
-Level 1
-oooRGRR
-TTTRRRR
-oooRGRR
-
-Level 0
-oooRRoW
-oooPoBW
-oooRRoW
-
-Level -1
-oooPWWR
-oooRRRR
-oooPWWR
-
-vertical at z = 1 or 3:
-oooRGRR
-oooRRoW
-oooPWWR
-
-vertical at z = 2:
-TTTRRRR
-oooPoBW
-oooRRRR
-
-*/

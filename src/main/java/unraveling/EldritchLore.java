@@ -64,9 +64,9 @@ public class EldritchLore {
     }    
     public static void studyVoid() {
 
-            ResearchItem research = new UResearchItem("VOIDORE", "UNRAVELING", 
+            ResearchItem researchVoidGen = new UResearchItem("VOIDGEN", "UNRAVELING", 
                 new AspectList(), 
-                -8, -5, 1, 
+                0, 8, 1, 
                 new ItemStack(UBlocks.voidOre)
             ).registerResearchItem();
             
@@ -90,85 +90,68 @@ public class EldritchLore {
                      }) 
                 }));
             
-            research.setPages(
-                new ResearchPage("VOIDORE.1"), 
-                //infusionPage(""), 
-                //new ResearchPage("2"), 
+            researchVoidGen.setPages(
+                new ResearchPage("1"), 
                 constructPage("CREATEVOIDORE")
                 ).setStub().setRound();
+                
+        (new UResearchItem("VOIDAGG", "UNRAVELING", 
+            new AspectList(), 
+            3, 8, 1, 
+            new ItemStack(UBlocks.darkGen))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("1"), 
+            new ResearchPage((IArcaneRecipe) recipes.get("VoidAgg")), 
+            }).setStub().setRound().registerResearchItem();
     }
     
-    public static void explore() {
-        (new UResearchItem("INTRO", "UNRAVELING", 
-            new AspectList(), 
-            -4, -8, 0, 
-            new ItemStack(UItems.necroFocus, 1, 0))
-        ).setPages(new ResearchPage[] { 
-            new ResearchPage("INTRO.1"), 
-            new ResearchPage("INTRO.2") 
-        }).setStub().setRound().setAutoUnlock().registerResearchItem();
-        
+    public static void explore() {       
         // --------- Quaesitum ------------
-        recipes.put("QBlock", 
-            ThaumcraftApi.addArcaneCraftingRecipe(
-                "QBLOCK", new ItemStack(UBlocks.quaesitum), 
-                new AspectList().add(Aspect.ENTROPY, 25).add(Aspect.ORDER, 25), 
-                new Object[]{"   ", "GSG", "RRR", 
-                    Character.valueOf('G'), Items.gold_ingot, 
-                    Character.valueOf('S'), new ItemStack(ConfigItems.itemThaumometer), 
-                    Character.valueOf('R'), Blocks.stone}));
         (new UResearchItem("Q", "UNRAVELING", 
             new AspectList(), 
-            -8, -8, 0, 
+            -4, -4, 0, 
             new ItemStack(UBlocks.quaesitum))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
             new ResearchPage("3"), 
             new ResearchPage("4") 
-        }).setStub().setRound().setAutoUnlock().registerResearchItem();
+        }).setSpecial().setAutoUnlock().registerResearchItem();
         // ---------- SAN -------------
-        (new UResearchItem("ENDERCOMPASS", "UNRAVELING", 
-            new AspectList(), 
-            -8, -2, 0, 
-            new ResourceLocation("unraveling", "textures/items/compass.png"))
-        ).setPages(new ResearchPage[] { 
-            new ResearchPage("1") 
-            //new ResearchPage((IArcaneRecipe) recipes.get("QBlock")), 
-            }).setStub().setRound().registerResearchItem();
-        
         (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
             new AspectList(), 
-            -8, 2, 0, 
-            new ItemStack(UBlocks.quaesitum))
+            -4, 2, 0, 
+            new ResourceLocation("unraveling", "textures/items/artifacts/singularity.png"))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("1"), 
+            new ResearchPage("2"), 
+            new ResearchPage("3"), 
+            new ResearchPage((IArcaneRecipe) recipes.get("WarpLocator")), 
+            }).setStub().setRound().registerResearchItem();
+        
+        (new UResearchItem("VOIDPORTAL", "UNRAVELING", 
+            new AspectList(), 
+            0, 2, 0, 
+            new ResourceLocation("unraveling", "textures/eldritchIcon.png"))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage("2") 
-        }).setStub().setRound().registerResearchItem();
-        
-        (new UResearchItem("DEMIPLANEDISCOVERY", "UNRAVELING", 
-            new AspectList(), 
-            -5, 0, 0, 
-            new ResourceLocation("unraveling", "textures/items/compass.png"))
-        ).setPages(new ResearchPage[] {
-            new ResearchPage("1"), 
-            new ResearchPage("2") 
-        }).setStub().setRound().setConcealed().registerResearchItem();
-        
+        }).setSpecial().setParents(new String[] { "ASTRALSNARE" }).setConcealed().registerResearchItem();
+                
         (new UResearchItem("lost", "UNRAVELING", 
             new AspectList(), 
-            -5, 3, 0, 
+            -3, 6, 0, 
             new ResourceLocation("unraveling", "textures/lostIcon.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
         (new UResearchItem("RESEARCHMASTERY", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5), 
-            0, 0, 1, 
+            -2, -2, 1, 
             new ResourceLocation("unraveling", "textures/mastery.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
-        }).setSpecial().registerResearchItem();
+        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
     }
     
     

@@ -43,6 +43,11 @@ public class PyramidMap {
 	public static final int ROOM_VPR = 100;
 	public static final int ROOM_GARDEN = 101;
 	public static final int ROOM_TRAP = 102;
+
+	public static final int CORIDOR_TRAP_WEST = 200;
+	public static final int CORIDOR_TRAP_SOUTH = 201;
+	public static final int CORIDOR_TRAP_EAST = 202;
+	public static final int CORIDOR_TRAP_NORTH = 203;
 	
 	public Random rand;
     public int[] rcoords = new int[0];
