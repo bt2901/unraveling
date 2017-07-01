@@ -28,27 +28,46 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	}
     
     public void createTripwire(World world, StructureBoundingBox sbb, int x, int y, int z) {
+        int doorwaySize = PyramidMain.oddBias;
         int m = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
-        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 2) | 4;
+        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
         // placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, 0, y+1, z+1, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, 0, y+1, z+1, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, x+3, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+2, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, x+1, y+1, 0, sbb);
     }
     public void createFloorTrap(World world, StructureBoundingBox sbb, int x, int y, int z) {
         fillWithAir(world, sbb, x, y-2, z, x, y+2, z);
 
-        fillWithMetadataBlocks(world, sbb, 1, y-2, z, x, y-2, z, Blocks.redstone_wire, 0, Blocks.redstone_wire, 0, false);
-        fillWithMetadataBlocks(world, sbb, x, y-2, 1, x, y-2, z, Blocks.redstone_wire, 0, Blocks.redstone_wire, 0, false);
+        fillWithMetadataBlocks(world, sbb, 0, y-2, z, x+2, y-2, z, Blocks.redstone_wire, 0, Blocks.redstone_wire, 0, false);
+        fillWithMetadataBlocks(world, sbb, x, y-2, 0, x, y-2, z, Blocks.redstone_wire, 0, Blocks.redstone_wire, 0, false);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-2, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, 0, y-2, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.piston, 1, x, y-2, z, sbb);
-        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, x, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, x, y-2, z, sbb);
+        placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, x, y, z, sbb);
 
-        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, 0, y-1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, x, y-1, 0, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, 0, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, x, y, 0, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, 0, y+1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, x, y+1, 0, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, 0, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, x, y, 0, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, 0, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, 0, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, 0, y-2, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-2, 0, sbb);
+    } 
+    public void createHiddenLever(World world, StructureBoundingBox sbb, int x, int y, int z) {
+
+        placeBlockAtCurrentPosition(world, Blocks.stone_pressure_plate, 0, x, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x-1, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-1, z-1, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-1, z+1, sbb);
+
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x-2, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, z-2, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x+2, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, z+2, sbb);
     } 
 
 	/**
@@ -61,8 +80,9 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
-        createFloorTrap(world, sbb, pace, 0, pace );
+        createFloorTrap(world, sbb, pace, -1, pace);
         createTripwire(world, sbb, pace, 0, pace );
+        createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
 		return true;
 	}
 	/**

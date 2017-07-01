@@ -267,7 +267,7 @@ public class PyramidMain extends StructureComponent {
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
-        int startH = -3;
+        int startH = -4;
         int endH = (height)*(levelsTall + 2) + startH;
         for (int i=startH; i < endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 

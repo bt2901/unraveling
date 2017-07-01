@@ -59,6 +59,7 @@ public class TileEntityTrapRoom extends TileEntity {
     public boolean spawnCreature(World par0World, int side) {
         byte GUARD = 4;
         byte BUTCHER = 9;
+        byte ORDER = 4;
         EntityGolemBase golem;
         boolean adv = false;
         if ((golem = new EntityGolemBase(par0World, EnumGolemType.STONE, adv)) != null) {
@@ -68,10 +69,11 @@ public class TileEntityTrapRoom extends TileEntity {
             double rz = zCoord + 0.5D;
             golem.setLocationAndAngles(rx, ry, rz, worldObj.rand.nextFloat() * 360F, 0.0F);
             // golem.playLivingSound();
-            golem.setHomeArea(xCoord, yCoord, zCoord, 32);
+            golem.setHomeArea(xCoord, yCoord+1, zCoord, 32);
             golem.setCore(GUARD);
-            golem.setToggle(3, false);
-            golem.setToggle(1, true);
+            golem.setUpgrade(0, ORDER); // ORDER upgrade: attack players
+            golem.setToggle(3, false); // attack players
+            golem.setToggle(1, false); // attack hostiles
             // skip golem.upgrades
             String deco = "";
             // skip golem.decoration

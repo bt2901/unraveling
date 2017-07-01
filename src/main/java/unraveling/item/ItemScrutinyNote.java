@@ -122,8 +122,8 @@ public class ItemScrutinyNote extends Item {
     public void getSubItems(Item item, CreativeTabs tab, List list) {
         ItemStack lodestone = new ItemStack(ConfigItems.itemCompassStone, 1, 0);
         Discovery sinstone = new Discovery(lodestone, "SINSTONE", true);
-        ItemStack air = new ItemStack(Blocks.air, 1, 0);
-        Discovery nitor = new Discovery(air, "NITOR", false);
+        ItemStack torch = new ItemStack(Blocks.torch, 1, 0);
+        Discovery nitor = new Discovery(torch, "NITOR", false);
         list.add(createNoteOnResearch(nitor, 3));
         list.add(createNoteOnResearch(sinstone, 5));
         list.add(createNoteOnAspect(Aspect.MAGIC));
@@ -144,8 +144,8 @@ public class ItemScrutinyNote extends Item {
             }
             if (!world.isRemote) {
                 ed.onUse(world, player);
-                stack.stackSize--;
             }
+            stack.stackSize--;
         }
         return stack;
     }
