@@ -71,7 +71,7 @@ public class TileEntityTrapRoom extends TileEntity {
             // golem.playLivingSound();
             golem.setHomeArea(xCoord, yCoord+1, zCoord, 32);
             golem.setCore(GUARD);
-            golem.setUpgrade(0, ORDER); // ORDER upgrade: attack players
+            //golem.setUpgrade(0, ORDER); // ORDER upgrade: attack players
             golem.setToggle(3, false); // attack players
             golem.setToggle(1, false); // attack hostiles
             // skip golem.upgrades

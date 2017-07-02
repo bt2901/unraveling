@@ -36,8 +36,8 @@ public class ComponentCoridorTrap extends StructureComponent {
     }
 
     public void createTripwire(World world, StructureBoundingBox sbb, int z) {
-        int m = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
-        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
+        int m = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
+        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
         int y = 1;
         int minX = -3;
         int maxX = -1;
@@ -52,8 +52,13 @@ public class ComponentCoridorTrap extends StructureComponent {
         int y = 0;
         int minX = 0;
         int maxX = 3;
+        // 0 1 : up/down
+        // 4: almost, wrong dir
+        // 5: good
+        // 2, 3: perp dir
+        int m = getMetadataWithOffset(Blocks.sticky_piston, 5);
         fillWithOutsideWalls(world, sbb, minX, -1, z, maxX, 1, z);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 2, minX, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, m, minX, y, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, minX+1, y, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, minX+2, y, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX+3, y, z, sbb);
@@ -63,7 +68,11 @@ public class ComponentCoridorTrap extends StructureComponent {
         int maxY = 1;
         int minX = 0;
         int maxX = 3;
+        
+        
         fillWithOutsideWalls(world, sbb, minX, minY, z, maxX, maxY, z);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX, maxY, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX, maxY+1, z, sbb);
         placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, minX + 1, maxY, z, sbb);
 
         placeBlockAtCurrentPosition(world, Blocks.air, 0, minX + 2, maxY-1, z, sbb);

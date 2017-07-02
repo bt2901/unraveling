@@ -20,6 +20,7 @@ import thaumcraft.common.config.ConfigItems;
 
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigBlocks;
+import thaumcraft.common.lib.utils.Utils;
 
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.Aspect;
@@ -30,18 +31,20 @@ public class URecipes {
 		
 		// void ore
         ItemStack voidIngot = new ItemStack(ConfigItems.itemResource, 1, 16);
+        ItemStack voidNugget = new ItemStack(ConfigItems.itemNugget, 1, 7);
+        ItemStack voidIngotDoubled = new ItemStack(ConfigItems.itemResource, 2, 16);
+        ItemStack voidOre = new ItemStack(UBlocks.voidOre);
+        ItemStack voidCluster = new ItemStack(UItems.voidCluster);
+        
         OreDictionary.registerOre("oreVoid", new ItemStack(UBlocks.voidOre, 1, OreDictionary.WILDCARD_VALUE));
         GameRegistry.addSmelting(UBlocks.voidOre, voidIngot, 0.1F);
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(UBlocks.voidOre), new ItemStack(ConfigItems.itemNugget, 1, 7));
+        ThaumcraftApi.addSmeltingBonus(voidOre, voidNugget);
 
-        // FMLInterModComms.sendMessage("Thaumcraft", "nativeCluster","15,0,25016,16,2.0");
-
-                /*
-            * "[ore item/block id],[ore item/block metadata],[cluster item/block id],[cluster item/block metadata],[chance modifier float]"
-            * NOTE: The chance modifier is a multiplier applied to the default chance for that cluster to be produced (default 27.5% for a pickaxe of the core)
-            * Example for vanilla iron ore to produce one of my own native iron clusters (assuming default id's) at double the default chance: 
-            * */
-
+        OreDictionary.registerOre("clusterVoid", new ItemStack(UItems.voidCluster, 1, OreDictionary.WILDCARD_VALUE));
+        GameRegistry.addSmelting(UItems.voidCluster, voidIngotDoubled, 0.1F);
+        ThaumcraftApi.addSmeltingBonus(voidCluster, voidNugget);
+        Utils.addSpecialMiningResult(voidOre, voidCluster, 0.5F);
+        
 
 		GameRegistry.addShapelessRecipe(new ItemStack(UItems.scepterTwilight), new Object[] {new ItemStack(UItems.scepterTwilight, 1, UItems.scepterTwilight.getMaxDamage()), Items.ender_pearl});
 		GameRegistry.addShapelessRecipe(new ItemStack(UItems.scepterLifeDrain), new Object[] {new ItemStack(UItems.scepterLifeDrain, 1, UItems.scepterLifeDrain.getMaxDamage()), Items.fermented_spider_eye});

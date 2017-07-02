@@ -15,9 +15,9 @@ public class UItems {
     public static Item necroFocus;
     public static Item ender_compass;
     public static Item artifact;
+    public static Item voidCluster;
 
     public static Item scrutinyNote;
-    public static Item aspectNote;
     public static Item spawnEgg;
     
     public static Item scepterTwilight;
@@ -31,6 +31,9 @@ public class UItems {
         spawnEgg = new ItemSpawnEgg().setUnlocalizedName("tfspawnegg");
         ender_compass = new ItemCompassStone().setUnlocalizedName("enderCompass");
         GameRegistry.registerItem(ender_compass, "ender_compass");
+
+        voidCluster = new ItemVoidCluster();
+        GameRegistry.registerItem(voidCluster, "voidCluster");
         
         scepterTwilight = new ItemTFTwilightWand().setUnlocalizedName("scepterTwilight").setMaxStackSize(1).setFull3D();
     	scepterLifeDrain = new ItemTFScepterLifeDrain().setUnlocalizedName("scepterLifeDrain").setMaxStackSize(1).setFull3D();

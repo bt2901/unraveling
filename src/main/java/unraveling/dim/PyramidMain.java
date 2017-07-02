@@ -92,7 +92,7 @@ public class PyramidMain extends StructureComponent {
 		this.boundingBox = new StructureBoundingBox(x-radius, y, z-radius, x + radius, y + height*(levelsTall+3), z + radius);
         int nrooms = 6;
         for (int i=0; i < levelsTall; ++i) {
-            nrooms = (i > 3)? 3 : 6;
+            nrooms = (i > 3)? 3 : 7;
             mazes.add(new PyramidMap(cellsWidth - height*i/2, cellsDepth - height*i/2));
             PyramidMap newMaze = mazes.get(i);
             // set the seed to a fixed value based on this maze's x and z
@@ -123,6 +123,9 @@ public class PyramidMain extends StructureComponent {
             setFixedMazeSeed(newMaze, i);
             // make actual maze
             newMaze.generateRecursiveBacktracker(0, 0);
+            if (i == 0) {
+                newMaze.addTrappedCoridors();
+            }
         }
 	}
     			

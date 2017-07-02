@@ -40,7 +40,7 @@ public class UnravelingConfig {
         if (item == Items.ender_pearl || item == Items.ender_eye) {
             return 2;
         }
-        if (stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 16)) || stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 17)))        { // void seed / void ingot
+        if (stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 16)) || stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 17))) { // void seed / void ingot
             return 3;
         }
         // ender lily: 4
@@ -77,5 +77,24 @@ public class UnravelingConfig {
         
         return null;
     }
+/*
+    public static Item getItem(String mod, String item) throws ItemNotFoundException {
+        Item target = GameRegistry.findItem(mod, item);
+        if(target == null)
+            throw new ItemNotFoundException(mod, item);
+        return target;
+    }
 
+    public static class ItemNotFoundException extends Exception {
+        public ItemNotFoundException(String mod, String item){
+            super("Unable to find item " + item + " in mod " + mod + "! Are you using the correct version of the mod?");
+        }
+    }
+                        Item kamiResource = getItem("ThaumicTinkerer", "kamiResource");
+                    list = new AspectList().add(DarkAspects.NETHER, 2).add(Aspect.MAGIC, 1).add(Aspect.CRYSTAL, 1);
+                    ThaumcraftApi.registerObjectTag(new ItemStack(kamiResource, 1, 6), list);
+                    list = new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.MAGIC, 1).add(Aspect.CRYSTAL, 1);
+                    ThaumcraftApi.registerObjectTag(new ItemStack(kamiResource, 1, 7), list);
+
+*/
 }

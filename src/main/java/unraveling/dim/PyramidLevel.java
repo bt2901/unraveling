@@ -66,32 +66,35 @@ public class PyramidLevel extends StructureComponent {
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
 		super.buildComponent(structurecomponent, list, random);
 			
-		// add rooms where we have our coordinates
-		for (int i = 0; i < pstorage.rcoords.length / 2; i++)
-		{
-			int dx = pstorage.rcoords[i * 2];
-			int dz = pstorage.rcoords[i * 2 + 1];
-	
-			// add the room as a component
-			// ComponentTFMazeRoom room = makeRoom(random, i, dx, dz);
-			// list.add(room);
-			// room.buildComponent(this, list, random);
-		}
+		// add traps 
+        for(int x = 0; x < rawWidth; x++) {
+			for(int z = 0; z < rawDepth; z++) {
+        		if (getRaw(x, z) >= 200 && getRaw(x, z) < 300) {
+                    int worldX = getBoundingBox().minX + x * (PyramidMain.evenBias + PyramidMain.oddBias) - 3;
+                    int worldY = getBoundingBox().minY;
+                    int worldZ = getBoundingBox().minZ + z * (PyramidMain.evenBias + PyramidMain.oddBias) - 3;
+                    int type = getRaw(x, z) % 200;
+
+                    ComponentCoridorTrap trap = new ComponentCoridorTrap(random, worldX, worldY, worldZ, type);
+                    list.add(trap);
+                    trap.buildComponent(this, list, random);
+                }        
+            }
+        }
+
 
 		// find dead ends and corridors and make components for them
 		// decorateDeadEndsCorridors(random, list);
 	}
+    
+    
     /**
 	 * Nullify all the sky light at the specified positions, using world coordinates
 	 */
-	public void nullifySkyLight(World world, int sx, int sy, int sz, int dx, int dy, int dz) 
-	{
-		for (int x = sx; x <= dx; x++) 
-		{
-         	for (int z = sz; z <= dz; z++) 
-         	{
-             	for (int y = sy; y <= dy; y++) 
-             	{
+	public void nullifySkyLight(World world, int sx, int sy, int sz, int dx, int dy, int dz) {
+		for (int x = sx; x <= dx; x++) {
+         	for (int z = sz; z <= dz; z++) {
+             	for (int y = sy; y <= dy; y++) {
              		world.setLightValue(EnumSkyBlock.Sky, x, y, z, 0);
              	}
          	}
@@ -120,13 +123,29 @@ public class PyramidLevel extends StructureComponent {
         System.out.println("level: " + level + " w " + cellsWidth);
         System.out.println(Arrays.toString(pstorage.rcoords));
         System.out.println(level + " " + pstorage.storage.length);
-        System.out.println(Arrays.toString(pstorage.storage));
+		for(int x = 0; x < rawWidth; x++) {
+			for(int z = 0; z < rawDepth; z++) {
+                int val = getRaw(x, z);
+                String toPrint = " " + val;
+                toPrint = (val == PyramidMap.ENTRANCE) ? " E" : toPrint;
+                toPrint = (val == PyramidMap.ROOM_TRAP) ? " T" : toPrint;
+                toPrint = (val >= 200) ? ("!" + (val % 200)) : toPrint;
+                toPrint = (val == PyramidMap.ROOM_VPR) ? " V" : toPrint;
+                toPrint = (val == PyramidMap.ROOM_GARDEN) ? " G" : toPrint;
+                System.out.print("" + toPrint);
+            }
+            System.out.println(" ");
+
+        }
     }
 
     /**
 	 * Copy the maze into a StructureComponent
 	 */
 	public void copyToStructure(World world, int dx, int dy, int dz, StructureComponent component, StructureBoundingBox sbb) {
+        if (level == 0) {
+            describe();
+        }
 		for(int x = 0; x < rawWidth; x++) {
 			for(int z = 0; z < rawDepth; z++) {
                 int mdx = dx + (x / 2 * (PyramidMain.evenBias + PyramidMain.oddBias));

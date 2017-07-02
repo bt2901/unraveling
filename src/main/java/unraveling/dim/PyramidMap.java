@@ -81,8 +81,8 @@ public class PyramidMap {
 	/**
 	 * Returns true if the specified cell equals the specified value
 	 */
-	public boolean cellEquals(int x, int z, int value) {
-		return getCell(x, z) == value;
+	public boolean cellIsFree(int x, int z) {
+		return getCell(x, z) == 0 || (getCell(x, z) > 200 && getCell(x, z) < 300) ;
 	}
 	
 	/**
@@ -252,7 +252,7 @@ public class PyramidMap {
 	 * @param sz The starting y coordinate
 	 */
 	public void generateRecursiveBacktracker(int sx, int sz) {
-        boolean roomHere = !cellEquals(sx, sz, 0);
+        boolean roomHere = !cellIsFree(sx, sz);
         int attempts = 0;
         if (cellsWidth < 2 || cellsDepth < 2) {
             return;
@@ -261,10 +261,35 @@ public class PyramidMap {
             sx = rand.nextInt(cellsWidth - 2) + 1;
             sz = rand.nextInt(cellsDepth - 2) + 1;
             attempts += 1;
-            roomHere = !cellEquals(sx, sz, 0);
+            roomHere = !cellIsFree(sx, sz);
         }
         rbGen(sx, sz);
 	}
+    public void addTrappedCoridors(){
+
+        putCell(0, 7, CORIDOR_TRAP_WEST);
+        putCell(0, 8, CORIDOR_TRAP_WEST);
+        putCell(0, 9, CORIDOR_TRAP_EAST);
+        putCell(0, 10, CORIDOR_TRAP_EAST);
+        
+        putCell(7, 0, CORIDOR_TRAP_SOUTH);
+        putCell(8, 0, CORIDOR_TRAP_SOUTH);
+        putCell(9, 0, CORIDOR_TRAP_NORTH);
+        putCell(10, 0, CORIDOR_TRAP_NORTH);
+
+        // CORIDOR_TRAP_WEST = maxX ?
+        putCell(cellsWidth, 7, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-1, 8, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-2, 9, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-3, 10, CORIDOR_TRAP_EAST);
+
+        // CORIDOR_TRAP_SOUTH = maxZ?
+        putCell(7, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(8, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(9, cellsDepth-2, CORIDOR_TRAP_SOUTH);
+        putCell(10, cellsDepth-2, CORIDOR_TRAP_SOUTH);
+        
+    }
 	
 	/**
 	 * Mark the cell as visited.  If we have any unvisited neighbors, pick one randomly, carve the wall between them, then call this function on that neighbor.
@@ -278,16 +303,16 @@ public class PyramidMap {
 		
 		// count the unvisted neighbors
 		int unvisited = 0;
-		if (cellEquals(sx + 1, sz, 0)) {
+		if (cellIsFree(sx + 1, sz)) {
 			unvisited++;
 		}
-		if (cellEquals(sx - 1, sz, 0)) {
+		if (cellIsFree(sx - 1, sz)) {
 			unvisited++;
 		}
-		if (cellEquals(sx, sz + 1, 0)) {
+		if (cellIsFree(sx, sz + 1)) {
 			unvisited++;
 		}
-		if (cellEquals(sx, sz - 1, 0)) {
+		if (cellIsFree(sx, sz - 1)) {
 			unvisited++;
 		}
 		
@@ -302,28 +327,28 @@ public class PyramidMap {
 		int dx, dz;
 		dx = dz = 0;
 		
-		if (cellEquals(sx + 1, sz, 0)) {
+		if (cellIsFree(sx + 1, sz)) {
 			if (rn == 0) {
 				dx = sx + 1;
 				dz = sz;
 			}
 			rn--;
 		}
-		if (cellEquals(sx - 1, sz, 0)) {
+		if (cellIsFree(sx - 1, sz)) {
 			if (rn == 0) {
 				dx = sx - 1;
 				dz = sz;
 			}
 			rn--;
 		}
-		if (cellEquals(sx, sz + 1, 0)) {
+		if (cellIsFree(sx, sz + 1)) {
 			if (rn == 0) {
 				dx = sx;
 				dz = sz + 1;
 			}
 			rn--;
 		}
-		if (cellEquals(sx, sz - 1, 0)) {
+		if (cellIsFree(sx, sz - 1)) {
 			if (rn == 0) {
 				dx = sx;
 				dz = sz - 1;
