@@ -66,6 +66,7 @@ public class ItemScrutinyNote extends Item {
     public IIcon iconAspect;
     public IIcon iconItem;
     public IIcon iconTorn;
+    public IIcon iconFancy;
 
 	protected ItemScrutinyNote() {
 		super();
@@ -79,6 +80,7 @@ public class ItemScrutinyNote extends Item {
         this.iconAspect = ir.registerIcon(UnravelingMod.ID + ":scroll_basic");
         this.iconItem = ir.registerIcon(UnravelingMod.ID + ":scroll_advanced");
         this.iconTorn = ir.registerIcon(UnravelingMod.ID + ":vellum");
+        this.iconFancy = ir.registerIcon(UnravelingMod.ID + ":scroll_fancy");
     }
     /*
     @SideOnly(Side.CLIENT)

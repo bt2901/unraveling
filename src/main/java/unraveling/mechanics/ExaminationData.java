@@ -49,7 +49,6 @@ public class ExaminationData {
             this(is, key, false);
         }
         public static Discovery readFromNBT(NBTTagCompound nbttagcompound) {
-            System.out.println(nbttagcompound.toString() + " has: " + nbttagcompound.hasKey("research"));
             if (nbttagcompound.hasKey("research")) {
                 NBTTagCompound tag = nbttagcompound.getCompoundTag("research");
                 ItemStack is = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("item"));
@@ -62,13 +61,11 @@ public class ExaminationData {
         public void writeToNBT(NBTTagCompound nbttagcompound) {
             NBTTagCompound res = new NBTTagCompound();
             NBTTagCompound itemNBT = new NBTTagCompound();
-            System.out.println(researchKey);
             item.writeToNBT(itemNBT);
             res.setString("researchKey", researchKey);
             res.setBoolean("override", overrideRequirements);
             res.setTag("item", itemNBT);
             nbttagcompound.setTag("research", res);
-            System.out.println(nbttagcompound.toString() + " has: " + nbttagcompound.hasKey("research"));
         }
     }
     

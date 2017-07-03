@@ -27,7 +27,8 @@ public class ItemVoidCluster extends Item {
 
     @SideOnly(value=Side.CLIENT)
     public void registerIcons(IIconRegister ir) {
-        this.icon = ir.registerIcon(UnravelingMod.ID + ":clustervoidalt");
+        // this.icon = ir.registerIcon(UnravelingMod.ID + ":clustervoidalt");
+        this.icon = ir.registerIcon(UnravelingMod.ID + ":clustervoidalt2");
     }
 
 

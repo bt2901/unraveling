@@ -65,7 +65,7 @@ public class EldritchLore {
     public static void studyVoid() {
 
             ResearchItem researchVoidGen = new UResearchItem("VOIDGEN", "UNRAVELING", 
-                new AspectList(), 
+                new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
                 0, 8, 1, 
                 new ItemStack(UBlocks.voidOre)
             ).registerResearchItem();
@@ -75,7 +75,7 @@ public class EldritchLore {
             ItemStack dg = new ItemStack(UBlocks.darkGen);
             
             registerResearchItemC("CREATEVOIDORE", Arrays.asList(new Object[] { 
-    			new AspectList(), 
+    			new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
     			4, 2, 4, 
     			Arrays.asList(new ItemStack[] { 
     					 empty, empty, empty, empty, 
@@ -96,13 +96,13 @@ public class EldritchLore {
                 ).setStub().setRound();
                 
         (new UResearchItem("VOIDAGG", "UNRAVELING", 
-            new AspectList(), 
+            new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
             3, 8, 1, 
             new ItemStack(UBlocks.darkGen))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage((IArcaneRecipe) recipes.get("VoidAgg")), 
-            }).setStub().setRound().registerResearchItem();
+            }).setStub().setRound().setParents(new String[] { "VOIDGEN" }).registerResearchItem();
     }
     
     public static void explore() {       
@@ -119,7 +119,7 @@ public class EldritchLore {
         }).setSpecial().setAutoUnlock().registerResearchItem();
         // ---------- SAN -------------
         (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
-            new AspectList(), 
+            new AspectList().add(Aspect.MIND, 5).add(Aspect.ENTROPY, 5).add(Aspect.SENSES, 7), 
             -4, 2, 0, 
             new ResourceLocation("unraveling", "textures/items/artifacts/singularity.png"))
         ).setPages(new ResearchPage[] { 
@@ -130,7 +130,7 @@ public class EldritchLore {
             }).setStub().setRound().registerResearchItem();
         
         (new UResearchItem("VOIDPORTAL", "UNRAVELING", 
-            new AspectList(), 
+            new AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.TRAVEL, 5), 
             0, 2, 0, 
             new ResourceLocation("unraveling", "textures/eldritchIcon.png"))
         ).setPages(new ResearchPage[] { 
@@ -146,7 +146,7 @@ public class EldritchLore {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
         (new UResearchItem("RESEARCHMASTERY", "UNRAVELING", 
-            new AspectList().add(Aspect.MIND, 5), 
+            new AspectList().add(Aspect.MIND, 5).add(Aspect.ORDER, 2).add(Aspect.ELDRITCH, 1), 
             -2, -2, 1, 
             new ResourceLocation("unraveling", "textures/mastery.png"))
         ).setPages(new ResearchPage[] {

@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.common.config.ConfigBlocks;
+import unraveling.UnravelingConfig;
 
 
 public class ComponentCoridorTrap extends StructureComponent {
@@ -30,6 +31,11 @@ public class ComponentCoridorTrap extends StructureComponent {
         int roomHeight = PyramidMain.height;
 
         this.boundingBox = new StructureBoundingBox(x, y, z, x + segWidth, y + roomHeight, z + segDepth);
+        if (UnravelingConfig.debug) {
+            System.out.println("Creating a room at " + x + " " + y + " " + z);
+            System.out.println("Orientation is " + mode);
+        }
+
 	}
     public void fillWithOutsideWalls(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
        fillWithMetadataBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);

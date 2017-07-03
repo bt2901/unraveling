@@ -18,12 +18,13 @@ import net.minecraft.item.Item;
 import net.minecraft.init.Blocks;
 import thaumcraft.common.config.ConfigItems;
 import unraveling.mechanics.ExaminationData.Discovery;
-
+import cpw.mods.fml.common.registry.GameRegistry;
 import unraveling.item.ItemArtifact;
 
 public class UnravelingConfig {
     
     public static float catalystDestroyChance = 0.25F;
+    public static boolean debug = true;
 
     public static int maxVisReserve = 8;
     public static int maxEssentiaReserve = 16;
@@ -43,9 +44,23 @@ public class UnravelingConfig {
         if (stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 16)) || stack.isItemEqual(new ItemStack(ConfigItems.itemResource, 1, 17))) { // void seed / void ingot
             return 3;
         }
-        // ender lily: 4
-        // element of darkness: 5
-
+        try {
+            if (Loader.isModLoaded("gadomancy")) {
+                Item elementOfDarkness = getItem("gadomancy", "itemElement");
+                if (stack.isItemEqual(new ItemStack(elementOfDarkness, 1, 0))) { // element of darkness
+                    return 5;
+                }
+            }
+            if (Loader.isModLoaded("ExtraUtilities")) {
+                Item ender_lily = getItem("ExtraUtilities", "ItemBlockEnderLily");
+                if (stack.isItemEqual(new ItemStack(ender_lily, 1, 0))) { // ender lily
+                    return 4;
+                }
+            }
+        } catch(ItemNotFoundException e) {
+            return 0;
+        }
+                    
         return 0;
     }
     public static Discovery RelatedResearch(ItemStack is) {
@@ -77,7 +92,6 @@ public class UnravelingConfig {
         
         return null;
     }
-/*
     public static Item getItem(String mod, String item) throws ItemNotFoundException {
         Item target = GameRegistry.findItem(mod, item);
         if(target == null)
@@ -90,11 +104,4 @@ public class UnravelingConfig {
             super("Unable to find item " + item + " in mod " + mod + "! Are you using the correct version of the mod?");
         }
     }
-                        Item kamiResource = getItem("ThaumicTinkerer", "kamiResource");
-                    list = new AspectList().add(DarkAspects.NETHER, 2).add(Aspect.MAGIC, 1).add(Aspect.CRYSTAL, 1);
-                    ThaumcraftApi.registerObjectTag(new ItemStack(kamiResource, 1, 6), list);
-                    list = new AspectList().add(Aspect.ELDRITCH, 2).add(Aspect.MAGIC, 1).add(Aspect.CRYSTAL, 1);
-                    ThaumcraftApi.registerObjectTag(new ItemStack(kamiResource, 1, 7), list);
-
-*/
 }

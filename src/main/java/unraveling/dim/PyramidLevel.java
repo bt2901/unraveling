@@ -16,6 +16,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.common.config.ConfigBlocks;
+import unraveling.UnravelingConfig;
 
 
 /**
@@ -143,7 +144,7 @@ public class PyramidLevel extends StructureComponent {
 	 * Copy the maze into a StructureComponent
 	 */
 	public void copyToStructure(World world, int dx, int dy, int dz, StructureComponent component, StructureBoundingBox sbb) {
-        if (level == 0) {
+        if (UnravelingConfig.debug && level == 0) {
             describe();
         }
 		for(int x = 0; x < rawWidth; x++) {

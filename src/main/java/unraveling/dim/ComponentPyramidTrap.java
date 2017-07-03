@@ -70,6 +70,24 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, z+2, sbb);
     } 
 
+    public void createTrappedChest(World world, StructureBoundingBox sbb, int x, int y, int z) {
+        placeBlockAtCurrentPosition(world, Blocks.trapped_chest, 0, x, y, z, sbb);
+        placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, 0, y-2, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, x, y-3, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-4, z, sbb);
+
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x-1, y-4, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-4, z-1, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y-4, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-4, z+1, sbb);
+
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x-2, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, z-2, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x+2, y-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-1, z+2, sbb);
+    } 
+
 	/**
 	 * Initiates construction of the Structure Component picked, at the current Location of StructGen
 	 */
@@ -81,8 +99,19 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
         createFloorTrap(world, sbb, pace, -1, pace);
-        createTripwire(world, sbb, pace, 0, pace );
-        createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
+        int randInt = rand.nextInt(3);
+        switch(randInt) {
+            case 0: {
+                createTripwire(world, sbb, pace, 0, pace );
+                break;
+            }
+            case 1: {
+                createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
+            }
+            case 2: {
+                createTrappedChest(world, sbb, pace + 2, 1, pace + 2);
+            }
+        }
 		return true;
 	}
 	/**

@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import thaumcraft.common.entities.golems.ItemGolemPlacer;
 import thaumcraft.common.lib.FakeThaumcraftPlayer;
 
+import unraveling.UnravelingConfig;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.entities.InventoryMob;
 import thaumcraft.common.entities.golems.EntityGolemBase;
@@ -68,10 +69,11 @@ public class TileEntityTrapRoom extends TileEntity {
             double ry = yCoord + 0.5D;
             double rz = zCoord + 0.5D;
             golem.setLocationAndAngles(rx, ry, rz, worldObj.rand.nextFloat() * 360F, 0.0F);
-            // golem.playLivingSound();
             golem.setHomeArea(xCoord, yCoord+1, zCoord, 32);
             golem.setCore(GUARD);
-            //golem.setUpgrade(0, ORDER); // ORDER upgrade: attack players
+            if (!UnravelingConfig.debug) {
+                golem.setUpgrade(0, ORDER); // ORDER upgrade: attack players
+            }
             golem.setToggle(3, false); // attack players
             golem.setToggle(1, false); // attack hostiles
             // skip golem.upgrades
