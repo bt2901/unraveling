@@ -66,6 +66,7 @@ public class URecipes {
             new Object[]{" E ", "ESE", " L ", 
                 Character.valueOf('R'), new ItemStack(ConfigBlocks.blockStoneDevice, 1, 2), 
                 Character.valueOf('E'), new ItemStack(Items.ender_eye), 
+                Character.valueOf('S'), new ItemStack(ConfigItems.itemSanityChecker), 
                 Character.valueOf('L'), new ItemStack(ConfigItems.itemCompassStone)}
             )
         );

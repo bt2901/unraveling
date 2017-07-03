@@ -75,7 +75,7 @@ public class EldritchLore {
             ItemStack dg = new ItemStack(UBlocks.darkGen);
             
             registerResearchItemC("CREATEVOIDORE", Arrays.asList(new Object[] { 
-    			new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
+    			new AspectList().add(Aspect.DARKNESS, UnravelingConfig.baseVoidProductionCost).add(Aspect.VOID, UnravelingConfig.baseVoidProductionCost), 
     			4, 2, 4, 
     			Arrays.asList(new ItemStack[] { 
     					 empty, empty, empty, empty, 

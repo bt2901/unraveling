@@ -187,7 +187,14 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             } else {
                 Aspect[] al = new AspectList(thingResearched).getAspects();
                 int randomIndex = rand.nextInt(al.length);
-                finishedResearch = ItemScrutinyNote.createNoteOnAspect(al[randomIndex]);
+                Aspect chosen = al[randomIndex];
+                if (chosen == null) {
+                    System.out.println(al);
+                    System.out.println(randomIndex);
+                    finishedResearch = ItemScrutinyNote.createEmptyNote();
+                } else {
+                    finishedResearch = ItemScrutinyNote.createNoteOnAspect(chosen);
+                }
             }
 
             ItemStack stack = getStackInSlot(3);

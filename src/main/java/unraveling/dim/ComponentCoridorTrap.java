@@ -47,6 +47,8 @@ public class ComponentCoridorTrap extends StructureComponent {
         int y = 1;
         int minX = -3;
         int maxX = -1;
+        minX = 1;
+        maxX = 3;
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, minX, y, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, maxX, y, z, sbb);
         for (int x = minX+1; x < maxX; ++x) {
@@ -56,37 +58,41 @@ public class ComponentCoridorTrap extends StructureComponent {
     }
     public void createSliceWithControl(World world, StructureBoundingBox sbb, int z) {
         int y = 0;
-        int minX = 0;
-        int maxX = 3;
+        int minX = -3;
+        int maxX = 0;
         // 0 1 : up/down
         // 4: almost, wrong dir
         // 5: good
         // 2, 3: perp dir
         int m = getMetadataWithOffset(Blocks.sticky_piston, 5);
+        m = getMetadataWithOffset(Blocks.sticky_piston, 4);
         fillWithOutsideWalls(world, sbb, minX, -1, z, maxX, 1, z);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, m, minX, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX+1, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, minX+2, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX+3, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, m, maxX, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX-1, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, maxX-2, y, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, maxX-3, y, z, sbb);
     }
     public void createSliceWithGolems(World world, StructureBoundingBox sbb, int z) {
         int minY = -1;
         int maxY = 1;
-        int minX = 0;
-        int maxX = 3;
+        int minX = -3;
+        int maxX = 0;
         
         
         fillWithOutsideWalls(world, sbb, minX, minY, z, maxX, maxY, z);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX, maxY, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX, maxY+1, z, sbb);
-        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, minX + 1, maxY, z, sbb);
-
-        placeBlockAtCurrentPosition(world, Blocks.air, 0, minX + 2, maxY-1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 3, maxY-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY, z, sbb);
+        // placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY+1, z, sbb);
         
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, minX, minY, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 1, minY, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, minX + 2, minY, z, sbb);
+        placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, maxX, maxY+1, z, sbb);
+
+        placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, maxX - 1, maxY, z, sbb);
+
+        placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX - 2, maxY-1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, maxX - 3, maxY-1, z, sbb);
+        
+        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, maxX, minY, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, maxX - 1, minY, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, maxX - 2, minY, z, sbb);
 
     }
 

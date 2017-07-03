@@ -104,18 +104,23 @@ public class ItemScrutinyNote extends Item {
         return this.iconTorn;
     }
     public static ItemStack createNoteOnAspect(Aspect aspect) {
-        int meta = 0;
         ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.onAspect(aspect);
-        ItemStack finishedResearch = new ItemStack(note, 1, meta);
+        ItemStack finishedResearch = new ItemStack(note, 1, ed.noteType);
+        setData(finishedResearch, ed);
+        return finishedResearch;
+    }
+    public static ItemStack createEmptyNote() {
+        ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
+        ExaminationData ed = ExaminationData.invalid();
+        ItemStack finishedResearch = new ItemStack(note, 1, ed.noteType);
         setData(finishedResearch, ed);
         return finishedResearch;
     }
     public static ItemStack createNoteOnResearch(Discovery which, int value) {
-        int meta = 1;
         ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.forResearch(which, value);
-        ItemStack finishedResearch = new ItemStack(note, 1, meta);
+        ItemStack finishedResearch = new ItemStack(note, 1, ed.noteType);
         setData(finishedResearch, ed);
         return finishedResearch;
     }

@@ -87,6 +87,14 @@ public class ExaminationData {
         ed.ResearchData = null;
         return ed;
     }
+    public static ExaminationData invalid() {
+        ExaminationData ed = new ExaminationData();
+        ed.noteType = -1;
+        ed.value = 0;
+        ed.aspectTag = "";
+        ed.ResearchData = null;
+        return ed;
+    }
 
     public static ExaminationData forResearch(Discovery desc, int value) {
         ExaminationData ed = new ExaminationData();
@@ -158,7 +166,7 @@ public class ExaminationData {
     }
     public boolean canSeeAdvancedDescription(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
-        return ResearchManager.isResearchComplete(playerName, "RESEARCHER2");
+        return ResearchManager.isResearchComplete(playerName, "RESEARCHMASTERY");
     }
 
 	public ExaminationData readFromNBT(NBTTagCompound nbttagcompound) {

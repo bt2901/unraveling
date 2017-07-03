@@ -83,7 +83,7 @@ import thaumcraft.common.config.ConfigItems;
 public class UnravelingMod {
 	
 	public static final String ID = "unraveling";
-	public static final String VERSION = "0.1alpha";
+	public static final String VERSION = "0.2beta";
 	public static final UEventListener eventListener = new UEventListener();
 	
 	public static int dimensionID;
