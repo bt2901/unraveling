@@ -117,6 +117,7 @@ public class UnravelingMod {
 		// load config
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		loadConfiguration(config);
+        ConfigHandler.init(event.getModConfigurationDirectory(), config);
 		// sounds on client, and whatever else needs to be registered pre-load
 		proxy.doPreLoadRegistration();
 
@@ -133,6 +134,7 @@ public class UnravelingMod {
 
 		registerCreatures();
 		registerTileEntities();
+        ConfigHandler.doYourThing();
         
 		// GUI
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
