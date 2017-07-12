@@ -117,10 +117,34 @@ public class EldritchLore {
             new ResearchPage("3"), 
             new ResearchPage("4") 
         }).setSpecial().setAutoUnlock().registerResearchItem();
+        
+        (new UResearchItem("SCRUTINY_INTUITION", "UNRAVELING", 
+            new AspectList().add(Aspect.MIND, 5).add(Aspect.ORDER, 2).add(Aspect.ELDRITCH, 1).add(Aspect.SENSES, 1), 
+            -2, -2, 1, 
+            new ResourceLocation("unraveling", "textures/scrutiny_intuition.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+        
+        (new UResearchItem("SCRUTINY_RECYCLING", "UNRAVELING", 
+            new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ORDER, 1), 
+            -2, -4, 1, 
+            new ResourceLocation("unraveling", "textures/vellum_quill.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+        
+        (new UResearchItem("SCRUTINY_SILKTOUCH", "UNRAVELING", 
+            new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ENTROPY, 1).add(Aspect.HEAL, 1), 
+            -2, -6, 1, 
+            new ResourceLocation("unraveling", "textures/scrutiny_silk.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
         // ---------- SAN -------------
         (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.ENTROPY, 5).add(Aspect.SENSES, 7), 
-            -4, 2, 0, 
+            0, 0, 1, 
             new ResourceLocation("unraveling", "textures/items/artifacts/singularity.png"))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
@@ -131,7 +155,7 @@ public class EldritchLore {
         
         (new UResearchItem("VOIDPORTAL", "UNRAVELING", 
             new AspectList().add(Aspect.ELDRITCH, 5).add(Aspect.TRAVEL, 5), 
-            0, 2, 0, 
+            0, 2, 1, 
             new ResourceLocation("unraveling", "textures/eldritchIcon.png"))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
@@ -145,13 +169,7 @@ public class EldritchLore {
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
-        (new UResearchItem("RESEARCHMASTERY", "UNRAVELING", 
-            new AspectList().add(Aspect.MIND, 5).add(Aspect.ORDER, 2).add(Aspect.ELDRITCH, 1), 
-            -2, -2, 1, 
-            new ResourceLocation("unraveling", "textures/mastery.png"))
-        ).setPages(new ResearchPage[] {
-            new ResearchPage("1"), 
-        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+
     }
     
     

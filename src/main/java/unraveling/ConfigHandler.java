@@ -141,8 +141,8 @@ public class ConfigHandler {
             new Discovery(new ItemStack(Items.ender_eye, 1, 0), "ASTRALSNARE"),
             new Discovery(new ItemStack(ConfigItems.itemCompassStone, 1, 0), "ASTRALSNARE"),
             new Discovery(new ItemStack(ConfigItems.itemSanityChecker, 1, 0), "ASTRALSNARE"),
-            new Discovery(new ItemStack(UItems.artifact, 1, 2), "VOIDORE"),
-            new Discovery(new ItemStack(UItems.artifact, 1, 3), "VOIDORE"),
+            new Discovery(new ItemStack(UItems.artifact, 1, 2), "VOIDGEN"),
+            new Discovery(new ItemStack(UItems.artifact, 1, 3), "VOIDGEN"),
             new Discovery(new ItemStack(UItems.artifact, 1, 1), "lost")
         );
         String json = gson.toJson(defaults);

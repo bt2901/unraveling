@@ -29,7 +29,7 @@ import thaumcraft.common.lib.research.ResearchManager;
 public class TileQuaesitum extends TileEntity implements IInventory  {
 
     static Random rand = new Random();
-    ItemStack[] inventorySlots = new ItemStack[4];
+    public ItemStack[] inventorySlots = new ItemStack[4];
     public int researchtime = 0;
     public int bonus = 0;
     public int progress = 0;

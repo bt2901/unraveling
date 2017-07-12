@@ -143,13 +143,17 @@ u.name.CURSEDFIRE=Cursed Fire
 u.text.CURSEDFIRE=Az-reth, the Great Devourer
 u.page.CURSEDFIRE.1=Burns underwater!
 
-u.name.RESEARCHMASTERY=Investigation Brilliance
-u.text.RESEARCHMASTERY=A taste for mysteries
-u.page.RESEARCHMASTERY.1=You gained an intuitive feeling of where the gaps in your knowledge lie. The chance of getting unknown aspect is greater. You see tooltips. You can examine research notes and scrutiny reports for unknown aspects. 
+u.name.SCRUTINY_INTUITION=Investigation Brilliance
+u.text.SCRUTINY_INTUITION=A taste for mysteries
+u.page.SCRUTINY_INTUITION.1=You gained an intuitive feeling of where the gaps in your knowledge lie. The chance of getting unknown aspect is greater. You see tooltips. You can examine research notes for unknown aspects. 
 
-u.name.ADVSCRUTINY=Investigation Excellence
-u.text.ADVSCRUTINY=Insight into unknown
-u.page.ADVSCRUTINY.1=Now you are more proficient at reverse engineering. 
+u.name.SCRUTINY_SILKTOUCH=Investigation Diligence
+u.text.SCRUTINY_SILKTOUCH=Insight into unknown
+u.page.SCRUTINY_SILKTOUCH.1=Now you are more proficient at reverse engineering. 
+
+u.name.SCRUTINY_RECYCLING=Investigation Abstraction
+u.text.SCRUTINY_RECYCLING=Working with ideas themselves
+u.page.SCRUTINY_RECYCLING.1=You can extract useful ideas from research notes. You can break up scrutiny reports into simpler aspects.
 
 
 u.name.NECROFOCUS=Focus: Necromancy

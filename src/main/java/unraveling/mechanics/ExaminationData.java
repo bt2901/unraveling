@@ -1,6 +1,8 @@
 package unraveling.mechanics;
 
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
@@ -18,6 +20,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.api.research.ResearchItem;
+
 // import thaumcraft.common.lib.network.playerdata.PacketAspectPool;
 
 import net.minecraft.util.ChatComponentTranslation;
@@ -162,7 +167,15 @@ public class ExaminationData {
         return desc;
     }
     public String getAdvancedDescription() {
-        return StatCollector.translateToLocal("u.note.description." + noteType + "." + value);
+        String power_desc = StatCollector.translateToLocal("u.note.description." + noteType + "." + value);
+        if (noteType == ON_ITEM) {
+            ResearchItem rr = ResearchCategories.getResearch(ResearchData.researchKey);
+            // Aspect primaryaspect = rr.getResearchPrimaryTag();
+            
+            return power_desc + "\n" + rr.getName();
+
+        }
+        return power_desc;
     }
     public boolean canSeeAdvancedDescription(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
@@ -220,5 +233,14 @@ public class ExaminationData {
 }
 
 
+/*
+ResearchItem
+    public String getName() {
+        return StatCollector.func_74838_a((String)("tc.research_name." + this.key));
+    }
 
+    public String getText() {
+        return StatCollector.func_74838_a((String)("tc.research_text." + this.key));
+    }
+*/
 
