@@ -79,7 +79,12 @@ import thaumcraft.api.ItemApi;
 import thaumcraft.common.config.ConfigItems;
 
 
-@Mod(modid = UnravelingMod.ID, name = "Unraveling Of the Eldritch", version = UnravelingMod.VERSION)
+@Mod(modid = UnravelingMod.ID, 
+	name = "Unraveling Of the Eldritch", 
+	version = UnravelingMod.VERSION,
+	dependencies = "required-after:Thaumcraft@[4.2.3.5,)"
+	)
+
 public class UnravelingMod {
 	
 	public static final String ID = "unraveling";
