@@ -1,4 +1,4 @@
-package unraveling.block;
+package unraveling.dim;
 
 import java.util.List;
 import java.util.Random;
@@ -49,7 +49,7 @@ import java.util.Random;
 
 public class BlockVoidPortal extends BlockContainer {
     
-    protected BlockVoidPortal() {
+    public BlockVoidPortal() {
 		super(Material.rock);
 		this.setHardness(10.F);
 		this.setStepSound(Block.soundTypeWood);
