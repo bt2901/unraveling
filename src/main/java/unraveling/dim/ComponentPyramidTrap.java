@@ -73,7 +73,7 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
     public void createTrappedChest(World world, StructureBoundingBox sbb, int x, int y, int z) {
         placeBlockAtCurrentPosition(world, Blocks.trapped_chest, 0, x, y, z, sbb);
         placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y-1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, x, y-2, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.piston, 0, x, y-2, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.redstone_block, 0, x, y-3, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y-4, z, sbb);
 
