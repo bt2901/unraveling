@@ -166,20 +166,22 @@ public class ExaminationData {
         String desc = new ChatComponentTranslation(prefix, new Object[]{details}).getUnformattedText();
         return desc;
     }
-    public String getAdvancedDescription() {
+    public String[] getAdvancedDescription() {
         String power_desc = StatCollector.translateToLocal("u.note.description." + noteType + "." + value);
         if (noteType == ON_ITEM) {
             ResearchItem rr = ResearchCategories.getResearch(ResearchData.researchKey);
-            // Aspect primaryaspect = rr.getResearchPrimaryTag();
+            if (rr != null) {
+                // Aspect primaryaspect = rr.getResearchPrimaryTag();
+                return {power_desc, rr.getName()};
+            }
             
-            return power_desc + "\n" + rr.getName();
 
         }
-        return power_desc;
+        return {power_desc};
     }
     public boolean canSeeAdvancedDescription(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
-        return ResearchManager.isResearchComplete(playerName, "RESEARCHMASTERY");
+        return ResearchManager.isResearchComplete(playerName, "SCRUTINY_INTUITION");
     }
 
 	public ExaminationData readFromNBT(NBTTagCompound nbttagcompound) {

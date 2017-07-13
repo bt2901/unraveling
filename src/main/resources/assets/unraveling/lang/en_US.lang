@@ -149,7 +149,7 @@ u.page.SCRUTINY_INTUITION.1=You gained an intuitive feeling of where the gaps in
 
 u.name.SCRUTINY_SILKTOUCH=Investigation Diligence
 u.text.SCRUTINY_SILKTOUCH=Insight into unknown
-u.page.SCRUTINY_SILKTOUCH.1=Now you are more proficient at reverse engineering. 
+u.page.SCRUTINY_SILKTOUCH.1=Losing items is annoying. Unfortuantely, intervention is a necessary precondition for knowledge. However, you can limit yourself to only absolutely neccessary experiments, which are guaranteed to give you some new observations to ponder upon. <BR>In other words, you'll still lose items, but you are insured against pointless losses: you'll learn something new after each dissection.
 
 u.name.SCRUTINY_RECYCLING=Investigation Abstraction
 u.text.SCRUTINY_RECYCLING=Working with ideas themselves

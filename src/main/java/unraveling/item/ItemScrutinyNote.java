@@ -132,7 +132,12 @@ public class ItemScrutinyNote extends Item {
         ItemStack torch = new ItemStack(Blocks.torch, 1, 0);
         Discovery nitor = new Discovery(torch, "NITOR", false);
         list.add(createNoteOnResearch(nitor, 3));
-        list.add(createNoteOnResearch(sinstone, 5));
+        list.add(createNoteOnResearch(sinstone, 1));
+
+        list.add(createNoteOnResearch(new Discovery(torch, "SCRUTINY_INTUITION", false), 5));
+        list.add(createNoteOnResearch(new Discovery(torch, "SCRUTINY_SILKTOUCH", false), 5));
+        list.add(createNoteOnResearch(new Discovery(torch, "SCRUTINY_RECYCLING", false), 5));
+
         list.add(createNoteOnAspect(Aspect.MAGIC));
         list.add(createNoteOnAspect(Aspect.MAN));
         list.add(createNoteOnAspect(Aspect.VOID));
@@ -166,7 +171,9 @@ public class ItemScrutinyNote extends Item {
             ExaminationData ed = new ExaminationData().readFromNBT(stack.getTagCompound());
             par3List.add(ed.getDescription());
             if (ed.canSeeAdvancedDescription(par2EntityPlayer)) {
-                par3List.add(ed.getAdvancedDescription());
+                for (String desc : ed.getAdvancedDescription()) {
+                    par3List.add(desc);
+                }
             }
         }
 	}

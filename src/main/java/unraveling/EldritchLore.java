@@ -124,7 +124,7 @@ public class EldritchLore {
             new ResourceLocation("unraveling", "textures/scrutiny_intuition.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
-        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+        }).setParents(new String[] { "Q" }).registerResearchItem();
         
         (new UResearchItem("SCRUTINY_RECYCLING", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ORDER, 1), 
@@ -132,7 +132,7 @@ public class EldritchLore {
             new ResourceLocation("unraveling", "textures/vellum_quill.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
-        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+        }).setParents(new String[] { "Q" }).registerResearchItem();
         
         (new UResearchItem("SCRUTINY_SILKTOUCH", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ENTROPY, 1).add(Aspect.HEAL, 1), 
@@ -140,7 +140,7 @@ public class EldritchLore {
             new ResourceLocation("unraveling", "textures/scrutiny_silk.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
-        }).setRound().setParents(new String[] { "Q" }).registerResearchItem();
+        }).setParents(new String[] { "Q" }).registerResearchItem();
         // ---------- SAN -------------
         (new UResearchItem("ASTRALSNARE", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.ENTROPY, 5).add(Aspect.SENSES, 7), 
