@@ -87,5 +87,8 @@ public class URecipes {
                 Character.valueOf('I'), voidIngot}
             )
         );
+        EldritchLore.recipes.put("PureVoid", ThaumcraftApi.addCrucibleRecipe("VOIDGEN", 
+            voidCluster, voidOre, 
+            new AspectList().add(Aspect.METAL, 1).add(Aspect.POISON, 1)));        
 	}
 }

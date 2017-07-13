@@ -113,7 +113,7 @@ public class ItemScrutinyNote extends Item {
     public static ItemStack createEmptyNote() {
         ItemScrutinyNote note = (ItemScrutinyNote)UItems.scrutinyNote;
         ExaminationData ed = ExaminationData.invalid();
-        ItemStack finishedResearch = new ItemStack(note, 1, ed.noteType);
+        ItemStack finishedResearch = new ItemStack(note, -1, ed.noteType);
         setData(finishedResearch, ed);
         return finishedResearch;
     }

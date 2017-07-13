@@ -11,6 +11,7 @@ import java.util.Iterator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.EnumRarity;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -33,7 +34,9 @@ import thaumcraft.common.lib.research.PlayerKnowledge;
 import thaumcraft.common.lib.research.ResearchNoteData;
 import thaumcraft.common.lib.utils.HexUtils;
 
+import thaumcraft.common.items.ItemResearchNotes;
 import unraveling.item.ItemScrutinyNote;
+
 import unraveling.mechanics.ExaminationData;
 import unraveling.mechanics.ExaminationData.Discovery;
 
@@ -56,15 +59,24 @@ public class ScrutinyHandler {
     }
     
     public static Aspect selectAspect(ItemStack thingResearched, String playerName) {
+        Set<Aspect> aspects_here = new AspectList(thingResearched).aspects.keySet();
+        if (aspects_here.size() == 0) {
+            return null;
+        }
         if (ResearchManager.isResearchComplete(playerName, "SCRUTINY_INTUITION")) {
             PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
-            Set<Aspect> aspects_here = new AspectList(thingResearched).aspects.keySet();
             AspectList aspects_known = pk.aspectsDiscovered.get(playerName);
             aspects_here.removeAll(aspects_known.aspects.keySet());
             if (aspects_here.size() > 0) {
                 return selectRandom(aspects_here);
             }
         }
+        /*if (chosen == null) {
+            System.out.println(al);
+            System.out.println(randomIndex);
+            finishedResearch = ItemScrutinyNote.createEmptyNote();
+        }*/
+        
         return selectRandom(new AspectList(thingResearched));
     }
     public static Aspect recycleResearchNote(ItemStack thingResearched, String playerName) {
@@ -118,35 +130,88 @@ public class ScrutinyHandler {
         }
         return selectRandom(new AspectList().add(aspect.getComponents()[0], 1).add(aspect.getComponents()[1], 1));
     }
-    
-    public static ItemStack finishResearch(TileQuaesitum q) {
-        ItemStack thingResearched = q.getStackInSlot(0);
-        if (thingResearched != null) {
-            //--this.inventorySlots[2].stackSize;
-            ResearchManager.consumeInkFromTable(q.inventorySlots[2], true);
-            q.inventorySlots[1].stackSize--;
-            
-            ItemStack finishedResearch;
-            Discovery r = UnravelingConfig.RelatedResearch(thingResearched);
-            if (r != null) {
-                finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, rand.nextInt(5));
-            } else {
-                Aspect[] al = new AspectList(thingResearched).getAspects();
-                int randomIndex = rand.nextInt(al.length);
-                Aspect chosen = al[randomIndex];
-                if (chosen == null) {
-                    System.out.println(al);
-                    System.out.println(randomIndex);
-                    finishedResearch = ItemScrutinyNote.createEmptyNote();
-                } else {
-                    finishedResearch = ItemScrutinyNote.createNoteOnAspect(chosen);
+
+    public static ItemStack outputAspectNote(ItemStack thingResearched, String playerName, int bonuses) {
+        Aspect chosen = examineAspect(thingResearched, playerName, bonuses);
+        if (chosen == null) {
+            return null;
+        }
+        PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
+        // losing unknown aspect is annoying
+        if (!pk.hasDiscoveredAspect(playerName, chosen)) {
+            return ItemScrutinyNote.createNoteOnAspect(chosen);
+        }
+        int success = rand.nextInt(10) + bonuses;
+        if (success > 7) {
+            return ItemScrutinyNote.createNoteOnAspect(chosen);
+        }
+        return null; // failure
+    }
+    public static boolean isScrutinyReport(ItemStack thingResearched) {
+        Class reportClass = ItemScrutinyNote.class;
+        return reportClass.isAssignableFrom(thingResearched.getItem().getClass());
+    }
+    public static boolean isResearchNote(ItemStack thingResearched) {
+        Class noteClass = ItemResearchNotes.class;
+        return noteClass.isAssignableFrom(thingResearched.getItem().getClass());
+    }
+    public static Aspect examineAspect(ItemStack thingResearched, String playerName, int bonuses) {
+        Aspect chosen = null;
+        if (isResearchNote(thingResearched) ) {
+            if (ResearchManager.isResearchComplete(playerName, "SCRUTINY_INTUITION")) {
+                chosen = reduceResearchNote(thingResearched, playerName);
+            }
+            if (chosen == null) {
+                if (ResearchManager.isResearchComplete(playerName, "SCRUTINY_RECYCLING")) {
+                    chosen = recycleResearchNote(thingResearched, playerName);
                 }
             }
-            return finishedResearch;
+            return chosen;
         }
-        return null;
+        if (isScrutinyReport(thingResearched)){
+            if (ResearchManager.isResearchComplete(playerName, "SCRUTINY_RECYCLING")) {
+                chosen = reduceScrutinyNote(thingResearched, playerName);
+            }
+            return chosen;
+        }
+        return selectAspect(thingResearched, playerName);
     }
     
-    public void maybeConsumeItem(int bonuses, TileQuaesitum q) {
+    
+    public static ItemStack finishResearch(ItemStack thingResearched, String playerName, int bonuses) {
+
+        ItemStack finishedResearch = null;
+        Discovery r = UnravelingConfig.RelatedResearch(thingResearched);
+        if (r != null) {
+            int choice = rand.nextInt(10) + bonuses;
+            if (choice > 8) {
+                int power = Math.min(rand.nextInt(3) + bonuses/3, 5);
+                finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, power);
+            }
+        }
+        if (finishedResearch == null) {
+            finishedResearch = outputAspectNote(thingResearched, playerName, bonuses);
+        }
+        return finishedResearch;
+    }
+    
+    public static boolean maybeConsumeItem (ItemStack thingResearched, String playerName, int bonuses, ItemStack finishedResearch) {
+        // always consume scrutiny reports
+        if (isScrutinyReport(thingResearched)) {
+            return true;
+        }
+        // never consume very valuable items
+        EnumRarity rarity = thingResearched.getItem().getRarity(thingResearched);
+        if (rarity == EnumRarity.rare || rarity == EnumRarity.epic) {
+            return false;
+        }
+        if (finishedResearch == null && ResearchManager.isResearchComplete(playerName, "SCRUTINY_SILKTOUCH")) {
+            return false;
+        }
+        int failure = rand.nextInt(10) - bonuses;
+        if (failure < 4) {
+            return true;
+        }
+        return false;
     }
 }

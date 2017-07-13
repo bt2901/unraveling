@@ -96,13 +96,22 @@ public class EldritchLore {
                 ).setStub().setRound();
                 
         (new UResearchItem("VOIDAGG", "UNRAVELING", 
-            new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
+            new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.VOID,  12), 
             3, 8, 1, 
             new ItemStack(UBlocks.darkGen))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage((IArcaneRecipe) recipes.get("VoidAgg")), 
             }).setStub().setRound().setParents(new String[] { "VOIDGEN" }).registerResearchItem();
+
+        (new UResearchItem("VOIDPURE", "UNRAVELING", 
+            new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
+            3, 5, 1, 
+            new ItemStack(UItems.voidCluster))
+        ).setPages(new ResearchPage[] { 
+            new ResearchPage("1"), 
+            new ResearchPage((CrucibleRecipe) recipes.get("PureVoid")), 
+            }).setRound().setParents(new String[] { "VOIDGEN" }).registerResearchItem();
     }
     
     public static void explore() {       
@@ -128,7 +137,7 @@ public class EldritchLore {
         
         (new UResearchItem("SCRUTINY_RECYCLING", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ORDER, 1), 
-            -2, -4, 1, 
+            -4, -2, 1, 
             new ResourceLocation("unraveling", "textures/vellum_quill.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
@@ -136,7 +145,7 @@ public class EldritchLore {
         
         (new UResearchItem("SCRUTINY_SILKTOUCH", "UNRAVELING", 
             new AspectList().add(Aspect.MIND, 5).add(Aspect.GREED, 2).add(Aspect.ENTROPY, 1).add(Aspect.HEAL, 1), 
-            -2, -6, 1, 
+            -6, -2, 1, 
             new ResourceLocation("unraveling", "textures/scrutiny_silk.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 

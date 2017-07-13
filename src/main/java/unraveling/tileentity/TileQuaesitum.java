@@ -17,6 +17,7 @@ import unraveling.UnravelingMod;
 import unraveling.item.UItems;
 import unraveling.item.ItemScrutinyNote;
 import unraveling.UnravelingConfig;
+import unraveling.mechanics.ScrutinyHandler;
 import unraveling.mechanics.ExaminationData;
 import unraveling.mechanics.ExaminationData.Discovery;
 
@@ -33,6 +34,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
     public int researchtime = 0;
     public int bonus = 0;
     public int progress = 0;
+    String playerName = "";
 
 	public TileQuaesitum() {
 	}
@@ -59,6 +61,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         progress = par1NBTTagCompound.getInteger("progress");
         researchtime = par1NBTTagCompound.getInteger("researchtime");
         bonus = par1NBTTagCompound.getInteger("bonus");
+        playerName = par1NBTTagCompound.getString("playerName");
     }
 
     @Override
@@ -79,6 +82,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         par1NBTTagCompound.setInteger("researchtime", researchtime);
         par1NBTTagCompound.setInteger("progress", progress);
         par1NBTTagCompound.setInteger("bonus", bonus);
+        par1NBTTagCompound.setString("playerName", playerName);
     }
 
 
@@ -154,11 +158,20 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         return true;
     }
 
+    public int bonusFrom(String key) {
+        if (ResearchManager.isResearchComplete(playerName, key)) {
+            return 1;
+        }
+        return 0;
+    }
     public void startResearch(EntityPlayer player) {
         ItemStack thingResearched = getStackInSlot(0);
         if (thingResearched != null && researchtime <= 0 && canResearch()) {
-            bonus = 0;
             progress = 0;
+            playerName = player.getCommandSenderName();
+            bonus = 0;
+            bonus += bonusFrom("SCRUTINY_INTUITION") + bonusFrom("SCRUTINY_RECYCLING") + bonusFrom("SCRUTINY_SILKTOUCH");
+            
             AspectList al = new AspectList(thingResearched);
             // simple items are easy to study
             if (al.size() <= 2 || al.visSize() < 5) {
@@ -175,31 +188,28 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         ItemStack thingResearched = getStackInSlot(0);
         progress = 0;
         researchtime = 0;
+        
         if (thingResearched != null) {
-            //--this.inventorySlots[2].stackSize;
             ResearchManager.consumeInkFromTable(this.inventorySlots[2], true);
             this.inventorySlots[1].stackSize--;
-            
-            ItemStack finishedResearch;
-            Discovery r = UnravelingConfig.RelatedResearch(thingResearched);
-            if (r != null) {
-                finishedResearch = ItemScrutinyNote.createNoteOnResearch(r, rand.nextInt(5));
-            } else {
-                Aspect[] al = new AspectList(thingResearched).getAspects();
-                int randomIndex = rand.nextInt(al.length);
-                Aspect chosen = al[randomIndex];
-                if (chosen == null) {
-                    System.out.println(al);
-                    System.out.println(randomIndex);
-                    finishedResearch = ItemScrutinyNote.createEmptyNote();
-                } else {
-                    finishedResearch = ItemScrutinyNote.createNoteOnAspect(chosen);
-                }
+            if(this.inventorySlots[1].stackSize == 0) {
+                this.inventorySlots[1] = (ItemStack)null;
             }
 
+            ItemStack finishedResearch = ScrutinyHandler.finishResearch(thingResearched, playerName, bonus);
+            boolean consumed = ScrutinyHandler.maybeConsumeItem(thingResearched, playerName, bonus, finishedResearch);
+            if (consumed) {
+                // System.out.println("Consuming " + inventorySlots[0]);
+                this.inventorySlots[0].stackSize--;
+                if(this.inventorySlots[0].stackSize == 0) {
+                    this.inventorySlots[0] = (ItemStack)null;
+                }
+                // System.out.println("Now " + this.inventorySlots[0].stackSize);
+            }
+            if (finishedResearch == null) {
+                return;
+            }
             ItemStack stack = getStackInSlot(3);
-            // if (stack==null || (stack.isItemEqual(finishedResearch) && stack.areItemStackTagsEqual(finishedResearch, stack))) {
-            // finishedResearch.stackSize += (stack == null) ? 0 : stack.stackSize;
             if (stack==null) {
                 setInventorySlotContents(3, finishedResearch);
                 return;
@@ -208,6 +218,8 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
             EntityItem entityitem = new EntityItem(worldObj, xCoord, yCoord + 1, zCoord, finishedResearch);                
             worldObj.spawnEntityInWorld(entityitem);
         }
+        playerName = "";
+
     }
     
     @SideOnly(value=Side.CLIENT)

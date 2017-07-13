@@ -30,6 +30,10 @@ public class ContainerQ extends Container {
     public int lastResearchTime = 0;
     public int lastProgress = 0;
 
+    public static int INPUT = 0;
+    public static int PAPER_HERE = 1;
+    public static int SCRIBE_HERE = 2;
+    public static int OUTPUT = 3;
 
     public ContainerQ(TileQuaesitum analyzer, InventoryPlayer playerInv) {
         this.playerInv = playerInv;
@@ -37,11 +41,11 @@ public class ContainerQ extends Container {
         this.analyzer = analyzer;
 
         //addSlotToContainer(slotInput = new SlotLimitedHasAspects(analyzer, 0, 22, 30));
-        addSlotToContainer(slotInput = new Slot(analyzer, 0, 22, 30));
+        addSlotToContainer(slotInput = new Slot(analyzer, INPUT, 22, 30));
 
-        addSlotToContainer(slotPaper = new SlotLimitedByItemstack(new ItemStack(Items.paper), analyzer, 1, 124, 21));
-        addSlotToContainer(slotScribe = new SlotLimitedByClass(IScribeTools.class, analyzer, 2, 91, 21));
-        addSlotToContainer(slotNote = new SlotOutput(analyzer, 3, 156, 31));
+        addSlotToContainer(slotPaper = new SlotLimitedByItemstack(new ItemStack(Items.paper), analyzer, PAPER_HERE, 124, 21));
+        addSlotToContainer(slotScribe = new SlotLimitedByClass(IScribeTools.class, analyzer, SCRIBE_HERE, 91, 21));
+        addSlotToContainer(slotNote = new SlotOutput(analyzer, OUTPUT, 156, 31));
 
         initPlayerInv();
     }
@@ -88,37 +92,58 @@ public class ContainerQ extends Container {
         }
     }
 
+    /**
+    * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
+    */
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
-        ItemStack var3 = null;
-        Slot var4 = (Slot) inventorySlots.get(par2);
+        ItemStack itemstack = null;
+        Slot slot = (Slot)this.inventorySlots.get(par2);
 
-        if (var4 != null && var4.getHasStack()) {
-            ItemStack var5 = var4.getStack();
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-            if (par2 == 0 || var5 != null && var4.isItemValid(var5)) {
-                var3 = var5.copy();
-
-                if (par2 < 1) {
-                    if (!mergeItemStack(var5, 1, 37, false))
-                        return null;
-                } else if (!mergeItemStack(var5, 0, 1, false))
+            if (par2 <= OUTPUT && par2 >= INPUT) {
+                // try to place in player inventory
+                if (!this.mergeItemStack(itemstack1, OUTPUT+1, OUTPUT+36+1, true)) {
                     return null;
-
-                if (var5.stackSize == 0)
-                    var4.putStack(null);
-                else
-                    var4.onSlotChanged();
-
-                if (var5.stackSize == var3.stackSize)
-                    return null;
-
-                var4.onPickupFromSlot(par1EntityPlayer, var5);
+                }
+                slot.onSlotChange(itemstack1, itemstack);
             }
-        }
+            // itemstack is in player inventory, try to place in appropriate slot
+            else if (par2 > OUTPUT) {
+                for (int i = 2; i >= 0; --i) {
+                    Slot shiftedInSlot = (Slot)inventorySlots.get(i);
+                    if(shiftedInSlot.isItemValid(itemstack1)) {
+                        // scribing tools has max stack size of 1
+                        if (i == SCRIBE_HERE && shiftedInSlot.getHasStack()) {
+                            continue;
+                        }
+                        if (!mergeItemStack(itemstack1, i, i + 1, false)) {
+                            return null;
+                        }
+                        
+                    }
+                }
+            }
+            
+            if(itemstack1.stackSize == 0) {
+                slot.putStack((ItemStack)null);
+            } else {
+                slot.onSlotChanged();
+            }
+            
+            if(itemstack1.stackSize == itemstack.stackSize) {
+                return null;
+            }
 
-        return var3;
+            slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+        }
+        return itemstack;
     }
+                
+    
     public void initPlayerInv() {
         int ys = getInvYStart();
         int xs = getInvXStart();

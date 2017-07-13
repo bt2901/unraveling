@@ -143,7 +143,8 @@ public class ConfigHandler {
             new Discovery(new ItemStack(ConfigItems.itemSanityChecker, 1, 0), "ASTRALSNARE"),
             new Discovery(new ItemStack(UItems.artifact, 1, 2), "VOIDGEN"),
             new Discovery(new ItemStack(UItems.artifact, 1, 3), "VOIDGEN"),
-            new Discovery(new ItemStack(UItems.artifact, 1, 1), "lost")
+            new Discovery(new ItemStack(UItems.artifact, 1, 1), "lost"),
+            new Discovery(new ItemStack(UItems.voidCluster), "VOIDPURE", true)
         );
         String json = gson.toJson(defaults);
         FileUtils.writeStringToFile(file, json, "UTF8");
