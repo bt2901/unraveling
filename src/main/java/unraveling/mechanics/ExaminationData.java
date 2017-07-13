@@ -172,12 +172,14 @@ public class ExaminationData {
             ResearchItem rr = ResearchCategories.getResearch(ResearchData.researchKey);
             if (rr != null) {
                 // Aspect primaryaspect = rr.getResearchPrimaryTag();
-                return {power_desc, rr.getName()};
+                String[] res = {power_desc, rr.getName()};
+                return res;
             }
             
 
         }
-        return {power_desc};
+        String[] res = {power_desc};
+        return res;
     }
     public boolean canSeeAdvancedDescription(EntityPlayer player) {
         String playerName = player.getCommandSenderName();
