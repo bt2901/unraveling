@@ -1,12 +1,8 @@
 package unraveling.block;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCompressed;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
-import unraveling.UnravelingMod;
+import unraveling.dim.BlockVoidPortal;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class UBlocks {
