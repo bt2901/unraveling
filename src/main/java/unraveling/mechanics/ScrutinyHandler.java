@@ -44,6 +44,7 @@ import unraveling.mechanics.ExaminationData.Discovery;
 public class ScrutinyHandler {
     static Random rand = new Random();
     public static Aspect selectRandom(Set<Aspect> set) {
+        System.out.println("Selecting from set");
         int index = rand.nextInt(set.size());
         Iterator<Aspect> iter = set.iterator();
         for (int i = 0; i < index; i++) {
@@ -52,32 +53,41 @@ public class ScrutinyHandler {
         return iter.next();
     }
     public static Aspect selectRandom(AspectList asps) {
+        System.out.println("Selecting from AL");
+
         Aspect[] al = asps.getAspects();
+        System.out.println(al);
         int randomIndex = rand.nextInt(al.length);
         Aspect chosen = al[randomIndex];
+        System.out.println(randomIndex + " out of " + al.length);
         return chosen;
     }
     
     public static Aspect selectAspect(ItemStack thingResearched, String playerName) {
-        Set<Aspect> aspects_here = new AspectList(thingResearched).aspects.keySet();
+        Set<Aspect> aspects_here = new HashSet<Aspect>();
+        Set<Aspect> unknown_aspects_here = new HashSet<Aspect>();
+        PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
+        for (Aspect asp : new AspectList(thingResearched).aspects.keySet()) {
+            if (asp != null) {
+                aspects_here.add(asp);
+                if (!pk.hasDiscoveredAspect(playerName, asp)) {
+                    unknown_aspects_here.add(asp);
+                }
+            }
+        }
+        System.out.println("aspects_here.size() == " + aspects_here.size());
         if (aspects_here.size() == 0) {
             return null;
         }
         if (ResearchManager.isResearchComplete(playerName, "SCRUTINY_INTUITION")) {
-            PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
-            AspectList aspects_known = pk.aspectsDiscovered.get(playerName);
-            aspects_here.removeAll(aspects_known.aspects.keySet());
-            if (aspects_here.size() > 0) {
-                return selectRandom(aspects_here);
+            System.out.println("unknown_aspects_here.size() == " + aspects_here.size());
+            if (unknown_aspects_here.size() > 0) {
+                return selectRandom(unknown_aspects_here);
             }
         }
-        /*if (chosen == null) {
-            System.out.println(al);
-            System.out.println(randomIndex);
-            finishedResearch = ItemScrutinyNote.createEmptyNote();
-        }*/
+        System.out.println("Selecting absolutely random aspect");
         
-        return selectRandom(new AspectList(thingResearched));
+        return selectRandom(aspects_here);
     }
     public static Aspect recycleResearchNote(ItemStack thingResearched, String playerName) {
         ResearchNoteData note = ResearchManager.getData(thingResearched);
@@ -134,6 +144,7 @@ public class ScrutinyHandler {
     public static ItemStack outputAspectNote(ItemStack thingResearched, String playerName, int bonuses) {
         Aspect chosen = examineAspect(thingResearched, playerName, bonuses);
         if (chosen == null) {
+            System.out.println("chosen == null");
             return null;
         }
         PlayerKnowledge pk = Thaumcraft.proxy.getPlayerKnowledge();
@@ -145,6 +156,7 @@ public class ScrutinyHandler {
         if (success > 7) {
             return ItemScrutinyNote.createNoteOnAspect(chosen);
         }
+        System.out.println("Wanted to create note on " + chosen.getTag() + " but failed!");
         return null; // failure
     }
     public static boolean isScrutinyReport(ItemStack thingResearched) {
@@ -174,6 +186,7 @@ public class ScrutinyHandler {
             }
             return chosen;
         }
+        System.out.println("chosing at random");
         return selectAspect(thingResearched, playerName);
     }
     

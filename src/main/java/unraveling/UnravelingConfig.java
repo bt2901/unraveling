@@ -61,11 +61,6 @@ public class UnravelingConfig {
         System.out.println(GameRegistry.findUniqueIdentifierFor(is.getItem()));
         // TODO: HashMap or something. Not sure what to do if there are several researches to a single item
         for (Discovery disc : ConfigHandler.research) {
-            System.out.println(disc);
-            System.out.println(disc.researchKey);
-            System.out.println(disc.item);
-            System.out.println(is.isItemEqual(disc.item));
-            // System.out.println(disc.researchKey + " " + disc.item + " " + is.getItem());
             if (is.isItemEqual(disc.item)) {
                 return disc;
             }

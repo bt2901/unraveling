@@ -117,11 +117,12 @@ public class ContainerQ extends Container {
                     Slot shiftedInSlot = (Slot)inventorySlots.get(i);
                     if(shiftedInSlot.isItemValid(itemstack1)) {
                         // scribing tools has max stack size of 1
-                        if (i == SCRIBE_HERE && shiftedInSlot.getHasStack()) {
+                        /*if (i == SCRIBE_HERE && shiftedInSlot.getHasStack()) {
                             continue;
-                        }
+                        }*/
                         if (!mergeItemStack(itemstack1, i, i + 1, false)) {
-                            return null;
+                            // return null;
+                            continue;
                         }
                         
                     }
@@ -129,14 +130,14 @@ public class ContainerQ extends Container {
             }
             
             if(itemstack1.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+                slot.putStack(null);
             } else {
                 slot.onSlotChanged();
             }
             
-            if(itemstack1.stackSize == itemstack.stackSize) {
-                return null;
-            }
+            // if(itemstack1.stackSize == itemstack.stackSize) {
+                // return null;
+            // }
 
             slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }
