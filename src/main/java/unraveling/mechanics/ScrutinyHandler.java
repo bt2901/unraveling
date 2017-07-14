@@ -228,3 +228,53 @@ public class ScrutinyHandler {
         return false;
     }
 }
+
+/*
+
+    public static int[] calculateResearchBoosters(xd world, int x, int y, int z) {
+        int bookshelves = 0;
+        int brains = 0;
+        for (int k = -1; k <= 1; ++k) {
+            for (int i1 = -1; i1 <= 1; ++i1) {
+                if (k == 0 && i1 == 0 || !world.i(x + i1, y, z + k) || !world.i(x + i1, y + 1, z + k)) continue;
+                if (world.a(x + i1 * 2, y, z + k * 2) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1 * 2, y, z + k * 2) == mod_ThaumCraft.blockAppFragile.bO && world.e(x + i1 * 2, y, z + k * 2) == 4) {
+                    ++brains;
+                }
+                if (world.a(x + i1 * 2, y + 1, z + k * 2) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1 * 2, y + 1, z + k * 2) == mod_ThaumCraft.blockAppFragile.bO && world.e(x + i1 * 2, y + 1, z + k * 2) == 4) {
+                    ++brains;
+                }
+                if (i1 == 0 || k == 0) continue;
+                if (world.a(x + i1 * 2, y, z + k) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1 * 2, y, z + k) == mod_ThaumCraft.blockAppFragile.bO && world.e(x + i1 * 2, y, z + k) == 4) {
+                    ++brains;
+                }
+                if (world.a(x + i1 * 2, y + 1, z + k) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1 * 2, y + 1, z + k) == mod_ThaumCraft.blockAppFragile.bO && world.e(x + i1 * 2, y + 1, z + k) == 4) {
+                    ++brains;
+                }
+                if (world.a(x + i1, y, z + k * 2) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1, y, z + k * 2) == mod_ThaumCraft.blockAppFragile.bO && world.e(x + i1, y, z + k * 2) == 4) {
+                    ++brains;
+                }
+                if (world.a(x + i1, y + 1, z + k * 2) == pb.an.bO) {
+                    ++bookshelves;
+                }
+                if (world.a(x + i1, y + 1, z + k * 2) != mod_ThaumCraft.blockAppFragile.bO || world.e(x + i1, y + 1, z + k * 2) != 4) continue;
+                ++brains;
+            }
+        }
+        return new int[]{bookshelves, brains};
+    }
+*/

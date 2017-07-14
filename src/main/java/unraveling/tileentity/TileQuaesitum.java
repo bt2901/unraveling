@@ -1,6 +1,7 @@
 package unraveling.tileentity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.world.World;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.block.BlockContainer;
@@ -169,7 +170,7 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         if (thingResearched != null && researchtime <= 0 && canResearch()) {
             progress = 0;
             playerName = player.getCommandSenderName();
-            bonus = 0;
+            bonus = calculateResearchBoosters();
             bonus += bonusFrom("SCRUTINY_INTUITION") + bonusFrom("SCRUTINY_RECYCLING") + bonusFrom("SCRUTINY_SILKTOUCH");
             
             AspectList al = new AspectList(thingResearched);
@@ -266,6 +267,29 @@ public class TileQuaesitum extends TileEntity implements IInventory  {
         }
     }
 
-    
+    public float getEnchantPower(World world, int x, int y, int z) {
+        return world.getBlock(x, y, z).getEnchantPowerBonus(world, x, y, z);
+    }
+    // vanilla copy. In the future: jarred brains, think tanks, research tables, maybe infusion stabilisers
+    public int calculateResearchBoosters() {
+        float power = 0;
+
+        for (int j = -1; j <= 1; ++j) {
+            for (int k = -1; k <= 1; ++k) {
+                if ((j != 0 || k != 0) && this.worldObj.isAirBlock(this.xCoord + k, this.yCoord, this.zCoord + j) && this.worldObj.isAirBlock(this.xCoord + k, this.yCoord + 1, this.zCoord + j)) {
+                    power += getEnchantPower(worldObj, xCoord + k * 2, yCoord,     zCoord + j * 2);
+                    power += getEnchantPower(worldObj, xCoord + k * 2, yCoord + 1, zCoord + j * 2);
+
+                    if (k != 0 && j != 0) {
+                        power += getEnchantPower(worldObj, xCoord + k * 2, yCoord,     zCoord + j    );
+                        power += getEnchantPower(worldObj, xCoord + k * 2, yCoord + 1, zCoord + j    );
+                        power += getEnchantPower(worldObj, xCoord + k,     yCoord,     zCoord + j * 2);
+                        power += getEnchantPower(worldObj, xCoord + k,     yCoord + 1, zCoord + j * 2);
+                    }
+                }
+            }
+        }
+        return (int)power;
+    }
 }
 
