@@ -116,12 +116,7 @@ public class ContainerQ extends Container {
                 for (int i = 2; i >= 0; --i) {
                     Slot shiftedInSlot = (Slot)inventorySlots.get(i);
                     if(shiftedInSlot.isItemValid(itemstack1)) {
-                        // scribing tools has max stack size of 1
-                        /*if (i == SCRIBE_HERE && shiftedInSlot.getHasStack()) {
-                            continue;
-                        }*/
                         if (!mergeItemStack(itemstack1, i, i + 1, false)) {
-                            // return null;
                             continue;
                         }
                         
@@ -135,10 +130,6 @@ public class ContainerQ extends Container {
                 slot.onSlotChanged();
             }
             
-            // if(itemstack1.stackSize == itemstack.stackSize) {
-                // return null;
-            // }
-
             slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
         }
         return itemstack;

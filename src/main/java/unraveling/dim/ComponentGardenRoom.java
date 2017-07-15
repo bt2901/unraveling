@@ -123,7 +123,7 @@ public class ComponentGardenRoom extends ComponentPyramidRoom {
     }
     @Override
     public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
-        
+        makeFancyEntrance(world, sbb);
         Block brick = ConfigBlocks.blockCosmeticSolid;
         int brickmeta = 11;
         int pace = PyramidMain.oddBias + PyramidMain.evenBias;

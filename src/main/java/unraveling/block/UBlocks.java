@@ -14,6 +14,9 @@ public class UBlocks {
     public static Block darkGenMain;
     public static Block quaesitum;
     public static Block portal;
+    public static Block saprolite;
+    public static Block ebricks;
+    // public static Block zhook;
 
 	public static void registerBlocks() {
 		
@@ -22,6 +25,7 @@ public class UBlocks {
         darkGen = (new BlockDarkGen()).setBlockName("darkGen");
         quaesitum = (new BlockQuaesitum()).setBlockName("Quaesitum");
         portal = (new BlockVoidPortal()).setBlockName("Portal");
+        ebricks = (new BlockEldritchBricks()).setBlockName("ebricks");
         
 		// register blocks with their pickup values
         registerMyBlock(voidOre, ItemBlock.class);
@@ -29,6 +33,12 @@ public class UBlocks {
         registerMyBlock(darkGenMain, ItemBlock.class);
         registerMyBlock(quaesitum, ItemBlock.class);
         registerMyBlock(portal, ItemBlock.class);
+        registerMyBlock(ebricks, ItemBlock.class);
+        
+        saprolite = (new BlockSaprolite()).setBlockName("saprolite");
+        registerMyBlock(saprolite, ItemBlock.class);
+        //zhook = (new BlockZTripWireHook()).setBlockName("zhook");
+        //registerMyBlock(zhook, ItemBlock.class);
         
         golemSpawner = (new BlockGolemSpawner()).setBlockName("GolemSpawner");
         registerMyBlock(golemSpawner, ItemBlock.class);

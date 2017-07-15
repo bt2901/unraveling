@@ -47,6 +47,22 @@ public class ComponentPyramidRoom extends StructureComponent {
     public void fillAroundHorizontally(World world, StructureBoundingBox sbb, int myX, int myY, int myZ, int radius, Block what, int meta) {
        fillWithMetadataBlocks(world, sbb, myX - radius, myY, myZ - radius, myX + radius, myY, myZ + radius, what, meta, what, meta, false);
     }
+    public void makeFancyEntrance(World world, StructureBoundingBox sbb) {
+        int pace = PyramidMain.oddBias + PyramidMain.evenBias;
+        int h = 2;
+
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 0, h, pace, sbb);
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 0, h, 2*pace, sbb);
+
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, pace, h, 0, sbb);
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 2*pace, h, 0, sbb);
+
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, roomWidth, h, pace, sbb);
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, roomWidth, h, 2*pace, sbb);
+
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, pace, h, roomDepth, sbb);
+        placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, 2*pace, h, roomDepth, sbb);
+    }
 
 
 	/**
@@ -71,7 +87,8 @@ public class ComponentPyramidRoom extends StructureComponent {
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
         
         // if (type == PyramidMap.ROOM2HIGH || type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOMCENTRAL || type == PyramidMap.ROOM2SUDDEN_LOW) {
-        if (type == PyramidMap.ROOM2LOW) {
+        if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2HIGH || type == PyramidMap.ROOM) {
+            makeFancyEntrance(world, sbb);
         }
         if (type == PyramidMap.ROOM2SUDDEN_LOW) {
         }
@@ -89,7 +106,6 @@ public class ComponentPyramidRoom extends StructureComponent {
         }
         if (type == PyramidMap.ROOM2LOW || type == PyramidMap.ROOM2SUDDEN_LOW) {
             // fillWithMetadataBlocks(world, sbb, 1, roomHeight, 1, roomWidth - 1, roomHeight, roomDepth - 1, Blocks.air, 0, Blocks.air, 0, false);
-
         }
         return true;
 	}

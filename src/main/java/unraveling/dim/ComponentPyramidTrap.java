@@ -81,8 +81,6 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-4, z-1, sbb);
         placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y-4, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x, y-4, z+1, sbb);
-
-
     } 
 
 	/**
@@ -94,18 +92,17 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
     
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
+        makeFancyEntrance(world, sbb);
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
         createFloorTrap(world, sbb, pace, -1, pace);
         int randInt = rand.nextInt(3);
         switch(randInt) {
             case 0: {
-                //createTripwire(world, sbb, pace, 0, pace );
-                createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
+                createTripwire(world, sbb, pace, 0, pace );
                 break;
             }
             case 1: {
-                createTrappedChest(world, sbb, pace + 2, 1, pace + 2);
-                // createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
+                createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
                 break;
             }
             case 2: {

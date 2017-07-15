@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import unraveling.block.UBlocks;
+import unraveling.UnravelingConfig;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -77,6 +78,8 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
             
         for (int ylevel = 1; ylevel <= PyramidMain.height; ++ylevel) {
             z -= 4;
+            fillWithMetadataBlocks(world, sbb, pace - 1, 0, z, 2 * pace + 1, ylevel, z + 3, 
+                UnravelingConfig.demiplaneStone, 0, UnravelingConfig.demiplaneStone, 0, false);
             fillWithWalls(world, sbb, pace - 1, ylevel, z, 2 * pace + 1, roomHeight, z + 3);
             fillWithMetadataBlocks(world, sbb, pace - 1, ylevel, z + 2, 2 * pace + 1, ylevel + 1, z + 3, 
                 ConfigBlocks.blockSlabStone, 1, ConfigBlocks.blockSlabStone, 1, false);

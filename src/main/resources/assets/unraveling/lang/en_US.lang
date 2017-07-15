@@ -21,6 +21,10 @@ entity.unraveling.Death Tome.name=Death Tome
 item.lichPowder.name=Lich Skull Powder
 item.necroFocus.name=Wand Focus: Necromancy
 
+tile.ebricks.name=Ancient Brick
+tile.saprolite.name=Rotten Rock
+
+
 
 tile.Quaesitum.name=Quaesitum
 tile.darkGen.name=Void Aggregator

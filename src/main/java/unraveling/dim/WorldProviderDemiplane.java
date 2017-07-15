@@ -10,7 +10,8 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
-//import thaumic.tinkerer.common.core.handler.ConfigHandler;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.entity.Entity;
 
 public class WorldProviderDemiplane extends WorldProvider {
 
@@ -22,12 +23,20 @@ public class WorldProviderDemiplane extends WorldProvider {
         this.hasNoSky = false;
     }
 
+    /**
+     * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
+     */
+    public float calculateCelestialAngle(long p_76563_1_, float p_76563_3_)
+    {
+        return 0.0F;
+    }
+
     public IChunkProvider createChunkGenerator() {
         return new ChunkProviderDemiplane(this.worldObj, this.worldObj.getSeed(), false);
     }
 
     public int getAverageGroundLevel() {
-        return 1;
+        return 50;
     }
 
     @Override
@@ -44,8 +53,12 @@ public class WorldProviderDemiplane extends WorldProvider {
     }
 
     public float getStarBrightness(World world, float f) {
-        return 5.0F;
+        return 1.0F;
     }
+    public float getSunBrightness(World world, float f) {
+        return 0.0F;
+    }
+
 
     public boolean renderClouds() {
         return false;
@@ -55,16 +68,12 @@ public class WorldProviderDemiplane extends WorldProvider {
         return true;
     }
 
-    public boolean renderEndSky() {
-        return false;
-    }
-
     public float setSunSize() {
-        return 10.0F;
+        return 0.0F;
     }
 
     public float setMoonSize() {
-        return 8.0F;
+        return 0.0F;
     }
 
     public boolean canRespawnHere() {
@@ -84,73 +93,92 @@ public class WorldProviderDemiplane extends WorldProvider {
         return false;
     }
 
-    public ChunkCoordinates getEntrancePortalLocation() {
-        return new ChunkCoordinates(50, 5, 0);
-    }
-
+    /*
+    // I like it the way it is
     protected void generateLightBrightnessTable() {
-        float f = 12.0F;
+        float f = 0.2F;
         for (int i = 0; i <= 15; i++) {
-            float f1 = 12.0F - i / 15.0F;
+            float f1 = 2.0F - i / 15.0F;
             this.lightBrightnessTable[i] = ((1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f);
         }
-    }
+    }*/
 
     @SideOnly(Side.CLIENT)
     public String getWelcomeMessage() {
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
-    public float[] calcSunriseSunsetColors(float par1, float par2) {
-        float f2 = 0.4F;
-        float f3 = MathHelper.cos(par1 * 3.141593F * 2.0F) - 0.0F;
-        float f4 = -0.0F;
-        if ((f3 >= f4 - f2) && (f3 <= f4 + f2)) {
-            float f5 = (f3 - f4) / f2 * 0.5F + 0.5F;
-            float f6 = 1.0F - (1.0F - MathHelper.sin(f5 * 3.141593F)) * 0.99F;
-            //noinspection UnusedAssignment
-            f6 *= f6;
-            this.colorsSunriseSunset[0] = (f5 * 0.3F + 0.7F);
-            this.colorsSunriseSunset[1] = (f5 * f5 * 0.7F + 0.2F);
-            this.colorsSunriseSunset[2] = (f5 * f5 * 0.0F + 0.2F);
-            this.colorsSunriseSunset[3] = f6;
-            return this.colorsSunriseSunset;
+
+
+	@Override
+    public Vec3 getFogColor(float var1, float var2) {
+        float f = 1.0F - this.getStarBrightness(1.0F);
+        f = 0.0F;
+        return Vec3.createVectorHelper(210F / 255F * f, 120F / 255F * f, 59F / 255F * f);
+    }
+    
+    public boolean canRainOrSnow() {
+        return false;
+    }
+
+    @Override
+    public void updateWeather() {
+        if (this.canRainOrSnow())
+        {
+            super.updateWeather();
         }
+        else
+        {
+            this.worldObj.getWorldInfo().setRainTime(0);
+            this.worldObj.getWorldInfo().setRaining(false);
+            this.worldObj.getWorldInfo().setThunderTime(0);
+            this.worldObj.getWorldInfo().setThundering(false);
+            this.worldObj.rainingStrength = 0.0F;
+            this.worldObj.thunderingStrength = 0.0F;
+        }
+    }
+
+    @Override
+    public boolean canBlockFreeze(int x, int y, int z, boolean byWater) {
+        return this.canRainOrSnow();
+    }
+
+    @Override
+    public boolean canDoLightning(Chunk chunk) {
+        return this.canRainOrSnow();
+    }
+
+    @Override
+    public boolean canDoRainSnowIce(Chunk chunk) {
+        return this.canRainOrSnow();
+    }
+
+    @Override
+    public float[] calcSunriseSunsetColors(float var1, float var2) {
         return null;
     }
+    
+    @Override
+    public double getHorizon() {
+        return 44.0D;
+    }    
 
-    public float calculateCelestialAngle(long par1, float par3) {
-        int j = (int) (par1 % 24000L);
-        float f1 = (j + par3) / 24000.0F - 0.25F;
-        if (f1 < 0.0F) {
-            f1 += 1.0F;
-        }
-        if (f1 > 1.0F) {
-            f1 -= 1.0F;
-        }
-        float f2 = f1;
-        f1 = 1.0F - (float) ((Math.cos(f1 * 3.141592653589793D) + 1.0D) / 2.0D);
-        f1 = f2 + (f1 - f2) / 3.0F;
-        return f1;
+    public boolean isDaytime() {
+        return false;
+    }
+    
+    @Override
+    public Vec3 getSkyColor(Entity cameraEntity, float partialTicks) {
+        float f = 1.0F - this.getStarBrightness(1.0F)/2;
+        f = 0.0F;
+        return Vec3.createVectorHelper(154 / 255.0F * f, 114 / 255.0F * f, 66 / 255.0F * f);
     }
 
-    @SideOnly(Side.CLIENT)
-    public Vec3 getFogColor(float par1, float par2) {
-        int i = 10518688;
-        float f2 = MathHelper.cos(par1 * 3.141593F * 2.0F) * 2.0F + 0.5F;
-        if (f2 < 0.0F) {
-            f2 = 0.0F;
-        }
-        if (f2 > 1.0F) {
-            f2 = 1.0F;
-        }
-        float f3 = (i >> 16 & 0xFF) / 255.0F;
-        float f4 = (i >> 8 & 0xFF) / 255.0F;
-        float f5 = (i & 0xFF) / 255.0F;
-        f3 *= (f2 * 0.0F + 0.15F);
-        f4 *= (f2 * 0.0F + 0.15F);
-        f5 *= (f2 * 0.0F + 0.15F);
-        return Vec3.createVectorHelper(f3, f4, f5);
+    @Override
+    public boolean isSkyColored()
+    {
+        return true;
     }
+    // TODO
+    // getBiomeGenForCoords(BlockPos pos)  
 }

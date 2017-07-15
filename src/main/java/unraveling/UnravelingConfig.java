@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 
 import unraveling.mechanics.voidgen.TileDarkGen;
 import unraveling.tileentity.TileQuaesitum;
+import unraveling.block.UBlocks;
 import unraveling.mechanics.ContainerQ;
 import unraveling.mechanics.GuiQTileEntity;
 import unraveling.mechanics.voidgen.GuiDarkGen;
@@ -23,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
 import thaumcraft.common.config.ConfigItems;
 import unraveling.mechanics.ExaminationData.Discovery;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -45,6 +47,11 @@ public class UnravelingConfig {
     
     public static float catalystDestroyChance = 0.25F;
     public static boolean debug = true;
+
+    public static int ravineFrequency = 5;
+    public static int maxDemiplaneHeight = 45;
+    public static int minDemiplaneHeight = 20;
+    public static Block demiplaneStone = UBlocks.saprolite;
 
     public static int maxVisReserve = 8;
     public static int maxEssentiaReserve = 16;
