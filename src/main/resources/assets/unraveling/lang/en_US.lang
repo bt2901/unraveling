@@ -155,7 +155,7 @@ u.name.SCRUTINY_SILKTOUCH=Investigation Diligence
 u.text.SCRUTINY_SILKTOUCH=Insight into unknown
 u.page.SCRUTINY_SILKTOUCH.1=Losing items is annoying. Unfortuantely, intervention is a necessary precondition for knowledge. However, you can limit yourself to only absolutely neccessary experiments, which are guaranteed to give you some new observations to ponder upon. <BR>In other words, you'll still lose items, but you are insured against pointless losses: you'll learn something new after each dissection.
 
-u.name.SCRUTINY_RECYCLING=Investigation Abstraction
+u.name.SCRUTINY_RECYCLING=Arcane Abstraction
 u.text.SCRUTINY_RECYCLING=Working with ideas themselves
 u.page.SCRUTINY_RECYCLING.1=You can extract useful ideas from research notes. You can break up scrutiny reports into simpler aspects.
 

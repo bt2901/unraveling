@@ -137,6 +137,7 @@ public class ConfigHandler {
             throw new IOException();
         }
         List defaults = Arrays.asList(
+            new Discovery(new ItemStack(Items.book, 1, 0), "MAGICBOOKS"),
             new Discovery(new ItemStack(Blocks.ender_chest, 1, 0), "FOCUS_ENDER_CHEST", true), 
             new Discovery(new ItemStack(Items.ender_eye, 1, 0), "ASTRALSNARE"),
             new Discovery(new ItemStack(ConfigItems.itemCompassStone, 1, 0), "ASTRALSNARE"),

@@ -90,5 +90,15 @@ public class URecipes {
         EldritchLore.recipes.put("PureVoid", ThaumcraftApi.addCrucibleRecipe("VOIDGEN", 
             voidCluster, voidOre, 
             new AspectList().add(Aspect.METAL, 1).add(Aspect.POISON, 1)));        
+
+        EldritchLore.recipes.put("MagicBooks", ThaumcraftApi.addArcaneCraftingRecipe("MAGICBOOKS", 
+            new ItemStack(UItems.thaumBook, 1, 0), 
+            (new AspectList()).add(Aspect.ORDER, 20).add(Aspect.ORDER, 20), 
+            new Object[]{"GTG", "TBT", "GTG", 
+                Character.valueOf('G'), new ItemStack(Items.gold_nugget, 1, 0), 
+                Character.valueOf('B'), new ItemStack(Items.book, 1, 0), 
+                Character.valueOf('T'), new ItemStack(ConfigItems.itemResource, 1, 2)}
+            )
+        );
 	}
 }

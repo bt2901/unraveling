@@ -22,6 +22,7 @@ import java.util.Random;
 public class BlockEldritchBricks extends Block {
 	
     private static int N = 3;
+	public static IIcon icon_top;
 	public static IIcon[] icons = new IIcon[N * 2];
 	
 	protected BlockEldritchBricks() {
@@ -49,13 +50,17 @@ public class BlockEldritchBricks extends Block {
         icons[3] = par1IconRegister.registerIcon(UnravelingMod.ID + ":ebi_1");
         icons[4] = par1IconRegister.registerIcon(UnravelingMod.ID + ":ebi_2");
         icons[5] = par1IconRegister.registerIcon(UnravelingMod.ID + ":ebi_3");
+        icon_top = par1IconRegister.registerIcon("thaumcraft" + ":es_p");
     }
     @SideOnly(value=Side.CLIENT)
     public IIcon getIcon(IBlockAccess ba, int x, int y, int z, int side) {
         String l = "" + x + "" + y + "" + z;
         Random r1 = new Random(Math.abs(l.hashCode() * 100) + 1);
         int i = r1.nextInt(12345 + side) % N;
-        int sideMod = (side < 2) ? 0 : (side < 4? 0 : 1);
+        if (side < 2) {
+            return icon_top;
+        }
+        int sideMod = (side < 4) ? 0 : 1;
         return this.icons[i + (sideMod * N)];
     }
 

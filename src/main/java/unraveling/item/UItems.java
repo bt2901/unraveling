@@ -17,6 +17,9 @@ public class UItems {
     public static Item artifact;
     public static Item voidCluster;
 
+    public static Item voidBook;
+    public static Item thaumBook;
+
     public static Item scrutinyNote;
     public static Item spawnEgg;
     
@@ -34,6 +37,9 @@ public class UItems {
 
         voidCluster = new ItemVoidCluster();
         GameRegistry.registerItem(voidCluster, "voidCluster");
+
+        thaumBook = new ItemThaumiumBook().setUnlocalizedName("itemThaumiumBook");
+        GameRegistry.registerItem(thaumBook, "thaumium_book");
         
         scepterTwilight = new ItemTFTwilightWand().setUnlocalizedName("scepterTwilight").setMaxStackSize(1).setFull3D();
     	scepterLifeDrain = new ItemTFScepterLifeDrain().setUnlocalizedName("scepterLifeDrain").setMaxStackSize(1).setFull3D();

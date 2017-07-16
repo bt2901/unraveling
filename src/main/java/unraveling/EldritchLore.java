@@ -66,7 +66,7 @@ public class EldritchLore {
 
             ResearchItem researchVoidGen = new UResearchItem("VOIDGEN", "UNRAVELING", 
                 new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
-                0, 8, 1, 
+                -3, 3, 1, 
                 new ItemStack(UBlocks.voidOre)
             ).registerResearchItem();
             
@@ -97,7 +97,7 @@ public class EldritchLore {
                 
         (new UResearchItem("VOIDAGG", "UNRAVELING", 
             new AspectList().add(Aspect.MECHANISM, 5).add(Aspect.VOID,  12), 
-            3, 8, 1, 
+            0, 3, 1, 
             new ItemStack(UBlocks.darkGen))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
@@ -106,7 +106,7 @@ public class EldritchLore {
 
         (new UResearchItem("VOIDPURE", "UNRAVELING", 
             new AspectList().add(Aspect.EXCHANGE, 5).add(Aspect.VOID,  12), 
-            3, 5, 1, 
+            -3, 0, 1, 
             new ItemStack(UItems.voidCluster))
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
@@ -169,12 +169,19 @@ public class EldritchLore {
         ).setPages(new ResearchPage[] { 
             new ResearchPage("1"), 
             new ResearchPage("2") 
-        }).setSpecial().setParents(new String[] { "ASTRALSNARE" }).setConcealed().registerResearchItem();
+        }).setSpecial().setRound().setParents(new String[] { "ASTRALSNARE" }).setConcealed().registerResearchItem();
                 
         (new UResearchItem("lost", "UNRAVELING", 
             new AspectList(), 
             -3, 6, 0, 
             new ResourceLocation("unraveling", "textures/lostIcon.png"))
+        ).setPages(new ResearchPage[] {
+            new ResearchPage("1"), 
+        }).setStub().setRound().registerResearchItem();
+        (new UResearchItem("MAGICBOOKS", "UNRAVELING", 
+            new AspectList(), 
+            0, 6, 0, 
+            new ResourceLocation("unraveling", "textures/items/thaumbook_alt.png"))
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
