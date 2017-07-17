@@ -26,6 +26,42 @@ public class ComponentPyramidRoom extends StructureComponent {
 		super();
 	}
 
+    @Override
+    protected int getXWithOffset(int p_74865_1_, int p_74865_2_)
+    {
+        switch (this.coordBaseMode)
+        {
+            case 0:
+                return this.boundingBox.minX + p_74865_1_;
+            case 2:
+                return this.boundingBox.minX + p_74865_1_;
+            case 1:
+                return this.boundingBox.maxX - p_74865_2_;
+            case 3:
+                return this.boundingBox.maxX - p_74865_1_;
+            default:
+                return p_74865_1_;
+        }
+    }
+
+    @Override
+    protected int getZWithOffset(int p_74873_1_, int p_74873_2_)
+    {
+        switch (this.coordBaseMode)
+        {
+            case 0:
+                return this.boundingBox.minZ + p_74873_2_;
+            case 1:
+                return this.boundingBox.minZ + p_74873_1_;
+            case 2:
+                return this.boundingBox.maxZ - p_74873_2_;
+            case 3:
+                return this.boundingBox.maxZ - p_74873_2_;
+            default:
+                return p_74873_2_;
+        }
+    }
+    
 	public ComponentPyramidRoom(Random rand, int x, int y, int z, int type) {
 		super(type);
         this.coordBaseMode = rand.nextInt(4);

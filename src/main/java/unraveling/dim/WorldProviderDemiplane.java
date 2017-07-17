@@ -93,15 +93,15 @@ public class WorldProviderDemiplane extends WorldProvider {
         return false;
     }
 
-    /*
     // I like it the way it is
+    
     protected void generateLightBrightnessTable() {
-        float f = 0.2F;
+        float f = 15.0F;
         for (int i = 0; i <= 15; i++) {
-            float f1 = 2.0F - i / 15.0F;
+            float f1 = 15.0F - i / 15.0F;
             this.lightBrightnessTable[i] = ((1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f);
         }
-    }*/
+    }
 
     @SideOnly(Side.CLIENT)
     public String getWelcomeMessage() {

@@ -178,14 +178,6 @@ public class EldritchLore {
         ).setPages(new ResearchPage[] {
             new ResearchPage("1"), 
         }).setStub().setRound().registerResearchItem();
-        (new UResearchItem("MAGICBOOKS", "UNRAVELING", 
-            new AspectList(), 
-            0, 6, 0, 
-            new ResourceLocation("unraveling", "textures/items/thaumbook_alt.png"))
-        ).setPages(new ResearchPage[] {
-            new ResearchPage("1"), 
-        }).setStub().setRound().registerResearchItem();
-
     }
     
     
