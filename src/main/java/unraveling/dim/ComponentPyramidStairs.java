@@ -37,6 +37,7 @@ public class ComponentPyramidStairs extends StructureComponent {
         return this.invY ? this.boundingBox.maxY - p_74862_1_ : p_74862_1_ + this.boundingBox.minY;
     }    
 
+    
     @Override
     protected int getXWithOffset(int p_74865_1_, int p_74865_2_)
     {
@@ -44,12 +45,12 @@ public class ComponentPyramidStairs extends StructureComponent {
         {
             case 0:
                 return this.boundingBox.minX + p_74865_1_;
-            case 2:
-                return this.boundingBox.minX + p_74865_1_;
             case 1:
                 return this.boundingBox.maxX - p_74865_2_;
-            case 3:
+            case 2:
                 return this.boundingBox.maxX - p_74865_1_;
+            case 3:
+                return this.boundingBox.minX + p_74865_2_;
             default:
                 return p_74865_1_;
         }
@@ -67,7 +68,7 @@ public class ComponentPyramidStairs extends StructureComponent {
             case 2:
                 return this.boundingBox.maxZ - p_74873_2_;
             case 3:
-                return this.boundingBox.maxZ - p_74873_2_;
+                return this.boundingBox.maxZ - p_74873_1_;
             default:
                 return p_74873_2_;
         }
@@ -76,24 +77,13 @@ public class ComponentPyramidStairs extends StructureComponent {
 	public ComponentPyramidStairs(Random rand, int x, int y, int z, int mode, int clock) {
 		super(clock);
         meta = PyramidMain.wallBlockMeta;
-        mode = mode % 4;
-        if (mode == 1) {
-            clock = 1-clock;
-            this.coordBaseMode = 3;
-        } else if (mode == 0) {
-            clock = 1-clock;
-            this.coordBaseMode = 1;
-        } else if (mode == 3) {
-            this.clock = clock;
-            this.coordBaseMode = 3;
-            this.invY = true;
-        } else if (mode == 2) {
-            this.clock = clock;
-            this.coordBaseMode = 2;
-        }
         this.clock = clock;
-        // this.clock = clock / 4;
-        // this.coordBaseMode = mode % 4;
+        mode  = mode % 4;
+        this.coordBaseMode = mode % 4;
+        if (mode % 2 == 1) {
+            // need to swap 1 and 3 for continuity reasons
+            this.coordBaseMode = (mode + 2) % 4;
+        }
         
         roomWidth = (PyramidMain.oddBias + PyramidMain.evenBias) * 3;
         roomDepth = (PyramidMain.oddBias + PyramidMain.evenBias) * 3;

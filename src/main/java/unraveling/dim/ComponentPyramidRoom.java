@@ -26,6 +26,13 @@ public class ComponentPyramidRoom extends StructureComponent {
 		super();
 	}
 
+    protected int getMetaAtCurrentPosition(World p_151548_1_, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_) {
+        int l = this.getXWithOffset(p_151548_2_, p_151548_4_);
+        int i1 = this.getYWithOffset(p_151548_3_);
+        int j1 = this.getZWithOffset(p_151548_2_, p_151548_4_);
+        return p_151548_1_.getBlockMetadata(l, i1, j1);
+    }
+    
     @Override
     protected int getXWithOffset(int p_74865_1_, int p_74865_2_)
     {
