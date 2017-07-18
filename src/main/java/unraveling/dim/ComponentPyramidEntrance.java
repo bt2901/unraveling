@@ -24,10 +24,10 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
 		super();
 	}
 
-	public ComponentPyramidEntrance(Random rand, int x, int y, int z) {
+	public ComponentPyramidEntrance(Random rand, int x, int y, int z, int mode) {
 		super(rand, x, y, z, PyramidMap.ENTRANCE);
         this.level = 0;
-        this.coordBaseMode = 0;
+        this.coordBaseMode = mode;
 	}
     
     public void createDoorway(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, Block what, int meta) {

@@ -139,7 +139,7 @@ public class BlockVoidPortal extends BlockContainer {
                 x -= 50;
                 z -= 50;
 
-                int y = 120;
+                int y = 60;
 
                 while (entity.worldObj.getBlock(x, y, z) == Blocks.air || entity.worldObj.getBlock(x, y, z).isAir(par1World, x, y, z)) {
                     y--;

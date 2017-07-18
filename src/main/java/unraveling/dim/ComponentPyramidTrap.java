@@ -18,13 +18,15 @@ import thaumcraft.common.config.ConfigBlocks;
 
 public class ComponentPyramidTrap extends ComponentPyramidRoom {
 
+    public int trap_type;
 	public ComponentPyramidTrap() {
 		super();
 	}
 
-	public ComponentPyramidTrap(Random rand, int x, int y, int z, int mode) {
+	public ComponentPyramidTrap(Random rand, int x, int y, int z, int mode, int trap_type) {
 		super(rand, x, y, z, PyramidMap.ROOM);
-        this.coordBaseMode = mode;
+        this.coordBaseMode = mode % 4;
+        this.trap_type = trap_type;
 	}
     
     public void createTripwire(World world, StructureBoundingBox sbb, int x, int y, int z) {
@@ -95,17 +97,12 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         makeFancyEntrance(world, sbb);
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
         createFloorTrap(world, sbb, pace, -1, pace);
-        int randInt = rand.nextInt(3);
-        switch(randInt) {
+        switch(trap_type) {
             case 0: {
-                createTripwire(world, sbb, pace, 0, pace );
+                createTripwire(world, sbb, pace, 0, pace);
                 break;
             }
             case 1: {
-                createHiddenLever(world, sbb, pace + 2, -1, pace + 2);
-                break;
-            }
-            case 2: {
                 createTrappedChest(world, sbb, pace + 2, 1, pace + 2);
                 break;
             }
@@ -118,6 +115,8 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	@Override
 	protected void func_143012_a(NBTTagCompound par1NBTTagCompound) {
 		super.func_143012_a(par1NBTTagCompound);
+        par1NBTTagCompound.setInteger("trap_type", trap_type);
+   
 	}
 
 	/**
@@ -126,6 +125,7 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	@Override
 	protected void func_143011_b(NBTTagCompound par1NBTTagCompound) {
         super.func_143011_b(par1NBTTagCompound);
+        this.trap_type = par1NBTTagCompound.getInteger("trap_type");
  	}
     
 }

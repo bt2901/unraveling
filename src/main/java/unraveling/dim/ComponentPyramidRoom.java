@@ -110,9 +110,10 @@ public class ComponentPyramidRoom extends StructureComponent {
         }
         
         if (type == PyramidMap.ROOM_TRAP) {
+            int randInt = random.nextInt(2);
             for (int i=0; i < 4; ++i) {
                 ComponentPyramidTrap trapBuilder = new ComponentPyramidTrap(random, 
-                    boundingBox.minX, boundingBox.minY, boundingBox.minZ, i);
+                    boundingBox.minX, boundingBox.minY, boundingBox.minZ, i, randInt);
                 list.add(trapBuilder);
                 trapBuilder.buildComponent(this, list, random);
             }

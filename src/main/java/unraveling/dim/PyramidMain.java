@@ -236,7 +236,8 @@ public class PyramidMain extends StructureComponent {
                 }
                 if (type == PyramidMap.ENTRANCE) {
                     // if (rand.nextFloat() > 0.33) {
-                    room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, levels.get(l));
+                    int mode = 0;
+                    room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, mode);
                     //}
                 }
                 if (room != null) {
@@ -262,7 +263,7 @@ public class PyramidMain extends StructureComponent {
             return new ComponentGardenRoom(random, worldX, worldY, worldZ);
         }
         if (type == PyramidMap.ENTRANCE) {
-            return new ComponentPyramidEntrance(random, worldX, worldY, worldZ);
+            return new ComponentPyramidEntrance(random, worldX, worldY, worldZ, i);
         }
         return new ComponentPyramidRoom(random, worldX, worldY, worldZ, type);
 	}

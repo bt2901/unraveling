@@ -21,28 +21,83 @@ public class ComponentPyramidStairs extends StructureComponent {
     int roomHeight;
     int roomWidth;
     int roomDepth;
+    boolean invY = false;
 
-    Block brick = PyramidMain.wallBlockID;
+    public Block brick = PyramidMain.wallBlockID;
     // int meta = PyramidMain.wallBlockMeta;
-    int meta = 1;
+    public int meta = 1;
     
 	public ComponentPyramidStairs() {
 		super();
 	}
 
+    // Black magic hacks incoming
+    @Override
+    protected int getYWithOffset(int p_74862_1_) {
+        return this.invY ? this.boundingBox.maxY - p_74862_1_ : p_74862_1_ + this.boundingBox.minY;
+    }    
+
+    @Override
+    protected int getXWithOffset(int p_74865_1_, int p_74865_2_)
+    {
+        switch (this.coordBaseMode)
+        {
+            case 0:
+                return this.boundingBox.minX + p_74865_1_;
+            case 2:
+                return this.boundingBox.minX + p_74865_1_;
+            case 1:
+                return this.boundingBox.maxX - p_74865_2_;
+            case 3:
+                return this.boundingBox.maxX - p_74865_1_;
+            default:
+                return p_74865_1_;
+        }
+    }
+
+    @Override
+    protected int getZWithOffset(int p_74873_1_, int p_74873_2_)
+    {
+        switch (this.coordBaseMode)
+        {
+            case 0:
+                return this.boundingBox.minZ + p_74873_2_;
+            case 1:
+                return this.boundingBox.minZ + p_74873_1_;
+            case 2:
+                return this.boundingBox.maxZ - p_74873_2_;
+            case 3:
+                return this.boundingBox.maxZ - p_74873_2_;
+            default:
+                return p_74873_2_;
+        }
+    }
+
 	public ComponentPyramidStairs(Random rand, int x, int y, int z, int mode, int clock) {
 		super(clock);
+        meta = PyramidMain.wallBlockMeta;
+        if (mode % 2 == 1) {
+            meta = 0;
+            brick = UBlocks.ebricks;
+        }
         mode = mode % 4;
         if (mode == 1) {
             clock = 1-clock;
-            mode = 3;
+            this.coordBaseMode = 3;
         } else if (mode == 0) {
             clock = 1-clock;
-            mode = 1;
+            this.coordBaseMode = 1;
+        } else if (mode == 3) {
+            this.clock = clock;
+            this.coordBaseMode = 3;
+            this.invY = true;
+        } else if (mode == 2) {
+            this.clock = clock;
+            this.coordBaseMode = 2;
         }
         this.clock = clock;
         // this.clock = clock / 4;
-        this.coordBaseMode = mode % 4;
+        // this.coordBaseMode = mode % 4;
         
         roomWidth = (PyramidMain.oddBias + PyramidMain.evenBias) * 3;
         roomDepth = (PyramidMain.oddBias + PyramidMain.evenBias) * 3;
@@ -116,6 +171,7 @@ public class ComponentPyramidStairs extends StructureComponent {
         par1NBTTagCompound.setInteger("roomHeight", roomHeight);
         par1NBTTagCompound.setInteger("roomDepth", roomDepth);
         par1NBTTagCompound.setInteger("roomWidth", roomWidth);
+        par1NBTTagCompound.setBoolean("invY", invY);
 	}
 
 	/**
@@ -126,6 +182,7 @@ public class ComponentPyramidStairs extends StructureComponent {
 		this.roomHeight = par1NBTTagCompound.getInteger("roomHeight");
         this.roomWidth = par1NBTTagCompound.getInteger("roomWidth");
         this.roomDepth = par1NBTTagCompound.getInteger("roomDepth");
+        this.invY = par1NBTTagCompound.getBoolean("invY");
  	}
     
 }
