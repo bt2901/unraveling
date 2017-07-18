@@ -55,6 +55,9 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
         fillAroundHorizontally(world, sbb, myX, 0, myZ, 1, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta);
     }
     public void createFourDoorways(World world, StructureBoundingBox sbb) {
+            int meta = 0;
+            Block brick = UBlocks.ebricks;
+
             int minX; 
             int minZ; 
             int maxX; 
@@ -62,19 +65,20 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
             minX = 0; maxX = 0;
             minZ = roomDepth / 2 - 1;
             maxZ = roomDepth / 2 + 1;
-            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta);
+            
+            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, brick, meta);
             minX = roomWidth; maxX = roomWidth;
             minZ = roomDepth / 2 - 1;
             maxZ = roomDepth / 2 + 1;
-            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta);
+            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, brick, meta);
             minX = roomWidth/2 - 1; 
             maxX = roomWidth/2 + 1;
             minZ = roomDepth; maxZ = roomDepth;
-            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta);
+            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, brick, meta);
             minX = roomWidth/2 - 1; 
             maxX = roomWidth/2 + 1;
             minZ = 0; maxZ = 0;
-            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta);
+            createDoorway(world, sbb, minX, 1, minZ, maxX, 3, maxZ, brick, meta);
     }
 
 

@@ -24,8 +24,8 @@ public class ComponentPyramidStairs extends StructureComponent {
     boolean invY = false;
 
     public Block brick = PyramidMain.wallBlockID;
-    // int meta = PyramidMain.wallBlockMeta;
-    public int meta = 1;
+    public int meta = PyramidMain.wallBlockMeta;
+    // public int meta = 1;
     
 	public ComponentPyramidStairs() {
 		super();
@@ -76,10 +76,6 @@ public class ComponentPyramidStairs extends StructureComponent {
 	public ComponentPyramidStairs(Random rand, int x, int y, int z, int mode, int clock) {
 		super(clock);
         meta = PyramidMain.wallBlockMeta;
-        if (mode % 2 == 1) {
-            meta = 0;
-            brick = UBlocks.ebricks;
-        }
         mode = mode % 4;
         if (mode == 1) {
             clock = 1-clock;

@@ -191,6 +191,7 @@ public class PyramidMain extends StructureComponent {
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
 		super.buildComponent(structurecomponent, list, random);
+        int entrance_mode = 0;
         
         ArrayList<PyramidLevel> levels = new ArrayList<PyramidLevel>();
         int centerX = boundingBox.minX + ((boundingBox.maxX - boundingBox.minX) / 2);
@@ -236,8 +237,7 @@ public class PyramidMain extends StructureComponent {
                 }
                 if (type == PyramidMap.ENTRANCE) {
                     // if (rand.nextFloat() > 0.33) {
-                    int mode = 0;
-                    room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, l, mode);
+                    room = makeRoom(random, PyramidMap.ENTRANCE, dx, dz, entrance_mode, levels.get(l));
                     //}
                 }
                 if (room != null) {
