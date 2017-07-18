@@ -31,7 +31,6 @@ public class UItems {
     public static void registerItems()
     {
     
-        spawnEgg = new ItemSpawnEgg().setUnlocalizedName("tfspawnegg");
         ender_compass = new ItemCompassStone().setUnlocalizedName("enderCompass");
         GameRegistry.registerItem(ender_compass, "ender_compass");
 
@@ -40,10 +39,6 @@ public class UItems {
 
         // thaumBook = new ItemThaumiumBook().setUnlocalizedName("itemThaumiumBook");
         // GameRegistry.registerItem(thaumBook, "thaumium_book");
-        
-        scepterTwilight = new ItemTFTwilightWand().setUnlocalizedName("scepterTwilight").setMaxStackSize(1).setFull3D();
-    	scepterLifeDrain = new ItemTFScepterLifeDrain().setUnlocalizedName("scepterLifeDrain").setMaxStackSize(1).setFull3D();
-    	scepterZombie = new ItemTFZombieWand().setUnlocalizedName("scepterZombie").setMaxStackSize(1).setFull3D();
 
     	//lichPowder = new Item().setUnlocalizedName("lichPowder");
         //lichPowder.isRare = true;
@@ -58,16 +53,7 @@ public class UItems {
         
     	scrutinyNote = new ItemScrutinyNote().setUnlocalizedName("scrutinyNote");
         GameRegistry.registerItem(scrutinyNote, "scrutinyNote");
-        
-        registerTFItem(scepterTwilight, "Scepter of Twilight");
-        registerTFItem(scepterLifeDrain, "Scepter of Life Draining");
-        registerTFItem(scepterZombie, "Zombie Scepter");
-        
-        registerTFItem(spawnEgg, "Spawn");
+                
     }
-
-	private static void registerTFItem(Item item, String englishName) {
-		GameRegistry.registerItem(item, item.getUnlocalizedName(), UnravelingMod.ID);
-	}
 
 }

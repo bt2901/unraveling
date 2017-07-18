@@ -26,7 +26,6 @@ import thaumcraft.common.entities.golems.Marker;
 
 public class TileEntityTrapRoom extends TileEntity {
     protected int counter;
-    String mobID = "Pig";
 	public TileEntityTrapRoom() {
 		// this.mobID = TFCreatures.getSpawnerNameFor("Twilight Lich");
 	}
@@ -105,6 +104,6 @@ public class TileEntityTrapRoom extends TileEntity {
 	 * Create a copy of what we spawn
 	 */
 	protected EntityLiving makeMyCreature() {
-		return (EntityLiving)EntityList.createEntityByName(mobID, worldObj);
+		return (EntityLiving)EntityList.createEntityByName("Pig", worldObj);
 	}
 }

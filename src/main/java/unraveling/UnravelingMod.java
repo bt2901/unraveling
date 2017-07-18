@@ -24,7 +24,6 @@ import thaumcraft.common.Thaumcraft;
 
 
 import unraveling.block.UBlocks;
-import unraveling.entity.TFCreatures;
 import unraveling.EldritchLore;
 import unraveling.mechanics.PacketQResearch;
 import unraveling.mechanics.voidgen.PacketDrainSwitch;
@@ -40,8 +39,6 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.relauncher.Side;
 import unraveling.item.UItems;
 import unraveling.item.URecipes;
-
-import unraveling.tileentity.TileEntityTFLichSpawner;
 
 import unraveling.mechanics.voidgen.TileDarkGenMain;
 import unraveling.mechanics.voidgen.TileDarkGen;
@@ -94,11 +91,6 @@ public class UnravelingMod {
 	public static int dimensionID;
 	public static int dimensionProviderID;
         
-	public static int idVehicleSpawnLichBolt = 1;
-	public static int idVehicleSpawnTwilightWandBolt = 2;
-	public static int idVehicleSpawnLichBomb = 3;
-	public static int idVehicleSpawnTomeBolt = 4;
-
     public static final String MODEL_DIR = "unraveling:textures/model/";
     public static final String GUI_DIR = "unraveling:textures/gui/";
 
@@ -160,14 +152,12 @@ public class UnravelingMod {
 		// render and other client stuff
 		proxy.doOnLoadRegistration();
 		
-		// dimension provider
-		// DimensionManager.registerProviderType(UnravelingMod.dimensionProviderID, WorldProviderTwilightForest.class, false);
 		// enter biomes into dictionary
 		// TFBiomeBase.registerWithBiomeDictionary();
         DimensionManager.registerProviderType(2901, WorldProviderDemiplane.class, false);
         DimensionManager.registerDimension(2901, 2901);
         
-        FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "Unraveling.Twilight Lich:95");
+        // FMLInterModComms.sendMessage("Thaumcraft", "championWhiteList", "Unraveling.Twilight Lich:95");
 	}
 	
 	/**
@@ -194,20 +184,10 @@ public class UnravelingMod {
 	public void startServer(FMLServerStartingEvent event) {}
 
 	private void registerCreatures() {
-		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLich.class, "Twilight Lich", 190, 0xaca489, 0x360472);
-		TFCreatures.registerTFCreature(unraveling.entity.EntityTFDeathTome.class, "Death Tome", 191, 0x774e22, 0xdbcdbe);
-		TFCreatures.registerTFCreature(unraveling.entity.boss.EntityTFLichMinion.class, "Lich Minion", 192);
-		TFCreatures.registerTFCreature(unraveling.entity.EntityTFLoyalZombie.class, "Loyal Zombie", 81);
-		
-		EntityRegistry.registerModEntity(unraveling.entity.boss.EntityTFLichBolt.class, "tflichbolt",  idVehicleSpawnLichBolt, this, 150, 2, true);
-		EntityRegistry.registerModEntity(unraveling.entity.EntityTFTwilightWandBolt.class, "tftwilightwandbolt", idVehicleSpawnTwilightWandBolt, this, 150, 5, true);
-		EntityRegistry.registerModEntity(unraveling.entity.EntityTFTomeBolt.class, "tftomebolt", idVehicleSpawnTomeBolt, this, 150, 5, true);
-		EntityRegistry.registerModEntity(unraveling.entity.boss.EntityTFLichBomb.class, "tflichbomb", idVehicleSpawnLichBomb, this, 150, 3, true);
 	}
 	
 	
 	private void registerTileEntities() {
-		GameRegistry.registerTileEntity(TileEntityTFLichSpawner.class, "Lich Spawner");
 		GameRegistry.registerTileEntity(TileDarkGenMain.class, "Void Aggregator");
 		GameRegistry.registerTileEntity(TileDarkGen.class, "Darkness Generator");
         GameRegistry.registerTileEntity(TileQuaesitum.class, "Quaesitum");

@@ -14,16 +14,9 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import unraveling.UCommonProxy;
 import unraveling.UnravelingMod;
-import unraveling.client.model.ModelTFDeathTome;
-import unraveling.client.model.ModelTFLich;
-import unraveling.client.model.ModelTFLichMinion;
-import unraveling.client.model.ModelTFLoyalZombie;
-import unraveling.client.renderer.entity.RenderTFGenericLiving;
 import unraveling.client.renderer.blocks.RenderBlockDarkGen;
 import unraveling.client.renderer.blocks.RenderBlockQ;
 
-import unraveling.client.renderer.entity.RenderTFLich;
-import unraveling.client.renderer.entity.RenderTFBiped;
 import unraveling.mechanics.voidgen.VoidPacketHandler;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -46,18 +39,7 @@ public class UClientProxy extends UCommonProxy {
 		// packet listener
 		VoidPacketHandler voidPacketHandler = new VoidPacketHandler();
 		UnravelingMod.genericChannel.register(voidPacketHandler);
-        
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLich.class, new RenderTFLich(new ModelTFLich(), 1.0F));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLichMinion.class, new RenderTFBiped(new ModelTFLichMinion(), 1.0F, "textures/entity/zombie/zombie.png"));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.EntityTFLoyalZombie.class, new RenderTFBiped(new ModelTFLoyalZombie(), 1.0F, "textures/entity/zombie/zombie.png"));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.EntityTFDeathTome.class, new RenderTFGenericLiving(new ModelTFDeathTome(), 0.625F, "textures/entity/enchanting_table_book.png"));
-        
-		// projectiles
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLichBolt.class, new RenderSnowball(Items.ender_pearl));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.EntityTFTwilightWandBolt.class, new RenderSnowball(Items.ender_pearl));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.EntityTFTomeBolt.class, new RenderSnowball(Items.paper));
-		RenderingRegistry.registerEntityRenderingHandler(unraveling.entity.boss.EntityTFLichBomb.class, new RenderSnowball(Items.magma_cream));
-				
+
 		// block render ids
 		blockDarkGenRenderID = RenderingRegistry.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(new RenderBlockDarkGen(blockDarkGenRenderID));

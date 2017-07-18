@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import unraveling.UnravelingMod;
-import unraveling.entity.EntityTFLoyalZombie;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import cpw.mods.fml.common.FMLLog;
@@ -21,6 +20,9 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.FocusUpgradeType;
 import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
+
+import thaumcraft.common.entities.golems.EntityGolemBase;
+import thaumcraft.common.entities.golems.EnumGolemType;
 
 import java.util.List;
 
@@ -69,12 +71,12 @@ public class necroFocus extends ItemFocusBasic {
             MovingObjectPosition mop = getPlayerPointVec(world, player, 20.0F);
             if (mop != null) {
                 // make a zombie there
-                EntityTFLoyalZombie zombie = new EntityTFLoyalZombie(world);
+                EntityGolemBase zombie = new EntityGolemBase(world, EnumGolemType.FLESH, false);
                 zombie.setPositionAndRotation(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, 1.0F, 1.0F);  /// NPE here needs to be fixed
-                zombie.setTamed(true);
+                // zombie.setTamed(true);
                 try {
-						zombie.func_152115_b(player.getUniqueID().toString());
-						//zombie.setOwner(player.getCommandSenderName());
+						//zombie.func_152115_b(player.getUniqueID().toString());
+						zombie.setOwner(player.getCommandSenderName());
                 } catch (NoSuchMethodError ex) {
 						// ignore?
 						FMLLog.warning("[unraveling] Could not determine player name for loyal zombie, ignoring error.");

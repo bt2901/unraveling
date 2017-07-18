@@ -45,11 +45,6 @@ public class URecipes {
         ThaumcraftApi.addSmeltingBonus(voidCluster, voidNugget);
         Utils.addSpecialMiningResult(voidOre, voidCluster, 0.5F);
         
-
-		GameRegistry.addShapelessRecipe(new ItemStack(UItems.scepterTwilight), new Object[] {new ItemStack(UItems.scepterTwilight, 1, UItems.scepterTwilight.getMaxDamage()), Items.ender_pearl});
-		GameRegistry.addShapelessRecipe(new ItemStack(UItems.scepterLifeDrain), new Object[] {new ItemStack(UItems.scepterLifeDrain, 1, UItems.scepterLifeDrain.getMaxDamage()), Items.fermented_spider_eye});
-        
-		GameRegistry.addShapelessRecipe(new ItemStack(UItems.scepterZombie), new Object[] {new ItemStack(UItems.scepterZombie, 1, UItems.scepterZombie.getMaxDamage()), Items.bone, Items.bone});
         
         EldritchLore.recipes.put("QBlock", 
             ThaumcraftApi.addArcaneCraftingRecipe(
