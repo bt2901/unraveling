@@ -46,7 +46,7 @@ import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 public class UnravelingConfig {
     
     public static float catalystDestroyChance = 0.25F;
-    public static boolean debug = false;
+    public static boolean debug = true;
 
     public static int ravineFrequency = 5;
     public static int maxDemiplaneHeight = 45;

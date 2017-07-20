@@ -17,7 +17,7 @@ import thaumcraft.common.config.ConfigBlocks;
 import unraveling.UnravelingConfig;
 
 
-public class ComponentCoridorTrap extends StructureComponent {
+public class ComponentCoridorTrap extends ComponentRotatable {
 
 	public ComponentCoridorTrap() {
 		super();
@@ -83,7 +83,8 @@ public class ComponentCoridorTrap extends StructureComponent {
         placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY, z, sbb);
         // placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY+1, z, sbb);
         
-        placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, maxX, maxY+1, z, sbb);
+        // placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, maxX, maxY+1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.glowstone, 4, maxX, maxY+1, z, sbb);
 
         placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, maxX - 1, maxY, z, sbb);
 

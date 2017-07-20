@@ -1,10 +1,10 @@
 import numpy as np
 
-arr = np.zeros((10, 10))
+arr = np.zeros((18, 18), dtype=int)
 coords = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (0, 1)]
 
-minX, minZ = 0, 0
-maxX, maxZ = 9, 9
+minX, minZ = 5, 5
+maxX, maxZ = 15, 8
 def get_coords_minecraft(x, z, coordBaseMode):
     if coordBaseMode == 0:
         return (minX + x, minZ + z)
@@ -30,8 +30,8 @@ def get_coords_sane(x, z, coordBaseMode):
         
 for m in [0, 1, 2, 3]:
     for (x, z) in coords:
-        #xC, zC = get_coords_minecraft(x, z, m)
-        xC, zC = get_coords_sane(x, z, m)
+        xC, zC = get_coords_minecraft(x, z, m)
+        #xC, zC = get_coords_sane(x, z, m)
         arr[xC, zC] = (m + 1)
 
 print arr

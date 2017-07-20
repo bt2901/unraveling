@@ -46,6 +46,7 @@ import unraveling.mechanics.MessageGetStrongholdPos;
 import unraveling.mechanics.MessageSetStrongholdPos;
 import unraveling.tileentity.TileQuaesitum;
 import unraveling.dim.TileVoidPortal;
+import unraveling.dim.PyramidFeatureStart;
 
 import unraveling.tileentity.TileEntityTrapRoom;
 
@@ -123,6 +124,8 @@ public class UnravelingMod {
 
 		// items
 		UItems.registerItems();
+        // just call this so that we register structure IDs correctly
+        new PyramidFeatureStart();
 				
 	}
 

@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.common.config.ConfigBlocks;
+import unraveling.UnravelingConfig;
 
 
 public class ComponentPyramidTrap extends ComponentPyramidRoom {
@@ -30,6 +31,7 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
 	}
     
     public void createTripwire(World world, StructureBoundingBox sbb, int x, int y, int z) {
+
         int doorwaySize = PyramidMain.oddBias;
         int m = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
         int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
@@ -37,6 +39,18 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, x+3, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+2, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, x+1, y+1, 0, sbb);
+        if (UnravelingConfig.debug) {
+            if (coordBaseMode <= 1) {
+                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+3, y+1, 0, sbb);
+                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+2, y+1, 0, sbb);
+                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+1, y+1, 0, sbb);
+            }
+            if (coordBaseMode == 3) {
+                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+3, y+1, 0, sbb);
+                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+2, y+1, 0, sbb);
+                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y+1, 0, sbb);
+            }
+        }
     }
     public void createFloorTrap(World world, StructureBoundingBox sbb, int x, int y, int z) {
         fillWithAir(world, sbb, x, y-2, z, x, y+2, z);
@@ -97,6 +111,7 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         makeFancyEntrance(world, sbb);
         int pace = PyramidMain.evenBias + PyramidMain.oddBias;
         createFloorTrap(world, sbb, pace, -1, pace);
+        trap_type = 0;
         switch(trap_type) {
             case 0: {
                 createTripwire(world, sbb, pace, 0, pace);

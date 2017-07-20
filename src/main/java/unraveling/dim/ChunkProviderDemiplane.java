@@ -101,8 +101,11 @@ public class ChunkProviderDemiplane implements IChunkProvider {
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 for (int y = 0; y < 128; y++) {
-                    if (idArray[this.getIndex(x, y, z)] == Blocks.stone) {
+                    Block blockHere = idArray[this.getIndex(x, y, z)];
+                    if (blockHere == Blocks.stone) {
                         idArray[this.getIndex(x, y, z)] = UnravelingConfig.demiplaneStone;
+                    } else if (blockHere == Blocks.lava || blockHere == Blocks.flowing_lava) {
+                        idArray[this.getIndex(x, y, z)] = Blocks.air;
                     }
                 }        
             }
@@ -152,39 +155,7 @@ public class ChunkProviderDemiplane implements IChunkProvider {
     }
     public int getIndex(int x, int y, int z) {
         return (x * 16 + z) * 256 + y;
-    }
-
-	public void generateTerrain3(int chunkX, int chunkZ, Block[] storage, byte[] metaStorage)
-    {
-        byte seaLevel = 50;
-        //if (Math.abs(chunkX) > 20 || Math.abs(chunkZ) > 20 ){
-        //    return;
-        //}
-        int miny = 20;
-        int maxy = 50 - ((chunkX + chunkZ)%10)/4; // TODO: use noise here or something
-        for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-                miny = 20 + (x*z)%2;
-                // int maxy = 50 - ((chunkX * 16 + x + chunkZ * 16 + z)%10)/4;
-                // int maxy = 50 - ((chunkX + chunkZ + z)%10)/4;
-                for (int y = 0; y <= 127; y++) {
-                    int index = (x * 16 + z) * 256 + y;
-                    if (y > miny && y < maxy) {
-                        storage[index] = UBlocks.saprolite;
-                    } else {
-                        if (y > 120) {
-                            storage[index] = Blocks.air;
-                            // storage[index] = ConfigBlocks.blockEldritchNothing;
-                            // metaStorage[index] = 1;
-                        } else {
-                            storage[index] = Blocks.air;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+    }    
 
     /**
      * Checks to see if a chunk exists at x, y

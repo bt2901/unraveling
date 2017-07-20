@@ -146,13 +146,14 @@ public class ComponentGardenRoom extends ComponentPyramidRoom {
             fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.soul_sand, 0, Blocks.soul_sand, 0, false);
             fillWithMetadataBlocks(world, sbb, pace+1, platf, pace+1, 2*pace-1, platf, 2*pace-1, Blocks.nether_wart, 0, Blocks.nether_wart, 0, false);
             return true;
-        } 
-        platf = 3;
-        int glassmeta = 2;
-        Block opaque = ConfigBlocks.blockCosmeticOpaque;
-        fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, opaque, glassmeta, opaque, glassmeta, false);
-        fillPillars(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, brick, PyramidMain.wallBlockMeta);
-        fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.water, 0, Blocks.water, 0, false);
+        } else { 
+            platf = 3;
+            int glassmeta = 2;
+            Block opaque = ConfigBlocks.blockCosmeticOpaque;
+            fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, opaque, glassmeta, opaque, glassmeta, false);
+            fillPillars(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, brick, PyramidMain.wallBlockMeta);
+            fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.water, 0, Blocks.water, 0, false);
+        }
         
         return true;
     }

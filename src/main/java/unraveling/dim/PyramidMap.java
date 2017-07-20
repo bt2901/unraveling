@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import net.minecraft.nbt.NBTTagCompound;
+import unraveling.UnravelingConfig;
 
 
 
@@ -267,27 +268,31 @@ public class PyramidMap {
 	}
     public void addTrappedCoridors(){
 
-        putCell(0, 7, CORIDOR_TRAP_WEST);
-        putCell(0, 8, CORIDOR_TRAP_WEST);
-        putCell(0, 9, CORIDOR_TRAP_EAST);
-        putCell(0, 10, CORIDOR_TRAP_EAST);
-        
-        putCell(7, 0, CORIDOR_TRAP_SOUTH);
-        putCell(8, 0, CORIDOR_TRAP_SOUTH);
-        putCell(9, 0, CORIDOR_TRAP_NORTH);
-        putCell(10, 0, CORIDOR_TRAP_NORTH);
+        // CORIDOR_TRAP_WEST = minX
+        if (!UnravelingConfig.debug) {
 
-        // CORIDOR_TRAP_WEST = maxX ?
+            putCell(0, 7, CORIDOR_TRAP_WEST);
+            putCell(0, 8, CORIDOR_TRAP_WEST);
+            putCell(0, 9, CORIDOR_TRAP_WEST);
+            putCell(0, 10, CORIDOR_TRAP_WEST);
+        
+            // CORIDOR_TRAP_SOUTH = minZ
+            putCell(7, 0, CORIDOR_TRAP_SOUTH);
+            putCell(8, 0, CORIDOR_TRAP_SOUTH);
+            putCell(9, 0, CORIDOR_TRAP_SOUTH);
+            putCell(10, 0, CORIDOR_TRAP_SOUTH);
+        }
+
         putCell(cellsWidth, 7, CORIDOR_TRAP_EAST);
         putCell(cellsWidth-1, 8, CORIDOR_TRAP_EAST);
         putCell(cellsWidth-2, 9, CORIDOR_TRAP_EAST);
         putCell(cellsWidth-3, 10, CORIDOR_TRAP_EAST);
 
-        // CORIDOR_TRAP_SOUTH = maxZ?
+        // CORIDOR_TRAP_NORTH = maxZ?
         putCell(7, cellsDepth-2, CORIDOR_TRAP_NORTH);
         putCell(8, cellsDepth-2, CORIDOR_TRAP_NORTH);
-        putCell(9, cellsDepth-2, CORIDOR_TRAP_SOUTH);
-        putCell(10, cellsDepth-2, CORIDOR_TRAP_SOUTH);
+        putCell(9, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(10, cellsDepth-2, CORIDOR_TRAP_NORTH);
         
     }
 	
