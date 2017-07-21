@@ -125,7 +125,7 @@ public class UnravelingMod {
 		// items
 		UItems.registerItems();
         // just call this so that we register structure IDs correctly
-        new PyramidFeatureStart();
+        // new PyramidFeatureStart();
 				
 	}
 

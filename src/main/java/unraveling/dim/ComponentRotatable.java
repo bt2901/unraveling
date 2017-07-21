@@ -79,38 +79,38 @@ public abstract class ComponentRotatable extends StructureComponent {
     
     
     @Override
-    protected int getXWithOffset(int p_74865_1_, int p_74865_2_)
+    protected int getXWithOffset(int x, int z)
     {
         switch (this.coordBaseMode)
         {
             case 0:
-                return this.boundingBox.minX + p_74865_1_;
-            case 2:
-                return this.boundingBox.minX + p_74865_1_;
+                return this.boundingBox.minX + x;
             case 1:
-                return this.boundingBox.maxX - p_74865_2_;
+                return this.boundingBox.maxX - z;
+            case 2:
+                return this.boundingBox.maxX - x;
             case 3:
-                return this.boundingBox.maxX - p_74865_1_;
+                return this.boundingBox.minX + z;
             default:
-                return p_74865_1_;
+                return x;
         }
     }
 
     @Override
-    protected int getZWithOffset(int p_74873_1_, int p_74873_2_)
+    protected int getZWithOffset(int x, int z)
     {
         switch (this.coordBaseMode)
         {
             case 0:
-                return this.boundingBox.minZ + p_74873_2_;
+                return this.boundingBox.minZ + z;
             case 1:
-                return this.boundingBox.minZ + p_74873_1_;
+                return this.boundingBox.minZ + x;
             case 2:
-                return this.boundingBox.maxZ - p_74873_2_;
+                return this.boundingBox.maxZ - z;
             case 3:
-                return this.boundingBox.maxZ - p_74873_2_;
+                return this.boundingBox.maxZ - x;
             default:
-                return p_74873_2_;
+                return z;
         }
     }    
     /**
