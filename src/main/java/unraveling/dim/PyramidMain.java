@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.common.config.ConfigBlocks;
+import unraveling.block.UBlocks;
+import unraveling.UnravelingConfig;
 
 
 /**
@@ -54,8 +56,8 @@ public class PyramidMain extends StructureComponent {
 	public static Block rootBlockID = ConfigBlocks.blockCosmeticSolid;
 	public static int rootBlockMeta = 14;
 
-    int outerBlockMeta = headBlockMeta; 
-    Block outerBlockID = headBlockID; 
+    public static int outerBlockMeta = headBlockMeta; 
+    public static Block outerBlockID = headBlockID; 
 
 	
 	public static Block pillarBlockID;
@@ -273,11 +275,13 @@ public class PyramidMain extends StructureComponent {
         int l = (this.boundingBox.maxX - this.boundingBox.minX) + 2; // TODO: why +2??
         int startH = -4;
         int endH = (height)*(levelsTall + 2) + startH;
-        for (int i=startH; i < endH; ++i) {
+        if (UnravelingConfig.debug) {
+            endH = 1;
+        }
+        for (int i=startH; i <= endH; ++i) {
             fillWithMetadataBlocks(world, sbb, i, i, i, l - i, i, l - i, 
                 outerBlockID, outerBlockMeta, outerBlockID, outerBlockMeta, false);
         }
-
 		return true;
 	}
 	

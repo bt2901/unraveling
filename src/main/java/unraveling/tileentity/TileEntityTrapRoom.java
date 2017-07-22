@@ -65,7 +65,7 @@ public class TileEntityTrapRoom extends TileEntity {
         if ((golem = new EntityGolemBase(par0World, EnumGolemType.STONE, adv)) != null) {
 
             double rx = xCoord + 0.5D;
-            double ry = yCoord + 0.5D;
+            double ry = yCoord;
             double rz = zCoord + 0.5D;
             golem.setLocationAndAngles(rx, ry, rz, worldObj.rand.nextFloat() * 360F, 0.0F);
             golem.setHomeArea(xCoord, yCoord+1, zCoord, 32);

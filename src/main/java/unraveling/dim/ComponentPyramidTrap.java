@@ -33,22 +33,29 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
     public void createTripwire(World world, StructureBoundingBox sbb, int x, int y, int z) {
 
         int doorwaySize = PyramidMain.oddBias;
-        int m = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
-        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
-        // placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, 0, y+1, z+1, sbb);
+        int m = getHookMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
+        int m2 = getHookMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, x+3, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+2, y+1, 0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, x+1, y+1, 0, sbb);
+        
         if (UnravelingConfig.debug) {
-            if (coordBaseMode <= 1) {
-                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+3, y+1, 0, sbb);
-                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+2, y+1, 0, sbb);
-                placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x+1, y+1, 0, sbb);
-            }
             if (coordBaseMode == 3) {
-                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+3, y+1, 0, sbb);
-                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+2, y+1, 0, sbb);
-                placeBlockAtCurrentPosition(world, Blocks.redstone_wire, 0, x+1, y+1, 0, sbb);
+                                
+                //placeBlockAtCurrentPosition(world, Blocks.piston, 4, x+3, y+3, 0, sbb);
+                //placeBlockAtCurrentPosition(world, Blocks.piston, 3, x+2, y+3, 0, sbb);
+                //placeBlockAtCurrentPosition(world, Blocks.piston, 2, x+1, y+3, 0, sbb);
+                
+                // placeBlockAtCurrentPosition(world, Blocks.piston, 5, x+3, y+2, 0, sbb);
+
+            }
+            if (coordBaseMode == 2) {
+                // placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, 0|4, x+3, y+1, 0, sbb);
+                // placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, 1|4, x+2, y+1, 0, sbb);
+                // placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, 2|4, x+1, y+1, 0, sbb);
+                
+                // placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, 3|4, x+3, y+2, 0, sbb);
+                // placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, 4|4, x+2, y+2, 0, sbb);
             }
         }
     }
@@ -62,6 +69,9 @@ public class ComponentPyramidTrap extends ComponentPyramidRoom {
         placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 1, x, y-2, z, sbb);
         placeBlockAtCurrentPosition(world, PyramidMain.wallBlockID, PyramidMain.wallBlockMeta, x, y-1, z, sbb);
         placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, x, y, z, sbb);
+        if (UnravelingConfig.debug) {
+            placeBlockAtCurrentPosition(world, UBlocks.ebricks, 0, x, y, z, sbb);
+        }
 
         placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, 0, y+1, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.sticky_piston, 0, x, y+1, 0, sbb);

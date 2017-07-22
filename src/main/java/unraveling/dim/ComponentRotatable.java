@@ -29,49 +29,73 @@ public abstract class ComponentRotatable extends StructureComponent {
 		super(type);
 	}
 
-    protected int getMetaAtCurrentPosition(World p_151548_1_, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_) {
+    protected int getMetaAtCurrentPosition(World world, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_) {
         int l = this.getXWithOffset(p_151548_2_, p_151548_4_);
         int i1 = this.getYWithOffset(p_151548_3_);
         int j1 = this.getZWithOffset(p_151548_2_, p_151548_4_);
-        return p_151548_1_.getBlockMetadata(l, i1, j1);
+        return world.getBlockMetadata(l, i1, j1);
     }
-    @Override
-    protected int getMetadataWithOffset(Block block, int dir) {
+    protected int getPistonMetadataWithOffset(Block block, int dir) {
         if (this.coordBaseMode == 0 || this.coordBaseMode == 1) {
             return super.getMetadataWithOffset(block, dir);
         }
-        if (block != Blocks.tripwire_hook && !(block instanceof BlockDirectional)) {
-            if (block == Blocks.piston || block == Blocks.sticky_piston || block == Blocks.lever || block == Blocks.dispenser) {
-                if (this.coordBaseMode == 2) { // was 3
-                    if (dir == 2) {
-                        return 5;
-                    }
-
-                    if (dir == 3) {
-                        return 4;
-                    }
-
-                    if (dir == 4) {
-                        return 2;
-                    }
-
-                    if (dir == 5) {
-                        return 3;
-                    }
+        if (block == Blocks.piston || block == Blocks.sticky_piston || block == Blocks.lever || block == Blocks.dispenser) {
+            
+            if (this.coordBaseMode == 2) { // was 3
+                if (dir == 4) {
+                    return 5;
+                }
+                if (dir == 5) {
+                    return 4;
                 }
             }
-        } else if (this.coordBaseMode == 2) { // was 2
-            if (dir == 2) {
-                return 2; // was 3
+            if (this.coordBaseMode == 3) { // max z
+                if (dir == 4) {
+                    return 3;
+                }
+                if (dir == 5) {
+                    return 2;
+                }
             }
-            if (dir == 0) {
-                return 0; // was 1
+            return super.getMetadataWithOffset(block, dir);
+        }
+        return dir;
+    }
+
+    protected int getHookMetadataWithOffset(Block block, int dir) {
+        if (this.coordBaseMode == 0 || this.coordBaseMode == 1) {
+            return super.getMetadataWithOffset(block, dir);
+        }
+        if (block == Blocks.tripwire_hook || (block instanceof BlockDirectional)) {
+           
+           
+            if (this.coordBaseMode == 2) { // was 2
+                if (dir == 2) {
+                    return 0; // was 3
+                }
+                if (dir == 0) {
+                    return 2; // was 1
+                }
+                if (dir == 1) {
+                    return 3; // was 2
+                }
+                if (dir == 3) {
+                    return 1; // was 0
+                }
             }
-            if (dir == 1) {
-                return 2; // was 2
-            }
-            if (dir == 3) {
-                return 0; // was 0
+            if (coordBaseMode == 3) {
+                if (dir == 2) {
+                    return 1; // was 3
+                }
+                if (dir == 0) {
+                    return 3; // was 1
+                }
+                if (dir == 1) {
+                    return 0; // was 2
+                }
+                if (dir == 3) {
+                    return 2; // was 0
+                }
             }
         }
         return dir;
@@ -79,8 +103,7 @@ public abstract class ComponentRotatable extends StructureComponent {
     
     
     @Override
-    protected int getXWithOffset(int x, int z)
-    {
+    protected int getXWithOffset(int x, int z) {
         switch (this.coordBaseMode)
         {
             case 0:
@@ -123,9 +146,33 @@ public abstract class ComponentRotatable extends StructureComponent {
         int j1 = this.getYWithOffset(p_151550_5_);
         int k1 = this.getZWithOffset(p_151550_4_, p_151550_6_);
 
-        if (p_151550_7_.isVecInside(i1, j1, k1))
-        {
-            p_151550_1_.setBlock(i1, j1, k1, p_151550_2_, p_151550_3_, 2);
-        }
+        //if (p_151550_7_.isVecInside(i1, j1, k1))
+        //{
+        p_151550_1_.setBlock(i1, j1, k1, p_151550_2_, p_151550_3_, 2);
+        //}
     }    
+    @Override
+    protected Block getBlockAtCurrentPosition(World world, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_)
+    {
+        int l = this.getXWithOffset(p_151548_2_, p_151548_4_);
+        int i1 = this.getYWithOffset(p_151548_3_);
+        int j1 = this.getZWithOffset(p_151548_2_, p_151548_4_);
+        return world.getBlock(l, i1, j1);
+    }
+    protected boolean isAirAtCurrentPosition(World world, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_)
+    {
+        int l = this.getXWithOffset(p_151548_2_, p_151548_4_);
+        int i1 = this.getYWithOffset(p_151548_3_);
+        int j1 = this.getZWithOffset(p_151548_2_, p_151548_4_);
+        return world.isAirBlock(l, i1, j1);
+    }
+    protected boolean isStructurePartAtCurrentPosition(World world, int p_151548_2_, int p_151548_3_, int p_151548_4_, StructureBoundingBox p_151548_5_)
+    {
+        // TODO
+        int l = this.getXWithOffset(p_151548_2_, p_151548_4_);
+        int i1 = this.getYWithOffset(p_151548_3_);
+        int j1 = this.getZWithOffset(p_151548_2_, p_151548_4_);
+        return world.isAirBlock(l, i1, j1);
+    }
+
 }

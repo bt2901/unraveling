@@ -269,30 +269,27 @@ public class PyramidMap {
     public void addTrappedCoridors(){
 
         // CORIDOR_TRAP_WEST = minX
-        if (!UnravelingConfig.debug) {
+        // doesn't generate completely for some reason
+        putCell(1, 7, CORIDOR_TRAP_WEST);
+        putCell(1, 8, CORIDOR_TRAP_WEST);
+        putCell(1, 9, CORIDOR_TRAP_WEST);
+        putCell(1, 10, CORIDOR_TRAP_WEST);
+    
+        // CORIDOR_TRAP_SOUTH = minZ
+        putCell(6, 1, CORIDOR_TRAP_SOUTH);
+        putCell(7, 1, CORIDOR_TRAP_SOUTH);
+        putCell(12, 1, CORIDOR_TRAP_SOUTH);
+        putCell(13, 1, CORIDOR_TRAP_SOUTH);
 
-            putCell(0, 7, CORIDOR_TRAP_WEST);
-            putCell(0, 8, CORIDOR_TRAP_WEST);
-            putCell(0, 9, CORIDOR_TRAP_WEST);
-            putCell(0, 10, CORIDOR_TRAP_WEST);
-        
-            // CORIDOR_TRAP_SOUTH = minZ
-            putCell(7, 0, CORIDOR_TRAP_SOUTH);
-            putCell(8, 0, CORIDOR_TRAP_SOUTH);
-            putCell(9, 0, CORIDOR_TRAP_SOUTH);
-            putCell(10, 0, CORIDOR_TRAP_SOUTH);
-        }
+        putCell(cellsWidth-2, 7, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-2, 8, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-2, 9, CORIDOR_TRAP_EAST);
+        putCell(cellsWidth-2, 10, CORIDOR_TRAP_EAST);
 
-        putCell(cellsWidth-1, 7, CORIDOR_TRAP_EAST);
-        putCell(cellsWidth-1, 8, CORIDOR_TRAP_EAST);
-        putCell(cellsWidth-1, 9, CORIDOR_TRAP_EAST);
-        putCell(cellsWidth-1, 10, CORIDOR_TRAP_EAST);
-
-        // CORIDOR_TRAP_NORTH = maxZ?
-        putCell(7, cellsDepth-1, CORIDOR_TRAP_NORTH);
-        putCell(8, cellsDepth-1, CORIDOR_TRAP_NORTH);
-        putCell(9, cellsDepth-1, CORIDOR_TRAP_NORTH);
-        putCell(10, cellsDepth-1, CORIDOR_TRAP_NORTH);
+        putCell(7, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(8, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(9, cellsDepth-2, CORIDOR_TRAP_NORTH);
+        putCell(10, cellsDepth-2, CORIDOR_TRAP_NORTH);
         
     }
 	

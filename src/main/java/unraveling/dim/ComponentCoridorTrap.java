@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.common.config.ConfigBlocks;
+import unraveling.block.UBlocks;
 import unraveling.UnravelingConfig;
 
 
@@ -38,34 +39,40 @@ public class ComponentCoridorTrap extends ComponentRotatable {
 
 	}
     public void fillWithOutsideWalls(World world, StructureBoundingBox sbb, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
-       fillWithMetadataBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, PyramidMain.headBlockID, PyramidMain.headBlockMeta, PyramidMain.headBlockID, PyramidMain.headBlockMeta, false);
+        Block what = PyramidMain.headBlockID;
+        int meta = PyramidMain.headBlockMeta;
+        if (UnravelingConfig.debug) {
+            what = Blocks.stone;
+            meta = 0;
+        }
+        
+        fillWithMetadataBlocks(world, sbb, minX, minY, minZ, maxX, maxY, maxZ, what, meta, what, meta, false);
     }
 
     public void createTripwire(World world, StructureBoundingBox sbb, int z) {
-        int m = getMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
-        int m2 = getMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
+        int m = getHookMetadataWithOffset(Blocks.tripwire_hook, 1) | 4;
+        int m2 = getHookMetadataWithOffset(Blocks.tripwire_hook, 3) | 4;
         int y = 1;
-        int minX = -3;
-        int maxX = -1;
-        minX = 1;
-        maxX = 3;
+        int minX = 1;
+        int maxX = 3;
+        
+        int pace = PyramidMain.evenBias + PyramidMain.oddBias;
+
         placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m2, minX, y, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, maxX, y, z, sbb);
+        if (isAirAtCurrentPosition(world, maxX+1, y, z, sbb)) {
+            maxX += pace;
+        }
         for (int x = minX+1; x < maxX; ++x) {
             placeBlockAtCurrentPosition(world, Blocks.tripwire, 0, x, y, z, sbb);
         }
-
+        placeBlockAtCurrentPosition(world, Blocks.tripwire_hook, m, maxX, y, z, sbb);
     }
     public void createSliceWithControl(World world, StructureBoundingBox sbb, int z) {
         int y = 0;
         int minX = -3;
         int maxX = 0;
-        // 0 1 : up/down
-        // 4: almost, wrong dir
-        // 5: good
-        // 2, 3: perp dir
-        int m = getMetadataWithOffset(Blocks.sticky_piston, 5);
-        m = getMetadataWithOffset(Blocks.sticky_piston, 4);
+        
+        int m = getPistonMetadataWithOffset(Blocks.sticky_piston, 4);
         fillWithOutsideWalls(world, sbb, minX, -1, z, maxX, 1, z);
         placeBlockAtCurrentPosition(world, Blocks.sticky_piston, m, maxX, y, z, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX-1, y, z, sbb);
@@ -81,10 +88,13 @@ public class ComponentCoridorTrap extends ComponentRotatable {
         
         fillWithOutsideWalls(world, sbb, minX, minY, z, maxX, maxY, z);
         placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY, z, sbb);
-        // placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY+1, z, sbb);
+        //placeBlockAtCurrentPosition(world, Blocks.air, 0, maxX, maxY+1, z, sbb);
         
+        // decoration
         // placeBlockAtCurrentPosition(world, ConfigBlocks.blockEldritch, 4, maxX, maxY+1, z, sbb);
-        placeBlockAtCurrentPosition(world, Blocks.glowstone, 4, maxX, maxY+1, z, sbb);
+        placeBlockAtCurrentPosition(world, UBlocks.ebricks, 4, maxX, maxY+1, z, sbb);
+        placeBlockAtCurrentPosition(world, Blocks.glowstone, 4, maxX, maxY+2, z, sbb);
+        
 
         placeBlockAtCurrentPosition(world, UBlocks.golemSpawner, 0, maxX - 1, maxY, z, sbb);
 
@@ -106,7 +116,8 @@ public class ComponentCoridorTrap extends ComponentRotatable {
     
 	@Override
 	public boolean addComponentParts(World world, Random rand, StructureBoundingBox sbb) {
-        int pace = PyramidMain.evenBias + PyramidMain.oddBias;
+        fillWithOutsideWalls(world, sbb, -3, -2, 1, 0, 1, 3);
+        
         createSliceWithGolems(world, sbb, 1);
         createSliceWithControl(world, sbb, 2);
         createSliceWithGolems(world, sbb, 3);

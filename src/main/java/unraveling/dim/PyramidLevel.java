@@ -81,6 +81,10 @@ public class PyramidLevel extends StructureComponent {
                     ComponentCoridorTrap trap = new ComponentCoridorTrap(random, worldX, worldY, worldZ, type);
                     list.add(trap);
                     trap.buildComponent(this, list, random);
+                    // if (UnravelingConfig.debug) {
+                        // System.out.println(list);
+                    // }
+                    
                 }        
             }
         }
@@ -146,12 +150,6 @@ public class PyramidLevel extends StructureComponent {
 	 * Copy the maze into a StructureComponent
 	 */
 	public void copyToStructure(World world, int dx, int dy, int dz, StructureComponent component, StructureBoundingBox sbb) {
-        if (UnravelingConfig.debug) {
-            if (level == 0) {
-                describe();
-            }
-        }
-
 		for(int x = 0; x < rawWidth; x++) {
 			for(int z = 0; z < rawDepth; z++) {
                 int mdx = dx + (x / 2 * (PyramidMain.evenBias + PyramidMain.oddBias));

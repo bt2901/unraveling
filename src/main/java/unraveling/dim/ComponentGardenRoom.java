@@ -128,33 +128,34 @@ public class ComponentGardenRoom extends ComponentPyramidRoom {
         int brickmeta = 11;
         int pace = PyramidMain.oddBias + PyramidMain.evenBias;
         int platf = 2;
+        int glassmeta = 2;
+        Block opaque = ConfigBlocks.blockCosmeticOpaque;        
         fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, brick, brickmeta, brick, brickmeta, false);
-        float r = rand.nextFloat();
-        // float r = 0.33f;
-        if (r > 0.75) { // tree
+        int gardenType = rand.nextInt(4);
+        switch (gardenType) {
+        case 0:
             int cx = roomWidth/2;
             int cz = roomDepth/2;
             decoratePlanter(world, rand, sbb, cx, cz, true); 
             return true;
-        } 
-        if (r > 0.50) {
+        case 1:
             fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.sand, 0, Blocks.sand, 0, false);
             fillWithMetadataBlocks(world, sbb, pace+1, platf, pace+1, 2*pace-1, platf, 2*pace-1, ConfigBlocks.blockCustomPlant, 3, ConfigBlocks.blockCustomPlant, 3, false);
             return true;
-        } 
-        if (r > 0.25) {
+        case 2:
             fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.soul_sand, 0, Blocks.soul_sand, 0, false);
-            fillWithMetadataBlocks(world, sbb, pace+1, platf, pace+1, 2*pace-1, platf, 2*pace-1, Blocks.nether_wart, 0, Blocks.nether_wart, 0, false);
+            
+            fillPillars(world, sbb, pace, 1, pace, 2*pace, platf, 2*pace, brick, PyramidMain.wallBlockMeta);
+            fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf, 2*pace, opaque, glassmeta, Blocks.nether_wart, 0, false);
+            
             return true;
-        } else { 
-            platf = 3;
-            int glassmeta = 2;
-            Block opaque = ConfigBlocks.blockCosmeticOpaque;
-            fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, opaque, glassmeta, opaque, glassmeta, false);
-            fillPillars(world, sbb, pace, 1, pace, 2*pace, platf-1, 2*pace, brick, PyramidMain.wallBlockMeta);
-            fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf-1, 2*pace-1, Blocks.water, 0, Blocks.water, 0, false);
-        }
-        
+        case 3:
+
+            fillWithMetadataBlocks(world, sbb, pace, 1, pace, 2*pace, platf, 2*pace, opaque, glassmeta, opaque, glassmeta, false);
+            fillPillars(world, sbb, pace, 1, pace, 2*pace, platf, 2*pace, brick, PyramidMain.wallBlockMeta);
+            fillWithMetadataBlocks(world, sbb, pace+1, 1, pace+1, 2*pace-1, platf, 2*pace-1, Blocks.water, 0, Blocks.water, 0, false);
+            return true;
+        }        
         return true;
     }
 }

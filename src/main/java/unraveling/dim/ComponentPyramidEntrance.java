@@ -47,7 +47,8 @@ public class ComponentPyramidEntrance extends ComponentPyramidRoom {
     
     public boolean replaceIfNotPartOfStructure(World world, StructureBoundingBox sbb, int x, int y, int z) {
         Block b = getBlockAtCurrentPosition(world, x, y, z, sbb);
-        if (b == PyramidMain.wallBlockID || b == PyramidMain.headBlockID || b == PyramidMain.rootBlockID) {
+        if (b == PyramidMain.wallBlockID || b == PyramidMain.headBlockID || b == PyramidMain.rootBlockID || 
+                b == PyramidMain.outerBlockID) {
             return false;
         }
         placeBlockAtCurrentPosition(world, Blocks.air, 0, x, y, z, sbb);

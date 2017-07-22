@@ -87,7 +87,7 @@ public class ComponentPyramidCentralRoom extends ComponentPyramidRoom {
 	 */
 	@Override
 	public void buildComponent(StructureComponent structurecomponent, List list, Random random) {
-            int c = 1;
+            int c = 0;
             ComponentPyramidStairs stairBuilder = new ComponentPyramidStairs(random, 
                 boundingBox.minX, boundingBox.minY, boundingBox.minZ, level % 8, c);
 			list.add(stairBuilder);
